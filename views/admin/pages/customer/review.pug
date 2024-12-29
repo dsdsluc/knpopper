@@ -1,0 +1,29 @@
+.container-xxl
+  .row
+    each problem in problems
+      .col-xl-3.col-md-6
+        .card.overflow-hidden
+          .card-body
+            p.mb-2.text-dark.fw-semibold.fs-15 
+              | Reported by #{problem.user ? problem.user.fullName : 'Anonymous'} on #{new Date(problem.createdAt).toLocaleDateString()}
+            p.mb-0
+              strong Problem Subject: 
+              span #{problem.subject}
+            p.mb-0.mt-2
+              | "#{problem.message}"
+            .d-flex.align-items-center.gap-2.mt-2.mb-1
+              p.fw-medium.mb-0.text-dark.fs-15 Status: #{problem.status}
+          .card-footer.bg-primary.position-relative.mt-3
+            .position-absolute.top-0.start-0.translate-middle-y.ms-3
+              img.avatar-lg.border.border-light.border-3.rounded-circle(
+                src=problem.user && problem.user.avatar ? problem.user.avatar : '/admin/images/users/avatar-1.jpg', 
+                alt="User Avatar"
+              )
+            .mt-4
+              h4.text-white.mb-1 #{problem.user ? problem.user.fullName : 'Anonymous'}
+              p.text-white.mb-0 #{problem.user ? problem.user.email : 'No Email'}
+            //- Form to mark the problem as resolved
+            form(method="POST", action=`/admin/customer/resolve/${problem._id}?_method=PATCH`)
+              input(type="hidden", name="status", value="resolved")
+              textarea.form-control(name="adminNote", placeholder="Add a note (optional)")
+              button.btn.btn-success.mt-2(type="submit") Mark as Resolved

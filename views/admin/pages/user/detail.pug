@@ -1,0 +1,84 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .row
+    .col-xl-12
+      .card.shadow-sm
+        .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+          h4 Chi Tiết Người Dùng
+          a.btn.btn-light.btn-sm(href='/admin/users') ← Quay Lại
+
+        .card-body
+          .row
+            .col-md-4.text-center
+              if user.avatar
+                img.img-thumbnail.rounded-circle(src=`${user.avatar}`, alt='Avatar', width='150', height='150')
+              else
+                img.img-thumbnail.rounded-circle(src='/images/default-avatar.png', alt='Avatar', width='150', height='150')
+              h5.mt-2 #{user.fullName || 'N/A'}
+              span.badge(class=`bg-${user.status === 'active' ? 'success' : user.status === 'inactive' ? 'warning' : 'danger'}`) #{user.status}
+
+            .col-md-8
+              dl.row
+                dt.col-sm-4 Email:
+                dd.col-sm-8 #{user.email || 'N/A'}
+
+                dt.col-sm-4 Số Điện Thoại:
+                dd.col-sm-8 #{user.phone || 'N/A'}
+
+                dt.col-sm-4 Địa chỉ:
+                dd.col-sm-8 #{user.address || 'N/A'}
+                
+                dt.col-sm-4 Thành Phố:
+                dd.col-sm-8 #{user.city || 'N/A'}
+
+                dt.col-sm-4 Tổng Chi Tiêu:
+                dd.col-sm-8 #{stats.totalSpent.toLocaleString()} VNĐ
+
+        .card-footer.text-end
+          a.btn.btn-warning.btn-sm(href=`/admin/users/edit/${user._id}`) ✏️ Chỉnh Sửa
+          button.btn.btn-danger.btn-sm(ms-2 onclick=`confirmDeleteUser('${user._id}')`) 🗑️ Xóa Người Dùng
+
+      .card.mt-4
+        .card-header.bg-secondary.text-white
+          h5 Thống Kê Đơn Hàng
+
+        .card-body
+          ul.list-group
+            li.list-group-item Tổng Đơn Hàng: #{orders.length}
+            li.list-group-item Đơn Đang Chờ: #{stats.pending}
+            li.list-group-item Đơn Đang Giao: #{stats.delivering}
+            li.list-group-item Đơn Hoàn Thành: #{stats.completed}
+            li.list-group-item Đơn Đã Hủy: #{stats.canceled}
+
+      .card.mt-4
+        .card-header.bg-info.text-white
+          h5 Danh Sách Đơn Hàng
+
+        .card-body
+          if orders.length > 0
+            table.table.table-bordered.table-hover
+              thead
+                tr
+                  th Mã Đơn Hàng
+                  th Trạng Thái
+                  th Tổng Giá
+                  th Ngày Tạo
+                  th Hành Động
+
+              tbody
+                each order in orders
+                  tr
+                    td #{order._id}
+                    td 
+                      span.badge(class=`bg-${order.status === 'completed' ? 'success' : order.status === 'pending' ? 'warning' : 'danger'}`) #{order.status}
+                    td #{order.totalPrice.toLocaleString()} VNĐ
+                    td #{new Date(order.createdAt).toLocaleString()}
+                    td
+                      a.btn.btn-primary.btn-sm(href=`/admin/order/detail/${order._id}`) Chi Tiết
+          else
+            p.text-muted Chưa có đơn hàng nào.

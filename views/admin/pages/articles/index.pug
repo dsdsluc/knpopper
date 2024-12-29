@@ -1,0 +1,100 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .container-fluid
+    .row.mb-4
+      .col-md-6
+        h3.text-primary Danh Sách Bài Báo
+        p.text-muted Quản lý danh sách bài báo trên hệ thống.
+      .col-md-6.text-end
+        a.btn.btn-primary(href='/admin/articles/create') 
+          i.fas.fa-plus.me-1
+          | Thêm Bài Báo
+
+    .card.shadow-sm
+      .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+        h5.mb-0 Danh Sách Bài Báo
+
+      .card-body.p-0
+        table.table.table-hover.table-bordered.mb-0
+          thead.table-light
+            tr.text-center
+              th # ID
+              th Tiêu Đề
+              th Tóm Tắt
+              th Trạng Thái
+              th Lượt Xem
+              th Ngày Xuất Bản
+              th Hành Động
+          tbody
+            each article in articles
+              tr.text-center
+                td #{article._id}
+                td.text-start #{article.title}
+                td.text-start #{article.summary || 'Không có tóm tắt'}
+                td
+                  if article.status === 'active'
+                    span.badge.bg-success.text-white Hoạt Động
+                  else
+                    span.badge.bg-secondary.text-white Không Hoạt Động
+                td #{article.views}
+                td #{article.publishedAt ? new Date(article.publishedAt).toLocaleString() : 'Chưa xuất bản'}
+                td.d-flex.justify-content-center.gap-2
+                  // 👉 Nút Xem Chi Tiết
+                  a.btn.btn-sm.btn-info(
+                    href=`/admin/articles/detail/${article._id}` 
+                    title='Xem chi tiết'
+                  ) 
+                    i.fas.fa-eye.me-1
+                    | Xem
+
+                  // 👉 Nút Chỉnh Sửa
+                  a.btn.btn-sm.btn-warning(
+                    href=`/admin/articles/edit/${article._id}` 
+                    title='Chỉnh sửa'
+                  ) 
+                    i.fas.fa-edit.me-1
+                    | Sửa
+
+                  // 👉 Nút Xóa
+                  button.btn.btn-sm.btn-danger(
+                    title='Xóa'
+                    onclick=`openDeleteModal('${article._id}')`
+                    data-bs-toggle='modal'
+                    data-bs-target='#deleteModal'
+                  ) 
+                    i.fas.fa-trash-alt.me-1
+                    | Xóa
+
+    .card-footer.text-muted.text-center.py-2
+      | Hiển thị #{articles.length} bài báo trên hệ thống.
+
+  // 👉 Modal Xác Nhận Xóa
+  div#deleteModal.modal.fade(tabindex='-1', role='dialog')
+    .modal-dialog.modal-dialog-centered
+      .modal-content
+        .modal-header.bg-danger.text-white
+          h5.modal-title Xác Nhận Xóa
+          button.btn-close(data-bs-dismiss='modal', aria-label='Close')
+
+        .modal-body
+          p Bạn có chắc chắn muốn xóa bài báo này không? Hành động này không thể hoàn tác.
+
+        .modal-footer
+          button.btn.btn-secondary(data-bs-dismiss='modal') Hủy
+          form(id='delete-form', method='POST', action='')
+            input(type='hidden', name='_method', value='DELETE')
+            button.btn.btn-danger(type='submit') Xác Nhận Xóa
+
+  script.
+    let deleteArticleId = null;
+
+    function openDeleteModal(articleId) {
+      deleteArticleId = articleId;
+      const form = document.getElementById('delete-form');
+      form.action = `/admin/articles/delete/${deleteArticleId}?_method=DELETE`;
+    }

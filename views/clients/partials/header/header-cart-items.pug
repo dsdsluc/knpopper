@@ -1,0 +1,28 @@
+.header-cart-items
+    if user 
+        .header-compare
+            a.cart-item(href="/cart/ordered" aria-label="Compare")
+                i.fa.fa-truck
+                span.cart-badge #{miniOrder}
+
+    .header-favourite
+        a.wishlist-item(href="wishlist.html" aria-label="Wishlist")
+            i.fas.fa-heart 
+            span.badge.badge-pill.badge-success 1 
+
+    .header-cart
+        a.cart-item(href=`/cart/` aria-label="Cart")
+            i.fas.fa-shopping-cart
+            if miniCart.totalQuantity > -1
+                span.cart-badge #{miniCart.totalQuantity}
+        include ./cart-sub
+
+    .header-user
+        if (!user) 
+            a(href="/auth/login" class="auth-link")
+                i.fas.fa-sign-in-alt 
+                | Login
+        else 
+            a(href="/auth/logout" class="auth-link")
+                i.fas.fa-sign-out-alt 
+                | Logout

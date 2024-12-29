@@ -1,0 +1,91 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .container-fluid
+    .row
+      .col-md-8.offset-md-2
+        .card.shadow-sm
+          .card-header.bg-warning.text-white
+            h5.mb-0 Chỉnh Sửa Bài Báo
+
+          form(method='POST', action=`/admin/articles/edit/${article._id}?_method=PATCH`, enctype='multipart/form-data')
+            .card-body
+              
+              // 📌 Tiêu Đề
+              .mb-3
+                label.form-label(for='title') Tiêu Đề *
+                input.form-control(
+                  type='text', 
+                  name='title', 
+                  id='title', 
+                  value=article.title,
+                  required
+                )
+
+              // 📌 Mô Tả Ngắn
+              .mb-3
+                label.form-label(for='summary') Mô Tả Ngắn
+                textarea.form-control(
+                  name='summary', 
+                  id='summary', 
+                  rows='2'
+                ) #{article.summary}
+
+              // 📌 Nội Dung
+              .mb-3
+                label.form-label(for='content') Nội Dung *
+                textarea.form-control.tinymce-app(
+                  name='content', 
+                  id='content', 
+                  rows='5',
+                  required
+                ) #{article.content}
+
+              // 📌 Ảnh Thumbnail
+              .mb-3
+                label.form-label(for='thumbnail') Ảnh Thumbnail
+                input.form-control(
+                  type='file', 
+                  name='thumbnail', 
+                  id='thumbnail', 
+                  accept='image/*'
+                )
+                if article.thumbnail
+                  img.img-thumbnail.mt-2#thumbnail-preview(src=article.thumbnail, alt='Thumbnail', style='max-width: 200px;' thumbnail-preview)
+
+              // 📌 Trạng Thái
+              .mb-3
+                label.form-label(for='status') Trạng Thái
+                select.form-select(name='status', id='status')
+                  option(value='active' selected=article.status === 'active') Hoạt Động
+                  option(value='inactive' selected=article.status === 'inactive') Không Hoạt Động
+
+              // 📌 Nút Hành Động
+              .text-end
+                button.btn.btn-success(type='submit') Lưu Thay Đổi
+                a.btn.btn-secondary.ms-2(href='/admin/articles') Hủy
+
+  // 👉 Script Preview Ảnh Thumbnail
+  script.
+    document.getElementById('thumbnail').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById('thumbnail-preview');
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.classList.remove('d-none');
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = '';
+        preview.classList.add('d-none');
+      }
+    });

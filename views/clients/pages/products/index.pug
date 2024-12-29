@@ -1,0 +1,11 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message,5000)
+  +alert-error(5000)
+  section.product.product-sidebar.footer-padding
+    .container
+      .row.g-5
+        include ./sidebar/sidebar.pug
+        include ./product-section/product-section.pug

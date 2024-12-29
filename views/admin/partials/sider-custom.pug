@@ -1,0 +1,29 @@
+
+li.menu-title.mt-2 Custom
+if( role.permissions.includes("pages-view"))
+  li.nav-item
+    a.nav-link.menu-arrow(href="#sidebarPages", data-bs-toggle="collapse", role="button", aria-expanded="false", aria-controls="sidebarPages")
+      span.nav-icon
+        iconify-icon(icon="solar:gift-bold-duotone")
+      span.nav-text Pages
+    div.collapse(id="sidebarPages")
+      ul.nav.sub-navbar-nav
+        li.sub-nav-item
+          a.sub-nav-link(href=`/${prefixAdmin}/page/home`) HomePage
+        li.sub-nav-item
+          a.sub-nav-link(href=`/${prefixAdmin}/articles/list`) Articals
+
+li.nav-item
+  a.nav-link.menu-arrow(href="#sidebarAuthentication", data-bs-toggle="collapse", role="button", aria-expanded="false", aria-controls="sidebarAuthentication")
+    span.nav-icon
+      iconify-icon(icon="solar:lock-keyhole-bold-duotone")
+    span.nav-text Authentication
+  div.collapse(id="sidebarAuthentication")
+    ul.nav.sub-navbar-nav
+      li.sub-nav-item
+        a.sub-nav-link(href=`/${prefixAdmin}/auth/login`) Sign In
+      li.sub-nav-item
+        a.sub-nav-link(href=`/${prefixAdmin}/auth/register`) Sign Up
+      li.sub-nav-item
+        a.sub-nav-link(href=`/${prefixAdmin}/auth/logout`) Logout
+

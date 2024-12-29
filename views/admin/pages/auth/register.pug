@@ -1,0 +1,54 @@
+extends ../../layouts/auth.pug
+
+block main
+  .row.h-100
+    .col-xxl-7
+      .row.justify-content-center.h-100
+        .col-lg-6.py-lg-5
+          .d-flex.flex-column.h-100.justify-content-center
+            .auth-logo.mb-4
+              a.logo-dark(href="index.html")
+                img(src="/admin/images/logo-dark.png", height="24", alt="logo dark")
+              a.logo-light(href="index.html")
+                img(src="/admin/images/logo-light.png", height="24", alt="logo light")
+
+            h2.fw-bold.fs-24 Sign Up
+
+            p.text-muted.mt-1.mb-4 New to our platform? Sign up now! It only takes a minute
+
+            .mb-5
+              form.authentication-form(action="https://techzaa.getappui.com/larkon/admin/index.html")
+                .mb-3
+                  label.form-label(for="example-name") Name
+                  input#example-name.form-control(type="text", name="example-name", placeholder="Enter your name")
+                .mb-3
+                  label.form-label(for="example-email") Email
+                  input#example-email.form-control(type="email", name="example-email", placeholder="Enter your email")
+                .mb-3
+                  label.form-label(for="example-password") Password
+                  input#example-password.form-control(type="password", placeholder="Enter your password")
+                .mb-3
+                  .form-check
+                    input#checkbox-signin.form-check-input(type="checkbox")
+                    label.form-check-label(for="checkbox-signin") I accept Terms and Condition
+
+                .mb-1.text-center.d-grid
+                  button.btn.btn-soft-primary(type="submit") Sign Up
+
+            p.mt-3.fw-semibold.no-span OR sign with
+
+            .d-grid.gap-2
+              a.btn.btn-soft-dark(href="javascript:void(0);")
+                i.bx.bxl-google.fs-20.me-1
+                | Sign Up with Google
+              a.btn.btn-soft-primary(href="javascript:void(0);")
+                i.bx.bxl-facebook.fs-20.me-1
+                | Sign Up with Facebook
+
+            p.mt-auto.text-danger.text-center I already have an account  
+              a.text-dark.fw-bold.ms-1(href="auth-signin.html") Sign In
+
+    .col-xxl-5.d-none.d-xxl-flex
+      .card.h-100.mb-0.overflow-hidden
+        .d-flex.flex-column.h-100
+          img(src="/admin/images/small/img-10.jpg", alt="", class="w-100 h-100")

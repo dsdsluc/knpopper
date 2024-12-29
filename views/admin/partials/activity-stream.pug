@@ -1,0 +1,92 @@
+div
+  // Off-canvas Panel for Activity Stream
+  .offcanvas.offcanvas-end.border-0(tabindex="-1", id="theme-activity-offcanvas", style="max-width: 450px; width: 100%")
+    // Header with Title and Close Button
+    .d-flex.align-items-center.bg-primary.p-3.offcanvas-header
+      h5.text-white.m-0.fw-semibold Activity Stream
+      button.btn-close.btn-close-white.ms-auto(type="button", data-bs-dismiss="offcanvas", aria-label="Close")
+
+    // Off-canvas Body
+    .offcanvas-body.p-0
+      div(data-simplebar, class="h-100 p-4")
+        // Activity Items
+        .position-relative.ms-2
+          span.position-absolute.start-0.top-0.border.border-dashed.h-100
+
+          // Activity Item 1
+          .position-relative.ps-4
+            .mb-4
+              span.position-absolute.start-0.avatar-sm.translate-middle-x.bg-danger.d-inline-flex.align-items-center.justify-content-center.rounded-circle.text-light.fs-20
+                iconify-icon(icon="iconamoon:folder-check-duotone")
+              .ms-2
+                h5.mb-1.text-dark.fw-semibold.fs-15.lh-base Report-Fix / Update
+                p.d-flex.align-items-center Add 3 files to 
+                  span.d-flex.align-items-center.text-primary.ms-1
+                    iconify-icon(icon="iconamoon:file-light") Tasks
+                // File List
+                .bg-light.bg-opacity-50.rounded-2.p-2
+                  .row
+                    .col-lg-6.border-end.border-light
+                      .d-flex.align-items-center.gap-2
+                        i.bx.bxl-figma.fs-20.text-red
+                        a.text-dark.fw-medium(href="#!") Concept.fig
+                    .col-lg-6
+                      .d-flex.align-items-center.gap-2
+                        i.bx.bxl-file-doc.fs-20.text-success
+                        a.text-dark.fw-medium(href="#!") larkon.docs
+                h6.mt-2.text-muted Monday, 4:24 PM
+
+          // Activity Item 2
+          .position-relative.ps-4
+            .mb-4
+              span.position-absolute.start-0.avatar-sm.translate-middle-x.bg-success.d-inline-flex.align-items-center.justify-content-center.rounded-circle.text-light.fs-20
+                iconify-icon(icon="iconamoon:check-circle-1-duotone")
+              .ms-2
+                h5.mb-1.text-dark.fw-semibold.fs-15.lh-base Project Status
+                p.d-flex.align-items-center.mb-0
+                  | Marked
+                  span.d-flex.align-items-center.text-primary.mx-1
+                    iconify-icon(icon="iconamoon:file-light") Design
+                  | as
+                  span.badge.bg-success-subtle.text-success.px-2.py-1.ms-1 Completed
+                .d-flex.align-items-center.gap-3.mt-1.bg-light.bg-opacity-50.p-2.rounded-2
+                  a.fw-medium.text-dark(href="#!") UI/UX Figma Design
+                  .ms-auto
+                    a.fw-medium.text-primary.fs-18(href="#!", data-bs-toggle="tooltip", data-bs-title="Download", data-bs-placement="bottom")
+                      iconify-icon(icon="iconamoon:cloud-download-duotone")
+                h6.mt-3.text-muted Monday, 3:00 PM
+
+          // Additional Items (Repeat Structure Similarly)
+          .position-relative.ps-4
+            .mb-4
+              span.position-absolute.start-0.avatar-sm.translate-middle-x.bg-primary.d-inline-flex.align-items-center.justify-content-center.rounded-circle.text-light.fs-16 UI
+              .ms-2
+                h5.mb-1.text-dark.fw-semibold.fs-15
+                  | Larkon Application UI v2.0.0 
+                  span.badge.bg-primary-subtle.text-primary.px-2.py-1.ms-1 Latest
+                p Get access to over 20+ pages including a dashboard layout, charts, kanban board, calendar, and pre-order E-commerce & Marketing pages.
+                .mt-2
+                  a.btn.btn-light.btn-sm(href="#!") Download Zip
+                h6.mt-3.text-muted Monday, 2:10 PM
+
+          // Example of an item with an avatar image
+          .position-relative.ps-4
+            .mb-4
+              span.position-absolute.start-0.translate-middle-x.bg-success.bg-gradient.d-inline-flex.align-items-center.justify-content-center.rounded-circle.text-light.fs-20
+                img.avatar-sm.rounded-circle(src="/admin/images/users/avatar-7.jpg", alt="avatar-5")
+              .ms-2
+                h5.mb-0.text-dark.fw-semibold.fs-15.lh-base Alex Smith Attached Photos
+                .row.g-2.mt-2
+                  .col-lg-4
+                    a(href="#!")
+                      img.img-fluid.rounded(src="/admin/images/small/img-6.jpg", alt="")
+                  .col-lg-4
+                    a(href="#!")
+                      img.img-fluid.rounded(src="/admin/images/small/img-3.jpg", alt="")
+                  .col-lg-4
+                    a(href="#!")
+                      img.img-fluid.rounded(src="/admin/images/small/img-4.jpg", alt="")
+                h6.mt-3.text-muted Monday, 1:00 PM
+
+          // Button to View All Activities
+          a.btn.btn-outline-dark.w-100(href="#!") View All

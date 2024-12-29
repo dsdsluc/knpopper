@@ -1,0 +1,81 @@
+// Menu Toggle Button (sm-hover)
+button.button-sm-hover(type="button", aria-label="Show Full Sidebar")
+  iconify-icon.button-sm-hover-icon(icon="solar:double-alt-arrow-right-bold-duotone")
+
+.scrollbar(data-simplebar)
+  ul#navbar-nav.navbar-nav
+    li.menu-title General
+
+    li.nav-item
+      a.nav-link(href="/admin/dashboard")
+        span.nav-icon
+          iconify-icon(icon="solar:widget-5-bold-duotone")
+        span.nav-text Dashboard
+    if( role.permissions.includes("products-view"))   
+      li.nav-item
+        a.nav-link.menu-arrow(href="#sidebarProducts", data-bs-toggle="collapse", role="button", aria-expanded="false", aria-controls="sidebarProducts")
+          span.nav-icon
+            iconify-icon(icon="solar:t-shirt-bold-duotone")
+          span.nav-text Products
+        .collapse(id="sidebarProducts")
+          ul.nav.sub-navbar-nav
+            li.sub-nav-item
+              a.sub-nav-link(href=`/${prefixAdmin}/products/list`) List
+            if( role.permissions.includes("products-create"))
+            li.sub-nav-item
+              a.sub-nav-link(href=`/${prefixAdmin}/products/create`) Create
+
+    if( role.permissions.includes("products_category-view"))  
+      li.nav-item
+        a.nav-link.menu-arrow(href="#sidebarCategory", data-bs-toggle="collapse", role="button", aria-expanded="false", aria-controls="sidebarCategory")
+          span.nav-icon
+            iconify-icon(icon="solar:clipboard-list-bold-duotone")
+          span.nav-text Category
+        .collapse(id="sidebarCategory")
+          ul.nav.sub-navbar-nav
+            if( role.permissions.includes("products_category-view"))  
+              li.sub-nav-item
+                a.sub-nav-link(href=`/${prefixAdmin}/category/list`) List
+            if( role.permissions.includes("products_category-create"))  
+              li.sub-nav-item
+                a.sub-nav-link(href=`/${prefixAdmin}/category/create`) Create
+
+            
+    if( role.permissions.includes("orders-view"))  
+      li.nav-item
+        a.nav-link.menu-arrow(href="#sidebarOrders", data-bs-toggle="collapse", role="button", aria-expanded="false", aria-controls="sidebarOrders")
+          span.nav-icon
+            iconify-icon(icon="solar:bag-smile-bold-duotone")
+          span.nav-text Orders
+        .collapse(id="sidebarOrders")
+          ul.nav.sub-navbar-nav
+            if( role.permissions.includes("orders-view"))  
+              li.sub-nav-item
+                a.sub-nav-link(href=`/${prefixAdmin}/order/list`) List 
+            li.sub-nav-item
+              a.sub-nav-link(href=`/${prefixAdmin}/order/trash`) Trash
+
+
+    if( role.permissions.includes("coupons-view")) 
+      li.nav-item
+        a.nav-link.menu-arrow(href="#sidebarInvoice", data-bs-toggle="collapse", role="button", aria-expanded="false", aria-controls="sidebarInvoice")
+          span.nav-icon
+            iconify-icon(icon="solar:bill-list-bold-duotone")
+          span.nav-text Coupons
+        .collapse(id="sidebarInvoice")
+          ul.nav.sub-navbar-nav
+            if( role.permissions.includes("coupons-view")) 
+              li.sub-nav-item
+                a.sub-nav-link(href=`/${prefixAdmin}/coupon/list`) List
+            if( role.permissions.includes("coupons-create"))
+              li.sub-nav-item
+                a.sub-nav-link(href=`/${prefixAdmin}/coupon/create`) Create
+    if( role.permissions.includes("settings-view"))
+      li.nav-item
+        a.nav-link(href=`/${prefixAdmin}/setting/general`)
+          span.nav-icon
+            iconify-icon(icon="solar:settings-bold-duotone")
+          span.nav-text Settings Genneral
+    include ./sider-custom.pug
+    include ./sider-user.pug
+    

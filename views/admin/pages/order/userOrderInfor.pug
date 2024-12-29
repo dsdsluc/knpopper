@@ -1,0 +1,23 @@
+// 👤 **Thông Tin Người Dùng**
+.card.mt-4
+  .card-header.bg-info.text-white
+    h5 Thông Tin Người Dùng
+
+  .card-body
+    .row
+      .col-md-6.mb-3
+        strong Tên Người Dùng: 
+        span.text-muted #{order.userInfo.name || 'Không có thông tin'}
+
+      .col-md-6.mb-3
+        strong Email: 
+        span.text-muted #{order.userInfo.email || 'Không có thông tin'}
+
+    .row
+      .col-md-6.mb-3
+        strong Số Điện Thoại: 
+        span.text-muted #{order.userInfo.phone || 'Không có thông tin'}
+
+      .col-md-6.mb-3
+        strong Địa Chỉ: 
+        span.text-muted #{order.userInfo.address || 'Không có thông tin'}

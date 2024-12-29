@@ -1,0 +1,14 @@
+// Menu Toggle Button (sm-hover)
+button.button-sm-hover(type="button", aria-label="Show Full Sidebar")
+  iconify-icon.button-sm-hover-icon(icon="solar:double-alt-arrow-right-bold-duotone")
+
+.scrollbar(data-simplebar)
+  ul#navbar-nav.navbar-nav
+    li.menu-title General
+    li.nav-item
+      a.nav-link.menu-arrow(href="#sidebarOrders", data-bs-toggle="collapse", role="button", aria-expanded="false", aria-controls="sidebarOrders")
+        span.nav-icon
+          iconify-icon(icon="solar:bag-smile-bold-duotone")
+        span.nav-text Thông tin đơn hàng
+
+

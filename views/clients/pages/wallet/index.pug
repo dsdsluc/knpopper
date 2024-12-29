@@ -1,0 +1,15 @@
+extends ../../layouts/default.pug
+
+block main
+  //- Blog Title Section
+  section.blog.about-blog
+    .container
+      .blog-breadcrumb
+        span
+          a(href="index-2.html", aria-label="Navigate to Home") Home
+        span.divider /
+        span
+          a(href="#", aria-current="page") Contact
+      .blog-heading.about-heading
+        h1.heading Contact
+    include ./contact-section.pug

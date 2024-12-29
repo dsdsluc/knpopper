@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message, 5000)
+  +alert-error(message, 5000)
+
+  section.login.product.footer-padding
+    .container
+      .login-section
+        .row.align-items-center
+          .col-lg-6
+            .login-form
+              .review-form.box-shadows
+                .review-form-text
+                  h5.comment-title Log In
+                  img(src="/clients/images/homepage-one/vector-line.png" alt="img")
+                form.review-inner-form(action="/auth/login" method="POST")
+                  .review-form-name
+                    label.form-label(for="email") Email Address**
+                    input.form-control(type="email" id="email" placeholder="Email" name="email" required)
+                  .review-form-name
+                    label.form-label(for="password") Password*
+                    input.form-control(type="password" id="password" placeholder="Password" name="password" required)
+                  .review-form-name.checkbox
+                    .checkbox-item
+                      input(type="checkbox" name="remember" id="remember")
+                      span.address Remember Me
+                    .forget-pass
+                      a(href="/auth/forgot-password") Forgot password?
+                  .login-btn.text-center
+                    button.shop-btn(type="submit") Log In
+                    span.shop-account 
+                      | Don't have an account?
+                      a(href="/auth/register") Sign Up Free
+          .col-lg-6
+            .login-img
+              img(src="/clients/images/homepage-one/account-img.webp" alt="img")

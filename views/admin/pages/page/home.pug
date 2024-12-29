@@ -1,0 +1,28 @@
+extends ../../layouts/default.pug
+
+block main
+  .row
+    .col-xl-12
+      .card
+        .card-header
+          h4.card-title Manage Home Page
+        .card-body
+          form(
+            action="/admin/page/home-update",
+            method="POST",
+            enctype="multipart/form-data"
+          )
+            //- Banners Section
+            include ./banner-section.pug
+
+            //- Featured Categories Section
+            include ./category-section.pug
+
+            //- Advertisements Section
+            include ./adv-section.pug
+
+            
+            //- Submit Button
+            .row.justify-content-end.g-2.mt-3
+              .col-lg-3
+                button.btn.btn-primary.w-100(type="submit") Save Changes

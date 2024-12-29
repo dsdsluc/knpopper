@@ -1,0 +1,56 @@
+extends ../../layouts/default.pug
+
+block css
+  link(rel="stylesheet", href="/admin/css/new-user.css")
+
+block main
+  .container
+    h1 Create New User
+
+    // Form to add a new user
+    form(method="POST", action="/admin/users/new")
+      .form-group
+        label(for="fullName") Full Name
+        input#fullName.form-control(type="text", name="fullName", placeholder="Enter full name", required)
+
+      .form-group
+        label(for="email") Email
+        input#email.form-control(type="email", name="email", placeholder="Enter email address", required)
+
+      .form-group
+        label(for="address") Address
+        input#address.form-control(type="text", name="address", placeholder="Enter address", required)
+
+      .form-group
+        label(for="password") Password
+        input#password.form-control(type="password", name="password", placeholder="Enter password", required)
+
+      .form-group
+        label(for="phone") Phone
+        input#phone.form-control(type="tel", name="phone", placeholder="Enter phone number")
+
+      .form-group
+        label(for="avatar") Avatar
+        input(type="file" class="form-control-file" id="thumbnail" name="avatar" accept="image/*" upload-input)   
+        img.avatar-preview(src="", alt="Avatar Preview", style="display:#{user.avatar ? 'block' : 'none'}")
+
+      .form-group
+        label(for="statusOnline") Status Online
+        select#statusOnline.form-control(name="statusOnline")
+          option(value="online") Online
+          option(value="offline") Offline
+
+      .form-group
+        label(for="status") Status
+        select#status.form-control(name="status")
+          option(value="active") Active
+          option(value="inactive") Inactive
+
+      .form-group
+        button.btn.btn-primary(type="submit") Create User
+
+  .mt-3
+    a.btn.btn-secondary(href="/admin/users") Back to User Management
+
+
+    

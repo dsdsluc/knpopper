@@ -1,0 +1,81 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  h1.mb-4 Chỉnh Sửa Mã Giảm Giá
+  p.text-muted Cập nhật thông tin mã giảm giá bên dưới.
+
+  form(method="POST" action=`/${prefixAdmin}/coupon/edit/${coupon._id}?_method=PATCH`)
+    .card.shadow-lg.border-0
+      .card-body.p-4
+        .row.g-4
+
+          //- Mã giảm giá và Mô tả
+          .col-md-6
+            label.form-label(for="code") Mã giảm giá
+            input.form-control(type="text" name="code" id="code" value=coupon.code required)
+
+          .col-md-6
+            label.form-label(for="description") Mô tả
+            input.form-control(type="text" name="description" id="description" value=coupon.description)
+
+          //- Giá trị giảm giá và Loại giảm giá
+          .col-md-6
+            label.form-label(for="discount_value") Giá trị giảm
+            input.form-control(type="number" name="discount_value" id="discount_value" value=coupon.discount_value required)
+
+          .col-md-6
+            label.form-label(for="discount_type") Loại giảm giá
+            select.form-select(name="discount_type" id="discount_type" required)
+              option(value="percentage", selected=coupon.discount_type=='percentage') Giảm theo phần trăm (%)
+              option(value="fixed_amount", selected=coupon.discount_type=='fixed_amount') Giảm số tiền cố định (₫)
+
+          //- Ngày bắt đầu và Ngày hết hạn
+          .col-md-6
+            label.form-label(for="start_date") Ngày bắt đầu
+            input.form-control(type="date" name="start_date" id="start_date" value=coupon.start_date.toISOString().split('T')[0] required)
+
+          .col-md-6
+            label.form-label(for="end_date") Ngày hết hạn
+            input.form-control(type="date" name="end_date" id="end_date" value=coupon.end_date.toISOString().split('T')[0] required)
+
+          //- Tổng số lần sử dụng và Giới hạn sử dụng mỗi người dùng
+          .col-md-6
+            label.form-label(for="usage_limit") Tổng số lần sử dụng
+            input.form-control(type="number" name="usage_limit" id="usage_limit" value=coupon.usage_limit min="0")
+
+          .col-md-6
+            label.form-label(for="usage_per_user") Số lần sử dụng mỗi người dùng
+            input.form-control(type="number" name="usage_per_user" id="usage_per_user" value=coupon.usage_per_user min="1")
+
+          //- Số lượng và Giá trị đơn hàng tối thiểu
+          .col-md-6
+            label.form-label(for="quantity") Số lượng mã giảm giá
+            input.form-control(type="number" name="quantity" id="quantity" value=coupon.quantity min="1" required)
+
+          .col-md-6
+            label.form-label(for="min_order_value") Giá trị đơn hàng tối thiểu
+            input.form-control(type="number" name="min_order_value" id="min_order_value" value=coupon.min_order_value min="0")
+
+          //- Có thể kết hợp với mã giảm giá khác và Trạng thái hoạt động
+          .col-md-6
+            label.form-label(for="is_combinable") Cho phép kết hợp mã giảm giá?
+            select.form-select(name="is_combinable" id="is_combinable" required)
+              option(value="true", selected=coupon.is_combinable) Có
+              option(value="false", selected=!coupon.is_combinable) Không
+
+          .col-md-6
+            label.form-label(for="is_active") Trạng thái
+            select.form-select(name="is_active" id="is_active" required)
+              option(value="true", selected=coupon.is_active) Kích hoạt
+              option(value="false", selected=!coupon.is_active) Không kích hoạt
+
+        //- Nút Submit
+        .row.mt-4
+          .col-12.text-end
+            button.btn.btn-primary.btn-lg(type="submit")
+              i.bi.bi-check-circle.me-2
+              | Cập Nhật Mã Giảm Giá

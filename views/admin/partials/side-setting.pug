@@ -1,0 +1,78 @@
+div
+  // Off-canvas panel for Theme Settings
+  .offcanvas.offcanvas-end.border-0(tabindex="-1", id="theme-settings-offcanvas")
+    // Header with title and close button
+    .d-flex.align-items-center.bg-primary.p-3.offcanvas-header
+      h5.text-white.m-0 Theme Settings
+      button.btn-close.btn-close-white.ms-auto(type="button", data-bs-dismiss="offcanvas", aria-label="Close")
+
+    // Off-canvas body
+    .offcanvas-body.p-0
+      div(data-simplebar, class="h-100")
+        .p-3.settings-bar
+
+          // Color Scheme Section
+          div
+            h5.mb-3.font-16.fw-semibold Color Scheme
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-bs-theme", id="layout-color-light", value="light")
+              label.form-check-label(for="layout-color-light") Light
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-bs-theme", id="layout-color-dark", value="dark")
+              label.form-check-label(for="layout-color-dark") Dark
+
+          // Topbar Color Section
+          div
+            h5.my-3.font-16.fw-semibold Topbar Color
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-topbar-color", id="topbar-color-light", value="light")
+              label.form-check-label(for="topbar-color-light") Light
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-topbar-color", id="topbar-color-dark", value="dark")
+              label.form-check-label(for="topbar-color-dark") Dark
+
+          // Menu Color Section
+          div
+            h5.my-3.font-16.fw-semibold Menu Color
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-menu-color", id="leftbar-color-light", value="light")
+              label.form-check-label(for="leftbar-color-light") Light
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-menu-color", id="leftbar-color-dark", value="dark")
+              label.form-check-label(for="leftbar-color-dark") Dark
+
+          // Sidebar Size Section
+          div
+            h5.my-3.font-16.fw-semibold Sidebar Size
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-menu-size", id="leftbar-size-default", value="default")
+              label.form-check-label(for="leftbar-size-default") Default
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-menu-size", id="leftbar-size-small", value="condensed")
+              label.form-check-label(for="leftbar-size-small") Condensed
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-menu-size", id="leftbar-hidden", value="hidden")
+              label.form-check-label(for="leftbar-hidden") Hidden
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-menu-size", id="leftbar-size-small-hover-active", value="sm-hover-active")
+              label.form-check-label(for="leftbar-size-small-hover-active") Small Hover Active
+
+            .form-check.mb-2
+              input.form-check-input(type="radio", name="data-menu-size", id="leftbar-size-small-hover", value="sm-hover")
+              label.form-check-label(for="leftbar-size-small-hover") Small Hover
+
+    // Off-canvas footer with reset button
+    .offcanvas-footer.border-top.p-3.text-center
+      .row
+        .col
+          button.btn.btn-danger.w-100(type="button", id="reset-layout") Reset

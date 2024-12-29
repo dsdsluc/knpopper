@@ -1,0 +1,38 @@
+// 👉 Hiển Thị Danh Sách Bài Báo
+.col-lg-4.col-sm-6
+  each article in articles
+    .blogs-wrapper.product-wrapper(data-aos="fade-up" data-aos-duration="300")
+        .wrapper-img
+            if article.thumbnail
+              img(src=article.thumbnail, alt=article.title)
+            else
+              img(src="/clients/images/homepage-one/about/blog-img-1.webp" alt="Default Thumbnail")
+
+        .wrapper-info
+            .wrapper-data
+                .admin.wrapper-item
+                    span.icon
+                        svg(width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg")
+                            path(
+                                d="M1.761 14.9996C1.55973 14.9336 1.35152 14.8896 1.16065 14.7978C0.397206 14.4272 -0.02963 13.6273 0.00160193 12.743..."
+                            )
+                    span.text Bởi Admin
+
+                .comments.wrapper-item
+                    span.icon
+                        svg(width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg")
+                            path(d="M3.73587 12.2092C3.29657 12.1112 2.8914 11.9493 2.52887 11.698...")
+                    span.text #{article.views} Lượt Xem
+
+            a(href=`/blogs/detail/${article._id}` class="about-details wrapper-details")
+                | #{article.title}
+
+            .divider
+
+            a(href=`/blogs/detail/${article._id}` class="shop-btn")
+                | Xem Chi Tiết
+                span
+                    svg(width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg")
+                        path(
+                            d="M12.6227 4.38176C12.5587 4.38176 12.4989 4.38176 12.4349 4.38176..."
+                        )

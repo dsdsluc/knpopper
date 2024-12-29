@@ -1,0 +1,44 @@
+// 🛒 **Danh Sách Sản Phẩm Trong Đơn Hàng**
+.card.mt-4
+  .card-header.bg-success.text-white
+    h5 Sản Phẩm Trong Đơn Hàng
+
+  .card-body
+    table.table.table-bordered.table-hover
+      thead
+        tr.bg-light
+          th Tên Sản Phẩm
+          th.text-center Giá (VNĐ)
+          th.text-center Số Lượng
+          th.text-center Tổng (VNĐ)
+          th.text-center Tổng Sau Cùng (VNĐ)
+
+      tbody
+        if order.products && order.products.length > 0
+          each product in order.products
+            tr
+              // Tên Sản Phẩm
+              td #{product.name || 'Không có thông tin'}
+              
+              // Giá Sản Phẩm
+              td.text-center | #{product.price ? product.price.toLocaleString() : '0'} VNĐ
+              
+              // Số Lượng
+              td.text-center #{product.quantity || 0}
+              
+              // Tổng Giá (Giá * Số Lượng)
+              td.text-center | #{product.price ? (product.price * product.quantity).toLocaleString() : '0'} VNĐ
+              
+              // Tổng Sau Cùng (Giá Mới * Số Lượng hoặc Giá Gốc)
+              td.text-center
+                if product.priceNew
+                  | #{(product.priceNew * product.quantity).toLocaleString()} VNĐ
+                else
+                  | #{(product.price * product.quantity).toLocaleString()} VNĐ
+        else
+          tr
+            td.text-center(colspan="5") Không có sản phẩm nào trong đơn hàng.
+
+  .card-footer.text-end
+    strong Tổng Giá Trị Đơn Hàng: 
+    span.text-success.ms-2 | #{order.orderInfo.totalPrice ? order.orderInfo.totalPrice.toLocaleString() : '0'} VNĐ

@@ -1,0 +1,52 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  h1.mb-4 Cài Đặt Chung
+  form(method="POST" action="/admin/setting/general" enctype="multipart/form-data")
+    .card.shadow-lg.border-0
+      .card-body.p-4
+        .row.g-4
+
+          .col-md-6
+            label(for="site_name") Tên trang
+            input.form-control(type="text" name="site_name" value=settings.site_name required)
+
+          .col-md-6
+            label(for="site_logo") Logo
+            if settings.site_logo
+              img(src=settings.site_logo alt="Logo" class="img-thumbnail mb-2" )
+            input.form-control(type="file" name="site_logo")
+
+          .col-md-6
+            label(for="contact_email") Email liên hệ
+            input.form-control(type="email" name="contact_email" value=settings.contact_email required)
+
+          .col-md-6
+            label(for="contact_phone") Số điện thoại
+            input.form-control(type="text" name="contact_phone" value=settings.contact_phone)
+
+          .col-12
+            label(for="address") Địa chỉ liên hệ
+            textarea.form-control(name="address" rows="3")= settings.address
+
+          .col-md-6
+            label(for="facebook") Facebook
+            input.form-control(type="text" name="facebook" value=settings.social_links.facebook)
+
+          .col-md-6
+            label(for="twitter") Twitter
+            input.form-control(type="text" name="twitter" value=settings.social_links.twitter)
+
+          .col-md-6
+            label(for="instagram") Instagram
+            input.form-control(type="text" name="instagram" value=settings.social_links.instagram)
+          .col-md-6
+            label(for="zalo") Zalo
+            input.form-control(type="text" name="zalo" value=settings.social_links.zalo)
+
+      .card-footer.text-end
+        button.btn.btn-primary(type="submit") Cập Nhật

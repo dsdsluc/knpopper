@@ -1,0 +1,21 @@
+.card-footer.border-top
+  nav(aria-label="Page navigation example")
+    ul.pagination.justify-content-end.mb-0
+      if pagination.hasPrevPage
+        li.page-item
+          a.page-link(href=`?page=${pagination.currentPage - 1}`) Previous
+      else
+        li.page-item.disabled
+          a.page-link(href="javascript:void(0);") Previous
+      
+      // Loop through pagination pages
+      each page in Array.from({ length: pagination.totalPages }, (v, i) => i + 1)
+        li.page-item(class={ active: page === pagination.currentPage })
+          a.page-link(href=`?page=${page}`) #{page}
+
+      if pagination.hasNextPage
+        li.page-item
+          a.page-link(href=`?page=${pagination.currentPage + 1}`) Next
+      else
+        li.page-item.disabled
+          a.page-link(href="javascript:void(0);") Next

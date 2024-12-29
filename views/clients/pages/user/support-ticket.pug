@@ -1,0 +1,72 @@
+div.tab-pane.fade(id="v-pills-ticket" role="tabpanel" aria-labelledby="v-pills-ticket-tab" tabindex="0")
+    .support-ticket
+        btn.shop-btn(onclick="modalAction('.ticket')") Add New Support
+
+        // ticket-modal
+        .modal-wrapper.ticket
+            div.anywhere-away(onclick="modalAction('.ticket')")
+
+            // change this
+            .login-section.account-section.modal-main
+                .review-form
+                    .review-content
+                        h5.comment-title Add New Ticket
+                        .close-btn
+                            img(src="clients/images/homepage-one/close-btn.png" onclick="modalAction('.ticket')" alt="close-btn")
+                    form(action="/user/support-tickets" method="POST")
+                        .review-form-name.address-form
+                            label(for="ticket" class="form-label") First Name*
+                            input#ticket.form-control(type="text" placeholder="Name" value=user.fullName)
+                        .account-inner-form
+                            .review-form-name
+                                label(for="ticketaddress" class="form-label") Email Address*
+                                input#ticketaddress.form-control(type="email" placeholder="email@gmail.com" value=user.email)
+                            .review-form-name
+                                label(for="ticketphone" class="form-label") Phone Number*
+                                input#ticketphone.form-control(type="tel" placeholder="******" value=user.phone)
+                        .review-form-name.address-form
+                            label(for="ticketmassage" class="form-label") Description*
+                            textarea#ticketmassage.form-control(cols="10" rows="3" placeholder="Write Here your Description" name="description")
+                        .login-btn.text-center
+                            button.shop-btn(type="submit" onclick="modalAction('.ticket')") Add Ticket Now
+
+        .ticket-section
+            table
+                tbody
+                    tr.table-row.table-top-row
+                        td.table-wrapper
+                            h5.table-heading NO
+                        td.table-wrapper
+                            .table-wrapper-center
+                                h5.table-heading TIME
+                        td.table-wrapper
+                            .table-wrapper-center
+                                h5.table-heading REPORT
+                        td.table-wrapper
+                            .table-wrapper-center
+                                h5.table-heading ACTION
+                    each item in supportTickets
+                        tr.table-row.ticket-row
+                            td.table-wrapper
+                                p.ticker-number # #{item._id.toString().slice(-3)}
+                            td.table-wrapper
+                                .table-wrapper-center
+                                    p.ticket-date  #{new Date(item.time).toLocaleDateString()}
+                            td.table-wrapper
+                                .table-wrapper-center
+                                    p.ticket-info #{item.description}
+                                        
+                            td.table-wrapper
+                                .table-wrapper-center.table-wrapper-img
+                                    .comment-img
+                                        span
+                                            div.comment-img
+                                                svg(width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg")
+                                                    path(d="M9.34526 0.0234375C12.2264 0.133021 14.9269 1.30005 16.7549 4.04172C18.878 7.22662 18.2288 11.3601 15.1868 13.87C12.3535 16.2076 9.12958 16.6592 5.65976 15.5326C5.41809 15.4537 5.23754 15.4516 5.0071 15.5696C3.56972 16.3032 2.03046 16.7262 0.439223 16.9705C0.315577 16.9893 0.142753 16.923 0.0528284 16.8351C0.000840854 16.7841 0.0268346 16.5747 0.0914679 16.4986C0.912029 15.5403 1.12209 14.3635 1.33847 13.1811C1.42909 12.6855 1.33144 12.2891 1.06799 11.8466C-1.05226 8.27848 0.068284 3.93424 3.68564 1.57994C5.29725 0.530871 7.07607 0.043679 9.34526 0.0234375ZM7.79406 8.08444C7.80179 8.72589 8.33993 9.25705 8.98556 9.25845C9.64384 9.25984 10.189 8.71053 10.1813 8.05373C10.1735 7.40461 9.64665 6.88949 8.98978 6.8881C8.31886 6.8874 7.78633 7.42066 7.79406 8.08444ZM4.80618 6.8874C4.14018 6.87972 3.59009 7.41647 3.5915 8.07118C3.5929 8.70844 4.12894 9.24588 4.77457 9.25845C5.41809 9.27031 5.96326 8.74613 5.97731 8.10259C5.99206 7.42834 5.4778 6.89508 4.80618 6.8874ZM11.9966 8.08235C12.0022 8.72868 12.532 9.25635 13.1797 9.25984C13.8316 9.26333 14.3923 8.70355 14.3838 8.05722C14.3747 7.41298 13.8415 6.89089 13.1895 6.8888C12.5151 6.886 11.991 7.41089 11.9966 8.08235Z")
+
+                                    .delete-img
+                                        
+                                        span
+                                            svg(width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg")
+                                                path(d="M14.7879 5.95508C14.7102 6.91333 14.6353 7.84896 14.5582 8.7853C14.3801 10.9315 14.2028 13.0776 14.0219 15.2238C13.9604 15.9503 13.9208 16.6802 13.8176 17.4018C13.7074 18.1756 13.0827 18.719 12.3039 18.7225C9.39528 18.7352 6.48733 18.7367 3.57867 18.7218C2.71582 18.7176 2.09748 18.0823 2.01904 17.158C1.79291 14.4959 1.58161 11.8332 1.36254 9.17114C1.28269 8.19735 1.19859 7.22426 1.11733 6.25117C1.10955 6.15931 1.10673 6.06744 1.10107 5.95578C5.66688 5.95508 10.2171 5.95508 14.7879 5.95508ZM4.26485 8.06096C4.26343 8.06096 4.26272 8.06096 4.26131 8.06096C4.28675 8.46023 4.31219 8.8595 4.33692 9.25877C4.47826 11.5258 4.61818 13.7921 4.76234 16.0591C4.78354 16.3926 5.0019 16.6067 5.29305 16.6053C5.59834 16.6039 5.81175 16.3665 5.8167 16.0188C5.81811 15.9368 5.81246 15.8541 5.8068 15.7722C5.66476 13.4818 5.52413 11.1915 5.37997 8.90119C5.34959 8.41995 5.32273 7.938 5.27256 7.45817C5.24076 7.15783 5.04289 7.00025 4.74185 7.00095C4.45635 7.00166 4.25142 7.22143 4.24153 7.53166C4.23729 7.70833 4.25707 7.885 4.26485 8.06096ZM11.6213 8.05813C11.6199 8.05813 11.6185 8.05813 11.6171 8.05813C11.6262 7.89348 11.6432 7.72883 11.6418 7.56488C11.6397 7.24758 11.451 7.0271 11.1733 7.00166C10.8991 6.97622 10.6595 7.16561 10.6072 7.46736C10.5775 7.64049 10.5726 7.81787 10.5613 7.99383C10.4737 9.39092 10.386 10.788 10.2998 12.1851C10.2214 13.4529 10.1387 14.7213 10.0687 15.9898C10.049 16.346 10.2574 16.5848 10.5606 16.6032C10.8673 16.6223 11.0991 16.4046 11.121 16.0534C11.2899 13.3886 11.4552 10.7237 11.6213 8.05813ZM8.47025 11.8169C8.47025 10.4757 8.47096 9.1344 8.47025 7.79384C8.47025 7.25394 8.29712 6.99742 7.93954 6.99954C7.57914 7.00095 7.41307 7.25111 7.41307 7.79879C7.41236 10.4693 7.41236 13.1398 7.41378 15.8103C7.41378 15.951 7.38197 16.1319 7.45405 16.2223C7.58055 16.3792 7.77701 16.5778 7.94307 16.5771C8.10914 16.5764 8.30418 16.3757 8.42856 16.2181C8.50064 16.1269 8.46813 15.946 8.46813 15.8061C8.47166 14.4754 8.47025 13.1462 8.47025 11.8169Z")
+

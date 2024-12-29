@@ -1,0 +1,16 @@
+.logo
+  a(href="/")
+    if settings.site_logo 
+      img(src=settings.site_logo alt="Logo")
+    else 
+      img(src="/clients/images/logos/logo.webp" alt="Default Logo")
+
+
+.header-search-btn
+  form(action="/products", method="get" form-search) 
+    input(type="text" placeholder="Search Product....." name="query" value=valueSearch)
+
+  .divider
+  a.shop-btn( btn-search-header) Search 
+
+include ./header-cart-items

@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug
+
+
+block main
+  if( role.permissions.includes("products_category-create"))
+    .row
+      // Product Card 
+      .col-xl-3.col-lg-4
+        .card
+          .card-header.bg-secondary.text-white
+            h4.card-title Category Preview
+          .card-body
+            img.img-fluid.rounded.bg-light(upload-image)
+            .mt-3
+              h4#preview-title Untitled Category
+                span.fs-14.text-muted.ms-1 (#active)
+              .row
+                .col-lg-6.col-12
+                  p.mb-1.mt-2 Created By :
+                  h5.mb-0 #{user.fullName}
+                .col-lg-6.col-12
+                  p.mb-1.mt-2 Parent Category :
+                  h5.mb-0#preview-parent-category None
+                
+
+
+      // Add Product Photo Card
+      .col-xl-9.col-lg-8
+        include ./category-info.pug  

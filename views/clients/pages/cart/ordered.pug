@@ -1,0 +1,120 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message, 5000)
+  +alert-error(message, 5000)
+  
+  if orders && orders.length > 0
+
+    // Phần tiêu đề trang
+    section.blog.about-blog
+      .container
+        .blog-breadcrumb
+          span
+            a(href="/") Home
+          span.divider / 
+          span
+            a(href="/cart") Cart
+        .blog-heading.about-heading
+          h1.heading Thông tin đơn hàng
+
+    // Phần thông tin đơn hàng
+    section.product-cart.product.footer-padding
+      .container   
+        each order in orders
+          .card.mt-4.shadow-sm
+            .card-body
+              .order-section
+                p Đơn hàng ID: 
+                  span.badge.bg-info #{order._id}
+                p Địa chỉ giao hàng: 
+                  span #{order.address}
+                p Trạng thái: 
+                  if order.status === 'pending'
+                    span.badge.bg-warning Chờ xử lý
+                  else if order.status === 'completed'
+                    span.badge.bg-success Đã hoàn thành
+                  else if order.status === 'canceled'
+                    span.badge.bg-danger Đã hủy
+                  else if order.status === 'delivering'
+                    span.badge.bg-info Đang giao hàng
+                  else
+                    span.badge.bg-secondary Trạng thái khác
+
+                p Ngày đặt: 
+                  span #{new Date(order.createdAt).toLocaleDateString()} 
+                  small.text-muted Thời gian: #{new Date(order.createdAt).toLocaleTimeString()}
+                p Mã giảm giá áp dụng: 
+                  span #{order.coupon && order.coupon.coupon_id && order.coupon.coupon_id.code ? order.coupon.coupon_id.code : 'Không có'}
+                p 
+                  a.btn.btn-primary(href=`/order/detail/${order._id}` ) Xem chi tiết
+
+                // Bảng chi tiết đơn hàng
+                table.mt-3
+                  thead
+                    tr.table-row.table-top-row
+                      td.table-wrapper.wrapper-product
+                        h5.table-heading PRODUCT
+                      td.table-wrapper
+                        .table-wrapper-center
+                          h5.table-heading PRICE
+                      td.table-wrapper
+                        .table-wrapper-center
+                          h5.table-heading QUANTITY
+                      td.table-wrapper.wrapper-total
+                        .table-wrapper-center
+                          h5.table-heading TOTAL
+
+                  tbody
+                    each item in order.items
+                      tr.table-row.ticket-row
+                        td.table-wrapper.wrapper-product
+                          .wrapper
+                            .wrapper-img
+                              img(src=item.product_id.thumbnail[0] alt=item.product_id.title style="width: 50px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);")
+                            .wrapper-content
+                              h5.heading 
+                                a(href=`/products/detail/${item.product_id.slug}`) #{item.product_id.title}
+                        td.table-wrapper
+                          .table-wrapper-center
+                            h5.heading.main-price #{item.priceAtPurchase.toLocaleString('vi-VN')} VNĐ
+                        td.table-wrapper
+                          .table-wrapper-center
+                            h5.heading.quantity #{item.quantity}
+                        td.table-wrapper.wrapper-total
+                          .table-wrapper-center
+                            h5.heading.total-price #{(item.priceAtPurchase * item.quantity).toLocaleString('vi-VN')} VNĐ
+
+                // Hiển thị tổng giá trị đơn hàng
+                p Tổng giá trị đơn hàng: 
+                  strong #{order.totalPrice.toLocaleString('vi-VN')} VNĐ
+                hr
+                // Nút hủy đơn hàng kích hoạt modal
+                button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#cancelOrderModal-${order._id}`) Hủy đơn hàng
+
+
+                div.modal.fade(id=`cancelOrderModal-${order._id}` tabindex="-1" aria-labelledby="cancelOrderModalLabel-#{order._id}" aria-hidden="true")
+                  .modal-dialog.modal-dialog-centered.modal-lg 
+                    .modal-content
+                      .modal-header
+                        h5.modal-title(id="cancelOrderModalLabel-#{order._id}") Xác nhận hủy đơn hàng
+                        button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                      .modal-body
+                        p Bạn có chắc chắn muốn hủy đơn hàng này không?
+                      .modal-footer
+                        button(type="button" class="btn btn-secondary" data-bs-dismiss="modal") Đóng
+                        // Form gửi yêu cầu hủy đơn hàng lên server
+                        form(action=`/order/cancel/${order._id}?_method=DELETE`, method="POST")
+                          input(type="hidden" name="orderId" value=order._id) 
+                          button(type="submit" class="btn btn-danger") Xác nhận hủy đơn hàng
+
+        // Nút quay lại giỏ hàng
+        .wishlist-btn.cart-btn
+          a.shop-btn(href="/cart") Quay lại giỏ hàng
+  else
+    include ./empty-order.pug
+    p Không có đơn hàng nào.
+    p Vui lòng đến 
+      a(href="/products") cửa hàng 
+      | để thêm sản phẩm vào giỏ hàng.

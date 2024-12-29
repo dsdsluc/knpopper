@@ -1,0 +1,52 @@
+// 📦 Product Details Section
+.card
+  .card-body
+    // 🖼️ Product Image Carousel
+    #carouselExampleFade.carousel.slide.carousel-fade(data-bs-ride="carousel")
+      .carousel-inner(role="listbox")
+        each image, index in product.thumbnail
+          .carousel-item(class=(index === 0 ? "active" : ""))
+            img.img-fluid.bg-light.rounded(src=image, alt="" upload-image)
+
+      .carousel-indicators.m-0.mt-2.d-lg-flex.d-none.position-static.h-100
+        each image, index in product.thumbnail
+          button(
+            type="button", 
+            data-bs-target="#carouselExampleFade", 
+            data-bs-slide-to=index, 
+            aria-label=`Slide ${index + 1}`, 
+            class=`w-auto h-auto rounded bg-light ${index === 0 ? 'active' : ''}`
+          )
+            img.d-block.avatar-xl(src=image, alt="swiper-indicator-img")
+
+    .mt-3
+      h4 #{product.title}
+        span.fs-14.text-muted.ms-1 (#{product.product_category_id})
+      h5.text-dark.fw-medium.mt-3 Price :
+      h4.fw-semibold.text-dark.mt-2.d-flex.align-items-center.gap-2
+        span.text-muted.text-decoration-line-through $100
+        |  $#{product.priceNew}
+        small.text-muted (#{product.discountPercentage}% Off)
+
+    .mt-3
+      h5.text-dark.fw-medium Size :
+      .d-flex.flex-wrap.gap-2(role="group", aria-label="Basic checkbox toggle button group")
+        each size in ['S', 'M', 'L', 'XL', 'XXL']
+          input.btn-check(
+            type="checkbox", 
+            id=`size-${size}`, 
+            checked=(product.sizes && product.sizes.includes(size))
+          )
+          label.btn.btn-light.avatar-sm.rounded.d-flex.justify-content-center.align-items-center(for=`size-${size}`) #{size}
+
+    .mt-3
+      h5.text-dark.fw-medium Colors :
+      .d-flex.flex-wrap.gap-2(role="group", aria-label="Basic checkbox toggle button group")
+        each color in ['dark', 'yellow', 'white', 'red']
+          input.btn-check(
+            type="checkbox", 
+            id=`color-${color}`, 
+            checked=(product.colors && product.colors.includes(color))
+          )
+          label.btn.btn-light.avatar-sm.rounded.d-flex.justify-content-center.align-items-center(for=`color-${color}`)
+            i.bx.bxs-circle.fs-18(class=`text-${color}`)

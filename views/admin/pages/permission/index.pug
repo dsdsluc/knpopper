@@ -1,0 +1,48 @@
+extends ../../layouts/default.pug
+
+block main
+  .row
+    // Employees Card
+    .col-lg-3
+      .card
+        .card-body
+          .d-flex.align-items-center.justify-content-between
+            div
+              h4.card-title.mb-2.d-flex.align-items-center.gap-2 Employees
+              p.text-muted.fw-medium.fs-22.mb-0 54
+            .avatar-md.bg-primary.bg-opacity-10.rounded
+              iconify-icon.fs-32.text-primary.avatar-title(icon="solar:users-group-two-rounded-bold-duotone")
+              
+    // Assigned Manager Card
+    .col-lg-3
+      .card
+        .card-body
+          .d-flex.align-items-center.justify-content-between
+            div
+              h4.card-title.mb-2.d-flex.align-items-center.gap-2 Assigned Manager
+              p.text-muted.fw-medium.fs-22.mb-0 13
+            .avatar-md.bg-primary.bg-opacity-10.rounded
+              iconify-icon.fs-32.text-primary.avatar-title(icon="solar:backpack-bold-duotone")
+              
+    // Project Card
+    .col-lg-3
+      .card
+        .card-body
+          .d-flex.align-items-center.justify-content-between
+            div
+              h4.card-title.mb-2.d-flex.align-items-center.gap-2 Project
+              p.text-muted.fw-medium.fs-22.mb-0 19
+            .avatar-md.bg-primary.bg-opacity-10.rounded
+              iconify-icon.fs-32.text-primary.avatar-title(icon="solar:rocket-2-bold-duotone")
+              
+    // License Used Card
+    .col-lg-3
+      .card
+        .card-body
+          .d-flex.align-items-center.justify-content-between
+            div
+              h4.card-title.mb-2.d-flex.align-items-center.gap-2 License Used
+              p.text-muted.fw-medium.fs-22.mb-0 36/50
+            .avatar-md.bg-primary.bg-opacity-10.rounded
+              iconify-icon.fs-32.text-primary.avatar-title(icon="solar:notebook-bold-duotone")
+    include ./all-permission.pug

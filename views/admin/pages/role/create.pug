@@ -1,0 +1,97 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .row
+    .col-lg-12
+      .card
+        .card-header
+          h4.card-title Roles Information
+        
+        .card-body
+          form(
+            action=`/${prefixAdmin}/role/create`,
+            method="POST",
+            class="form-create-product",
+            enctype="multipart/form-data"
+          )
+            .row
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="roles-name" ) Roles Name
+                  input#roles-name.form-control(type="text" placeholder="Role name" name="title")
+              
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="workspace") Add Workspace
+                  select#workspace.form-control(data-choices data-choices-groups data-placeholder="Select Workspace" name="workspace")
+                    option(value="Select Workspace") Select Workspace
+                    option(value="Facebook") Facebook
+                    option(value="Slack") Slack
+                    option(value="Zoom") Zoom
+                    option(value="Analytics") Analytics
+                    option(value="Meet") Meet
+                    option(value="Mail") Mail
+                    option(value="Strip") Strip
+
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="role-tag") Tag
+                  select#choices-multiple-remove-button.form-control(
+                    data-choices 
+                    data-choices-removeItem 
+                    name="tag"
+                    multiple
+                  )
+                    option(value="Manager") Manager
+                    option(value="Product") Product
+                    option(value="Data") Data
+                    option(value="Designer") Designer
+                    option(value="Supporter") Supporter
+                    option(value="System Design") System Design
+                    option(value="QA") QA
+              
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="user-name") User Name
+                  input#user-name.form-control(type="text" placeholder="Enter name" name="userName")
+              
+              .col-lg-6
+                .mb-3
+                  p User Status
+                  .d-flex.gap-2.align-items-center
+                    .form-check
+                      input#flexRadioDefault1.form-check-input(type="radio" name="status" checked value="active")
+                      label.form-check-label(for="flexRadioDefault1") Active
+                    .form-check
+                      input#flexRadioDefault2.form-check-input(type="radio" name="status" value="inactive")
+                      label.form-check-label(for="flexRadioDefault2") Inactive
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="description") Description
+                  textarea#description.form-control.bg-light-subtle(
+                    name="description",
+                    rows="7",
+                    placeholder="Short description about the product"
+                  )
+              .col-lg-6
+                .mb-3
+                  label(for="thumbnail" class="form-label") 
+                    span.btn.btn-outline-secondary.w-100 Upload Avatar Worksapce            
+                  label.custom-file-upload     
+                    i.bx.bx-cloud-upload          
+                    input(type="file" class="form-control-file d-none" id="thumbnail" name="thumbnail" accept="image/*" multiple upload-input)
+              .col-lg-6
+                img.img-fluid.rounded.bg-light(upload-image style="width: 100px; height: 100px;")
+              .clo-log-12 
+                .mb-3
+                  button.btn.btn-primary(type="submit") Create Roles
+              
+        
+        .card-footer.border-top
+            p.text-center Create New Row
+
+          

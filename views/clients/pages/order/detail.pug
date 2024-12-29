@@ -1,0 +1,19 @@
+extends ../../layouts/order.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message, 5000)
+  +alert-error(message, 5000)
+  .block-title.mt-5
+    h2.text-center.text-uppercase.text-primary
+      span.border-bottom
+        | Chi tiết đơn hàng
+
+  section.product-cart.product.product-compair.footer-padding
+    .container
+      include ./orderInfor.pug
+      include ./timeLine.pug
+      include ./orderDeliveryStatus.pug
+      include ./orderProductList.pug
+        
+

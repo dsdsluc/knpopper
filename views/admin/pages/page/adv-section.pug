@@ -1,0 +1,49 @@
+h5.text-dark.fw-medium.mb-3 Advertisements
+script.
+  function previewAdvertisementImage(event, previewId) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById(previewId).src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+each adv, index in (advs && advs.length > 0 ? advs : [{ title: '', image: '', link: '' }])
+  .row.align-items-center.mb-3
+    .col-lg-12
+      h6.text-dark.fw-bold.mb-2 Advertisement #{index + 1} <!-- Differentiation added here -->
+    .col-lg-6
+      label.form-label(for=`advs[${index}][title]`) Advertisement Title
+      input.form-control(
+        type="text",
+        id=`advs[${index}][title]`,
+        name=`advs[${index}][title]`,
+        value=adv.title || '',
+        placeholder="Enter advertisement title"
+      )
+    .col-lg-6
+      label.form-label(for=`advs[${index}][image]`) Advertisement Image
+      input.form-control(
+        type="file",
+        id=`advs[${index}][image]`,
+        name=`advs[${index}][image]`,
+        accept="image/*",
+        onchange=`previewAdvertisementImage(event, 'preview-adv-${index}')`
+      )
+      img.img-fluid.mt-2(
+        id=`preview-adv-${index}`,
+        src=adv.image || '/images/default-adv.jpg',
+        alt=`Advertisement ${index + 1}`,
+        style="max-width: 150px; max-height: 100px; object-fit: cover;"
+      )
+    .col-lg-12
+      label.form-label(for=`advs[${index}][link]`) Advertisement Link
+      input.form-control(
+        type="text",
+        id=`advs[${index}][link]`,
+        name=`advs[${index}][link]`,
+        value=adv.link || '',
+        placeholder="Enter advertisement link"
+      )

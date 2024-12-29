@@ -1,0 +1,63 @@
+extends ../../layouts/default.pug
+
+block main
+  .row
+    .col-xxl-5
+      .row
+        // Alert Message
+        .col-12
+          .alert.alert-primary.text-truncate.mb-3(role="alert")
+            | We regret to inform you that our server is currently experiencing technical difficulties.
+
+        // Total Orders Card
+        .col-md-6
+          .card.overflow-hidden
+            .card-body
+              .row
+                .col-6
+                  .avatar-md.bg-soft-primary.rounded
+                    iconify-icon.avatar-title.fs-32.text-primary(icon="solar:cart-5-bold-duotone")
+                .col-6.text-end
+                  p.text-muted.mb-0.text-truncate Total Orders
+                  h3.text-dark.mt-1.mb-0 13, 647
+            .card-footer.py-2.bg-light.bg-opacity-50
+              .d-flex.align-items-center.justify-content-between
+                div
+                  span.text-success
+                    i.bx.bxs-up-arrow.fs-12
+                    |  2.3%
+                  span.text-muted.ms-1.fs-12 Last Week
+                a.text-reset.fw-semibold.fs-12(href="#!") View More
+
+        // New Leads Card
+        .col-md-6
+          .card.overflow-hidden
+            .card-body
+              .row
+                .col-6
+                  .avatar-md.bg-soft-primary.rounded
+                    i.bx.bx-award.avatar-title.fs-24.text-primary
+                .col-6.text-end
+                  p.text-muted.mb-0.text-truncate New Leads
+                  h3.text-dark.mt-1.mb-0 9, 526
+            .card-footer.py-2.bg-light.bg-opacity-50
+              .d-flex.align-items-center.justify-content-between
+                div
+                  span.text-success
+                    i.bx.bxs-up-arrow.fs-12
+                    |  8.1%
+                  span.text-muted.ms-1.fs-12 Last Month
+                a.text-reset.fw-semibold.fs-12(href="#!") View More
+    .col-xxl-7
+      .card
+        .card-body
+          .d-flex.justify-content-between.align-items-center
+            h4.card-title Performance
+            div
+              button.btn.btn-sm.btn-outline-light(type="button") ALL
+              button.btn.btn-sm.btn-outline-light(type="button") 1M
+              button.btn.btn-sm.btn-outline-light(type="button") 6M
+              button.btn.btn-sm.btn-outline-light.active(type="button") 1Y
+          // Performance Chart
+          div(dir="ltr")
+            #dash-performance-chart.apex-charts

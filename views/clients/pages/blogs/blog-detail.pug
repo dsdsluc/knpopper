@@ -1,0 +1,70 @@
+section.blog-details.product.footer-padding
+  .container
+    .blog-detail-section
+      .row.g-5
+        // 👉 Phần Nội Dung Chính
+        .col-lg-8
+          .blogs-wrapper
+            .wrapper-img
+              img(src=article.thumbnail || "/assets/images/homepage-one/about/blog-img-5.webp", alt="Thumbnail", class='img-fluid')
+            .wrapper-info
+              .wrapper-data
+                .admin.wrapper-item
+                  span.icon
+                    svg(width="12", height="15", viewBox="0 0 12 15", fill="none", xmlns="http://www.w3.org/2000/svg")
+                      path(d="...") // Thay bằng path SVG
+                  span.text By Admin
+                .comments.wrapper-item
+                  span.icon
+                    svg(width="16", height="15", viewBox="0 0 16 15", fill="none", xmlns="http://www.w3.org/2000/svg")
+                      path(d="...") // Thay bằng path SVG
+                  span.text Comments
+
+              h2.blog-details-heading= article.title
+              .blog-details
+                p!= article.content
+
+        // 👉 Sidebar
+        .col-lg-4
+          .blog-post-section
+            .row.g-5
+              // 🔹 Tìm Kiếm
+              .col-lg-12
+                .blog-post.search
+                  h5.post-details Search
+                  hr
+                  .search-btn
+                    input(type='text', placeholder='Search')
+                    span
+                      svg(width="25", height="25", viewBox="0 0 25 25", fill="#34a853", xmlns="http://www.w3.org/2000/svg")
+                        path(d="...") // SVG Search Icon
+
+              // 🔹 Bài Viết Mới Nhất
+              .col-lg-12
+                .blog-post.Latest-post
+                  h5.post-details Latest Post
+                  hr
+                  each post in relatedArticles
+                    .blogs-wrapper.product-wrapper
+                      .wrapper-img
+                        img(src=post.thumbnail || "assets/images/homepage-one/about/blog-img-1.webp", alt="Related Post Thumbnail", class='img-fluid')
+                      .wrapper-info
+                        h5.about-details.wrapper-details 
+                          a(href=`/blogs/${post._id}`)= post.title
+                        .wrapper-data
+                          .admin.wrapper-item
+                            span.icon
+                              svg(width="14", height="13", viewBox="0 0 14 13", fill="none", xmlns="http://www.w3.org/2000/svg")
+                                path(d="...") // SVG Icon
+                            span.text #{new Date(post.publishedAt).toLocaleDateString()}
+
+
+              // 🔹 Bản Tin
+              .col-lg-12
+                .blog-post.newsletter
+                  h5.post-details Our Newsletter
+                  hr
+                  p.blog-paragraph Follow our newsletter to stay updated about us.
+                  .form
+                    input(type='text', placeholder='Enter Your Email Address')
+                    button.shop-btn Subscribe

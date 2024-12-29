@@ -1,0 +1,65 @@
+li.menu-title.mt-2 Users
+if( role.permissions.includes("users-view"))
+  li.nav-item
+    a.nav-link(href=`/${prefixAdmin}/user/list`)
+      span.nav-icon
+        iconify-icon(icon="solar:chat-square-like-bold-duotone")
+      span.nav-text User
+if( role.permissions.includes("role-view"))
+  li.nav-item
+    a.nav-link.menu-arrow(href="#sidebarRoles" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles")
+      span.nav-icon
+        iconify-icon(icon="solar:user-speak-rounded-bold-duotone")
+      span.nav-text Roles
+    .collapse#sidebarRoles
+      ul.nav.sub-navbar-nav
+        ul.nav.sub-navbar-nav
+          if( role.permissions.includes("role-view"))
+            li.sub-nav-item
+              a.sub-nav-link(href=`/${prefixAdmin}/role/list`) List
+          if( role.permissions.includes("role-create"))
+            li.sub-nav-item
+              a.sub-nav-link(href=href=`/${prefixAdmin}/role/create`) Create
+
+if( role.permissions.includes("role-permission"))
+  li.nav-item
+    a.nav-link(href=`/${prefixAdmin}/permission/list`)
+      span.nav-icon
+        iconify-icon(icon="solar:checklist-minimalistic-bold-duotone")
+      span.nav-text Permissions
+
+if( role.permissions.includes("customers-view"))
+  li.nav-item
+    a.nav-link.menu-arrow(href="#sidebarCustomers" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCustomers")
+      span.nav-icon
+        iconify-icon(icon="solar:users-group-two-rounded-bold-duotone")
+      span.nav-text Customers
+    .collapse#sidebarCustomers
+      ul.nav.sub-navbar-nav
+        li.sub-nav-item
+          a.sub-nav-link(href=`/${prefixAdmin}/customer/review`) Review
+
+
+li.menu-title.mt-2 Other
+
+if( role.permissions.includes("accounts-view"))
+  li.nav-item
+    a.nav-link.menu-arrow(href="#sidebarCoupons" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCoupons")
+      span.nav-icon
+        iconify-icon(icon="solar:leaf-bold-duotone")
+      span.nav-text ADMIN
+    .collapse#sidebarCoupons
+      ul.nav.sub-navbar-nav
+        if( role.permissions.includes("accounts-view"))
+          li.sub-nav-item
+            a.sub-nav-link(href=`/${prefixAdmin}/account/list`) List
+        if( role.permissions.includes("accounts-create"))
+          li.sub-nav-item
+            a.sub-nav-link(href=`/${prefixAdmin}/account/create`) Create
+  if( role.permissions.includes("accounts-create"))
+    li.nav-item
+      a.nav-link(href=`/${prefixAdmin}/account/create`)
+        span.nav-icon
+          iconify-icon(icon="solar:chat-square-like-bold-duotone")
+        span.nav-text ADD ADMIN 
+

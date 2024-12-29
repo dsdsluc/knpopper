@@ -1,0 +1,110 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+  if( role.permissions.includes("products-create"))
+    .row
+      // 🖼️ **Cột Trái: Hình Ảnh Sản Phẩm**
+      .col-lg-4
+        .card
+          .card-body
+            #carouselExampleFade.carousel.slide.carousel-fade(data-bs-ride="carousel")
+              .carousel-inner(role="listbox")
+                each image, index in product.thumbnail
+                  .carousel-item(class=(index === 0 ? "active" : ""))
+                    img.img-fluid.bg-light.rounded(src=image, alt=product.title)
+
+              .carousel-indicators.m-0.mt-2.d-lg-flex.d-none.position-static.h-100
+                each image, index in product.thumbnail
+                  button(
+                    type="button", 
+                    data-bs-target="#carouselExampleFade", 
+                    data-bs-slide-to=index, 
+                    aria-label=`Slide ${index + 1}`, 
+                    class=`w-auto h-auto rounded bg-light ${index === 0 ? 'active' : ''}`
+                  )
+                    img.d-block.avatar-xl(src=image, alt="Product Indicator Image")
+
+          .card-footer.border-top
+            .row.g-2
+              .col-lg-6
+                a.btn.btn-primary.w-100(href=`/${prefixAdmin}/products/edit/${product._id}`)
+                  i.bx.bx-edit.fs-18
+                  | Edit Product
+              .col-lg-6
+                a.btn.btn-danger.w-100(href=`/${prefixAdmin}/products/delete/${product._id}`)
+                  i.bx.bx-trash.fs-18
+                  | Delete Product
+
+      // 📝 **Cột Phải: Chi Tiết Sản Phẩm**
+      .col-lg-8
+        .card
+          .card-body
+            h4.badge.bg-success.text-light.fs-14.py-1.px-2 New Arrival
+            h3.fw-medium.mb-2 #{product.title}
+            .d-flex.gap-2.align-items-center.mb-3
+              ul.d-flex.text-warning.m-0.fs-20.list-unstyled
+                - for (let i = 0; i < 5; i++)
+                  li
+                    i(class=i < Math.floor(product.rating || 0) ? "bx bxs-star" : "bx bx-star")
+              p.mb-0.fw-medium.fs-18.text-dark #{product.rating || 0} 
+                span.text-muted.fs-13 (#{product.reviews || 0} Reviews)
+
+            h2.fw-medium.my-3
+              | $#{product.finalPrice}
+              if product.discountPercentage > 0
+                span.fs-16.text-decoration-line-through.text-muted $#{(product.price).toFixed(2)}
+                small.text-danger.ms-2 (#{product.discountPercentage}% Off)
+
+            // 📊 **Thông Tin Sản Phẩm**
+            .row.align-items-center.g-2.mt-3
+              .col-lg-6
+                h5.text-dark.fw-medium Brand:
+                p.text-muted #{product.brand || 'N/A'}
+
+              .col-lg-6
+                h5.text-dark.fw-medium Weight:
+                p.text-muted #{product.weight || 'N/A'}
+
+              .col-lg-6
+                h5.text-dark.fw-medium Gender:
+                p.text-muted #{product.gender || 'Unisex'}
+
+              .col-lg-6
+                h5.text-dark.fw-medium Stock:
+                p.text-muted #{product.stock > 0 ? product.stock + ' Items' : 'Out of Stock'}
+
+            // 📏 **Kích Cỡ**
+            .mt-3
+              h5.text-dark.fw-medium Sizes:
+              .d-flex.flex-wrap.gap-2
+                each size in product.size
+                  span.badge.bg-light.text-dark.p-2 #{size}
+
+            // 📦 **Mô Tả**
+            h5.text-dark.fw-medium.mt-3 Description:
+            p.text-muted !{product.description || "No description available."}
+              a.link-primary(href="#!") Read more
+
+            // 🚚 **Thông Tin Khác**
+            ul.d-flex.flex-column.gap-2.list-unstyled.fs-15.my-3
+              li
+                i.bx.bx-check.text-success
+                span #{product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+              li
+                i.bx.bx-check.text-success
+                span Free delivery available
+              li
+                i.bx.bx-check.text-success
+                span Sales 10% Off Use Code: 
+                  span.text-dark.fw-medium CODE123
+
+            // 🎯 **Thao Tác**
+            .p-3.bg-light.mb-3.rounded
+              .row.justify-content-end.g-2
+                .col-lg-4
+                  a.btn.btn-outline-secondary.w-100(href=`/${prefixAdmin}/products/list`) Back to List
+                .col-lg-4
+                  a.btn.btn-primary.w-100(href=`/${prefixAdmin}/products/edit/${product._id}`) Edit Product

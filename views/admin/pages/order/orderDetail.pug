@@ -1,0 +1,65 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  // Hiển thị thông báo thành công hoặc lỗi
+  +alert-success(message)
+  +alert-error(message)
+
+  .container
+    h1 #{title} 
+    p #{message} 
+    include ./timeLine.pug
+    include ./orderDeliveryStatus.pug
+    include ./orderInfor.pug
+
+    include ./payment.pug
+
+    include ./userOrderInfor.pug
+
+    include ./orderProductList.pug
+
+
+    .card.mt-4
+      .card-header
+        h5 Update Delivery Status
+      .card-body 
+        .row.mb-3
+          .col-md-6
+            form(method="POST" action=`/${prefixAdmin}/order/update-status-order/${order.orderInfo.orderId}?_method=PATCH`)
+              label.form-label(for="status") Order Status
+              select.form-select(name="status" id="status" required)
+                option(value="pending", selected=order.orderInfo.status == 'pending') Chờ xử lý
+                option(value="completed", selected=order.orderInfo.status == 'completed') Đã hoàn thành
+                option(value="canceled", selected=order.orderInfo.status == 'canceled') Đã hủy
+                option(value="delivering", selected=order.orderInfo.status == 'delivering') Đang giao hàng
+              .form-group.mt-4
+                button.btn.btn-primary(type="submit") Update Status
+          .col-md-6
+            form(method="POST" action=`/${prefixAdmin}/order/update-payment-order/${order.orderInfo.orderId}?_method=PATCH`)
+              label.form-label(for="status") Payment
+              select.form-select(name="status" id="status" required)
+                option(value="unpaid", selected=(order.orderInfo.paymentStatus === 'unpaid')) Chưa Thanh Toán
+                option(value="paid", selected=(order.orderInfo.paymentStatus === 'paid')) Đã Thanh Toán
+                option(value="refunded", selected=(order.orderInfo.paymentStatus === 'refunded')) Đã Hoàn Tiền
+              .mb-3
+                label.form-label(for="note") Ghi Chú
+                input.form-control(
+                  type="text",
+                  name="note",
+                  id="note",
+                  placeholder="Thêm ghi chú cho trạng thái thanh toán",
+                  value=order.orderInfo.note || ''
+                )
+                
+              .form-group.mt-4
+                button.btn.btn-primary(type="submit") Update Payment
+                          
+          
+
+    include ./updateDeliveryStatus.pug
+
+
+    // Nút trở về danh sách đơn hàng
+    .mt-4
+      a.btn.btn-primary(href=`/${prefixAdmin}/order/list`) Trở Về Danh Sách Đơn Hàng

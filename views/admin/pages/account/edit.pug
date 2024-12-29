@@ -1,0 +1,148 @@
+extends ../../layouts/default.pug
+
+block main
+  .row
+    // Product Card
+    .col-xl-3.col-lg-4
+      .card
+        .card-body
+          img.img-fluid.rounded.bg-light(src=account.avatar, alt="Avatar" upload-image)
+          .mt-3
+            h4 #{account.fullName} 
+              p.fs-14.text-muted.ms-1.mt-2
+                - var roleTitle = 'Role not found';
+                each role in roles
+                    if role.id === account.role_id
+                    - roleTitle = role.title
+                | #{roleTitle}
+
+        .card-footer.bg-light-subtle
+          .row.g-2
+            .col-lg-12  
+              p General Views
+
+    // Add Admin Account Form Card
+    .col-xl-9.col-lg-8
+      .card
+        .card-header
+          h4.card-title General Information
+
+        .card-body
+          form(
+            action=`/${prefixAdmin}/account/edit/${account.id}?_method=PATCH`,
+            method="POST",
+            class="form-create-product",
+            enctype="multipart/form-data"
+          )
+            .row
+              // Thumbnail Upload Section
+              .col-lg-6  
+                label(for="avatar" class="form-label")
+                  span.btn.btn-outline-secondary.w-100 Avatar
+                label.custom-file-upload
+                  i.bx.bx-cloud-upload
+                  input(
+                    type="file",
+                    class="form-control-file d-none",
+                    id="avatar",
+                    name="avatar",
+                    accept="image/*",
+                    upload-input
+                  )
+
+              // Status Radio Buttons Section
+              .col-lg-6  
+                p Status
+                .d-flex.gap-2.align-items-center.mb-3
+                  .form-check
+                    input.form-check-input(
+                        type="radio",
+                        name="status",
+                        id="flexRadioDefault1",
+                        checked= account.status == "active",
+                        value="active"
+                    )
+                    label.form-check-label(for="flexRadioDefault1") Active
+                  .form-check
+                    input.form-check-input(
+                      type="radio",
+                      name="status",
+                      id="flexRadioDefault2",
+                      checked= account.status == "inactive",
+                      value="inactive"
+                    )
+                    label.form-check-label(for="flexRadioDefault2") Inactive
+
+              // Admin Name Input
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="admin-name") Account Name
+                  input.form-control(
+                    type="text",
+                    id="admin-name",
+                    name="fullName",
+                    placeholder="Enter Name"
+                    value=account.fullName
+                  )
+
+              // Admin Email Input
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="admin-email") Email
+                  input.form-control(
+                    type="email",
+                    id="admin-email",
+                    name="email",
+                    placeholder="Enter Admin Email"
+                    value=account.email
+                  )
+
+
+              // Admin Phone Input
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="admin-phone") Phone
+                  input.form-control(
+                    type="tel",
+                    id="admin-phone",
+                    name="phone",
+                    placeholder="Enter Phone Number"
+                    value=account.phone
+                  )
+
+              // Role Dropdown
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="role") Role
+                  select.form-control(
+                    id="role",
+                    name="role_id",
+                    data-choices,
+                    data-choices-groups,
+                    data-placeholder="Select Role"
+                    
+                  )
+                    option(value="") Choose a role
+                    each role in roles
+                      option(value=role.id selected=role.id ==account.role_id) #{role.title}
+
+
+            // Description Textarea
+            .row
+              .col-lg-12
+                .mb-3
+                  label.form-label(for="description") Description
+                  textarea.form-control.bg-light-subtle(
+                    id="description",
+                    name="description",
+                    rows="7",
+                    placeholder="Short description about the admin"
+                  ) #{account.description}
+
+            // Buttons for Submit and Reset
+            .p-3.bg-light.mb-3.rounded
+              .row.justify-content-end.g-2
+                .col-lg-2
+                  button.btn.btn-outline-secondary.w-100(type="submit") Edit Account
+                .col-lg-2
+                  button.btn.btn-primary.w-100(type="reset") Cancel

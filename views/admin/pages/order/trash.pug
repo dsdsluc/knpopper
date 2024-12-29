@@ -1,0 +1,43 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  // Hiển thị thông báo thành công hoặc lỗi
+  +alert-success(message)
+  +alert-error(message)
+
+  .row
+    .col-xl-12
+      .card.mt-4
+        .card-header.bg-danger.text-white
+          h5 🗑️ Thùng Rác - Đơn Hàng
+
+        .card-body
+          if orders.length > 0
+            table.table.table-bordered.table-hover
+              thead
+                tr
+                  th Mã Đơn Hàng
+                  th Người Mua
+                  th Tổng Tiền
+                  th Trạng Thái
+                  th Ngày Cập Nhật
+                  th Tùy Chọn
+              tbody
+                each order in orders
+                  tr
+                    td #{order._id}
+                    td #{order.user_id && order.user_id.fullName ? order.user_id.fullName : 'Không xác định'}
+                    td #{order.totalPrice.toLocaleString()} VNĐ
+                    td #{order.status}
+                    td #{new Date(order.updatedAt).toLocaleString()}
+                    td
+                      form(method="POST" action=`/${prefixAdmin}/order/restore/${order._id}?_method=PATCH`)
+                        button.btn.btn-sm.btn-success(type="submit") 🔄 Khôi Phục
+                      form(method="POST" action=`/${prefixAdmin}/order/delete/${order._id}?_method=DELETE`)
+                        button.btn.btn-sm.btn-danger(type="submit") ❌ Xóa Vĩnh Viễn
+          else
+            p.text-center Không có đơn hàng nào trong thùng rác.
+
+        .card-footer.text-end
+          a.btn.btn-secondary(href=`/${prefixAdmin}/order/list`) ⬅️ Quay Lại Danh Sách Đơn Hàng

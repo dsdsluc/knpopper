@@ -1,0 +1,18 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message, 5000)
+  +alert-error(message, 5000)
+  //- Blog Title Section
+  section.blog.about-blog
+    .container
+      .blog-breadcrumb
+        span
+          a(href="/", aria-label="Navigate to Home") Home
+        span.divider /
+        span
+          a(href="/contact", aria-current="page") Contact
+      .blog-heading.about-heading
+        h1.heading Contact
+    include ./contact-section.pug

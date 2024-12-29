@@ -1,0 +1,82 @@
+// 📦 **Thông tin đơn hàng**
+.card.mt-4
+  .card-header.bg-primary.text-white
+    h5 Thông Tin Đơn Hàng
+
+  .card-body
+    .row
+      .col-md-6.mb-3
+        strong Mã Đơn Hàng: 
+        span.text-muted #{order.orderInfo.orderId}
+
+      .col-md-6.mb-3
+        strong Ngày Tạo: 
+        span.text-muted #{order.orderInfo.createdAt}
+
+    .row
+      .col-md-6.mb-3
+        strong Địa Chỉ Giao Hàng: 
+        span.text-muted #{order.orderInfo.address || 'Không có địa chỉ'}
+
+      .col-md-6.mb-3
+        strong Tổng Giá Trị: 
+        span.text-success #{order.orderInfo.finalPrice} VNĐ
+
+    .row
+      .col-md-6.mb-3
+        strong Trạng Thái Đơn Hàng: 
+        - const orderStatusClass = order.orderInfo.status === 'completed' ? 'success' : order.orderInfo.status === 'pending' ? 'warning' : order.orderInfo.status === 'canceled' ? 'danger' : order.orderInfo.status === 'delivering' ? 'info' : 'secondary'
+        span.badge(class=`bg-${orderStatusClass}`) #{order.orderInfo.status.charAt(0).toUpperCase() + order.orderInfo.status.slice(1)}
+
+      .col-md-6.mb-3
+        strong Trạng Thái Thanh Toán: 
+        - const paymentStatusClass = order.orderInfo.paymentStatus === 'paid' ? 'success' : order.orderInfo.paymentStatus === 'refunded' ? 'warning' : 'danger'
+        span.badge(class=`bg-${paymentStatusClass}`) #{order.orderInfo.paymentStatus.charAt(0).toUpperCase() + order.orderInfo.paymentStatus.slice(1)}
+
+    .row
+      .col-md-6.mb-3
+        strong Phương Thức Thanh Toán: 
+        span.text-muted #{order.orderInfo.paymentMethod.charAt(0).toUpperCase() + order.orderInfo.paymentMethod.slice(1)}
+
+      .col-md-6.mb-3
+        strong Lần Cập Nhật Cuối: 
+        span.text-muted #{order.orderInfo.updatedAt}
+
+// 🎟️ **Thông tin mã giảm giá**
+.card.mt-4
+  .card-header.bg-info.text-white
+    h5 Thông Tin Mã Giảm Giá
+
+  .card-body
+    if order.coupon
+      .row
+        .col-md-6.mb-3
+          strong Mã Giảm Giá: 
+          span.text-muted #{order.coupon.code}
+
+        .col-md-6.mb-3
+          strong Mô Tả: 
+          span.text-muted #{order.coupon.description || 'Không có mô tả'}
+
+      .row
+        .col-md-6.mb-3
+          strong Loại Giảm Giá: 
+          span.text-muted #{order.coupon.discountType === 'percentage' ? 'Phần trăm' : 'Số tiền cố định'}
+
+        .col-md-6.mb-3
+          strong Giá Trị Giảm: 
+          span.text-success #{order.coupon.discountValue} VNĐ
+
+      .row
+        .col-md-6.mb-3
+          strong Ngày Bắt Đầu: 
+          span.text-muted #{order.coupon.startDate || 'Không xác định'}
+
+        .col-md-6.mb-3
+          strong Ngày Kết Thúc: 
+          span.text-muted #{order.coupon.endDate || 'Không xác định'}
+    else
+      p.text-muted Không có mã giảm giá nào được áp dụng.
+
+  .card-footer.text-end
+    a.btn.btn-primary(href=`/admin/order/list`) Trở Về Danh Sách Đơn Hàng

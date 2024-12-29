@@ -1,0 +1,42 @@
+div.tab-pane.fade(id="v-pills-wishlist" role="tabpanel" aria-labelledby="v-pills-wishlist-tab" tabindex="0")
+  if wishlist && wishlist.products && wishlist.products.length > 0
+    .wishlist
+      .cart-content
+        h5.cart-heading SpaceRace
+        p Order ID: 
+          span.inner-text #4345
+      .cart-section.wishlist-section
+        table
+          tbody
+            tr.table-row.table-top-row
+              td.table-wrapper.wrapper-product
+                h5.table-heading PRODUCT
+              td.table-wrapper
+                .table-wrapper-center
+                  h5.table-heading PRICE
+              td.table-wrapper
+                .table-wrapper-center
+                  h5.table-heading ACTION
+            each item in wishlist.products
+              tr.table-row.ticket-row
+                td.table-wrapper.wrapper-product
+                  .wrapper
+                    .wrapper-img
+                      img(src=item.product_id.thumbnail[0], alt="img")
+                    .wrapper-content
+                      a(href=`/products/detail/${item.product_id.slug}`) 
+                        h5.heading= item.product_id.title
+                td.table-wrapper
+                  .table-wrapper-center
+                    h5.heading $#{item.product_id.price}
+                td.table-wrapper
+                  .table-wrapper-center
+                    a(href=`/wishlist/remove/${item.product_id._id}`, class="remove-btn") Remove
+      .wishlist-btn
+        a(href="/wishlist/clean" class="clean-btn") Clean Wishlist
+        a(href="/products" class="shop-btn") View Cards
+  else
+    .wishlist-empty
+      h5.heading Your wishlist is empty.
+      p Add products to your wishlist to view them here.
+      a.btn.btn-primary.mt-3(href="/products") Browse Products

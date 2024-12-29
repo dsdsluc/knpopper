@@ -1,0 +1,24 @@
+.col-lg-12
+  .product-sorting-section.box-shadows
+    .result
+      p Showing 
+        span 1–16 of 66 results
+    .product-sorting
+      span.product-sort Sort by:
+      #allitem
+        .product-list(onclick="selectBoxHandler('allitem')")
+          span.default.item-text Default
+          span
+            svg(width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg")
+              path(d="M1 1L5 5L9 1" stroke="#9A9A9A")
+        .slectbox-body(style="display: none;")
+          .clickAway.position-fixed(onclick="selectBoxHandler('allitem')")
+          ul.country-options
+            li.all-option 
+              span.option-text.item-text Vegetable
+            li.all-option 
+              span.option-text.item-text Fruits
+            li.all-option 
+              span.option-text.item-text Juice
+            li.all-option 
+              span.option-text.item-text Meat

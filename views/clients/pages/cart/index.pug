@@ -1,0 +1,89 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message, 5000)
+  +alert-error(message, 5000)
+
+  section.blog.about-blog
+    .container
+      .blog-breadcrumb
+        span
+          a(href="/") Home
+        span.divider /
+        span
+          a(href="/cart") Cart
+      .blog-heading.about-heading
+        h1.heading Cart
+
+  section.product-cart.product.footer-padding
+    .container
+      if cart && cart.items.length > 0
+        .cart-section.mb-5
+          table.table-cart
+            thead
+              tr.table-row.table-top-row
+                td.table-wrapper.wrapper-product
+                  h5.table-heading PRODUCT
+                td.table-wrapper
+                  .table-wrapper-center
+                    h5.table-heading PRICE
+                td.table-wrapper
+                  .table-wrapper-center
+                    h5.table-heading SIZE
+                td.table-wrapper
+                  .table-wrapper-center
+                    h5.table-heading QUANTITY
+                td.table-wrapper.wrapper-total
+                  .table-wrapper-center
+                    h5.table-heading TOTAL
+                td.table-wrapper
+                  .table-wrapper-center
+                    h5.table-heading ACTION
+            tbody
+              each item in cart.items
+                tr.table-row.ticket-row
+                  td.table-wrapper.wrapper-product
+                    .wrapper
+                      .wrapper-img
+                         img(src=item.product.image ? item.product.image : 'default-avatar.png', 
+                              alt=item.product.name ? item.product.name : 'Unknown Product')
+                      .wrapper-content
+                        h5.heading 
+                          a(href=`/products/detail/${item.product.id}`) #{item.product.name}
+                  td.table-wrapper
+                    .table-wrapper-center
+                      h5.heading.main-price #{item.product.finalPrice}$
+                  td.table-wrapper
+                    .table-wrapper-center
+                      h5.heading #{item.size || "N/A"}
+                  td.table-wrapper
+                    .table-wrapper-center
+                      .quantity
+                        span.minus(data-product-id=item.product.id) -
+                        span.number #{item.quantity}
+                        span.plus(data-product-id=item.product.id) +
+                  td.table-wrapper.wrapper-total
+                    .table-wrapper-center
+                      h5.heading.total-price #{item.totalPrice}$
+                  td.table-wrapper
+                    .table-wrapper-center
+                      button.remove-item.btn.btn-danger(data-product-id=item.product.id remove-item) Remove
+
+          .total-for-cart
+            h5 Total: #{cart.totalPrice}$
+          .wishlist-btn.cart-btn
+            button.clean-btn.btn-clear-all-cart Clear Cart
+            button.clean-btn.d-none.btn-backup-cart Back up
+            button.shop-btn.update-btn Update Cart
+            a.shop-btn(href="/cart/checkout") Proceed to Checkout
+            form(action=`/cart/update?_method=PATCH`, method="post" form-update-cart) 
+              input(type="hidden" name="data-update-cart" data-update-cart)
+            form(action=`/cart/delete?_method=DELETE`, method="post" form-delete-cart) 
+              input(type="hidden" name="data-delete-item-cart" data-delete-item-cart)
+        
+      else
+        p No items in your cart.
+        p Please go to the 
+          a(href="/products") shop 
+          | to add items to your cart.

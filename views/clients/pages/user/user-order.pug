@@ -1,0 +1,56 @@
+.tab-pane.fade#v-pills-order(role="tabpanel" aria-labelledby="v-pills-order-tab" tabindex="0")
+    .cart-section.mt-3
+      table
+        tbody
+          tr.table-row.table-top-row
+            td.table-wrapper.wrapper-product
+              h5.table-heading CODE
+            td.table-wrapper
+              .table-wrapper-center
+                h5.table-heading PRICE
+            td.table-wrapper
+              .table-wrapper-center
+                h5.table-heading SHOPNAME
+            td.table-wrapper.wrapper-total
+              .table-wrapper-center
+                h5.table-heading COUPON
+            td.table-wrapper
+              .table-wrapper-center
+                h5.table-heading PAY METHOD
+            td.table-wrapper
+              .table-wrapper-center
+                h5.table-heading STATUS
+          each order in orders
+            tr.table-row.ticket-row
+              td.table-wrapper.wrapper-product
+                .wrapper-img(style="display: flex; gap: 10px;")
+                  each item in order.items
+                    img(src=item.product_id.thumbnail[0], alt="img")
+                .wrapper-content
+                  p.heading
+                    a.text-primary(href=`/order/detail/${order.id}`) #{order.id}
+
+              td.table-wrapper
+                .table-wrapper-center
+                  p.heading.main-price.text-success #{order.totalPrice}
+
+              td.table-wrapper
+                .table-wrapper-center
+                  p.heading.main-price.text-dark KNPORPER
+
+              td.table-wrapper.wrapper-total
+                .table-wrapper-center
+                  p.heading.total-price.text-muted
+                    | #{order.code_id && order.code_id.code ? order.code_id.code : 'No Coupon Applied'}
+
+              td.table-wrapper
+                .table-wrapper-center
+                  p.heading.total-price.text-info #{order.paymentMethod}
+
+              td.table-wrapper
+                .table-wrapper-center
+                  p.heading.total-price.text-warning #{order.status}
+
+
+
+        

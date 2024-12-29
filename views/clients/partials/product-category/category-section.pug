@@ -1,0 +1,9 @@
+.category-section
+  each category in categories
+    .product-wrapper(data-aos="fade-right" data-aos-duration="100")
+      .wrapper-img
+        img(src=category.thumbnail alt="img")
+      .wrapper-info
+        a.wrapper-details(href="product-sidebar.html") #{category.title}
+
+  

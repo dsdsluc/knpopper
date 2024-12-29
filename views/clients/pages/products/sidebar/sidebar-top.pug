@@ -1,0 +1,11 @@
+include ../../../mixins/category-dropdown.pug
+
+.sidebar-wrapper
+  h3.wrapper-heading Product Categories
+  .sidebar-item
+    if categories && categories.length
+      +category-dropdown(categories,categoriesChecked)
+    else
+      p No categories available.
+    
+  hr

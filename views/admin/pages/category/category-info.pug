@@ -1,0 +1,123 @@
+include ../../mixins/select-tree.pug
+
+.card
+  .card-header
+    h4.card-title General Information 
+
+  .card-body
+    form(
+      action=`/${prefixAdmin}/category/create`,
+      method="POST",
+      class="form-create-product",
+      enctype="multipart/form-data"
+    )
+      .row
+        // Thumbnail Upload Section
+        .col-lg-6  
+          label(for="thumbnail" class="form-label")
+            span.btn.btn-outline-secondary.w-100 Thumbnail
+          label.custom-file-upload
+            i.bx.bx-cloud-upload
+            input(
+              type="file",
+              class="form-control-file d-none",
+              id="thumbnail",
+              name="thumbnail",
+              accept="image/*",
+              multiple
+              upload-input
+            )
+
+        // Status Radio Buttons Section
+        .col-lg-6  
+          .card-body
+            p Status
+            .d-flex.gap-2.align-items-center.mb-3
+              .form-check
+                input.form-check-input(
+                  type="radio",
+                  name="status",
+                  id="flexRadioDefault1",
+                  checked,
+                  value="active"
+                )
+                label.form-check-label(for="flexRadioDefault1") Active
+              .form-check
+                input.form-check-input(
+                  type="radio",
+                  name="status",
+                  id="flexRadioDefault2",
+                  value="inactive"
+                )
+                label.form-check-label(for="flexRadioDefault2") Inactive
+
+        // Category Title Input
+        .col-lg-6
+          .mb-3
+            label.form-label(for="category-title") Category Title
+            input.form-control( 
+              type="text",
+              id="category-title",
+              name="title",
+              placeholder="Category Name"
+            )
+
+        // Created By Input
+        .col-lg-6
+          .mb-3
+            label.form-label(for="created-by") Created By
+            input.form-control(
+              type="text",
+              id="created-by",
+              name="createdBy",
+              placeholder="Enter Creator's Name"
+              value= user.fullName
+              readOnly= true
+            ) 
+
+        // Position Input
+        .col-lg-6
+          .mb-3
+            label.form-label(for="position") Position
+            input.form-control(
+              type="number",
+              id="position",
+              name="position",
+              placeholder="Position"
+            )
+
+        // Category Parents Dropdown
+        .col-lg-6
+          .mb-3
+            label.form-label(for="category-parents") Category Parents
+            select.form-control(
+              id="category-parents",
+              name="parent_id",
+              data-choices,
+              data-choices-groups,
+              data-placeholder="Select Parent Category"
+            )
+              
+              option(value="") Choose a parent category
+              +select-tree(productsCategory)
+
+
+      // Description Textarea
+      .row
+        .col-lg-12
+          .mb-3
+            label.form-label(for="description") Description
+            textarea.form-control.bg-light-subtle(
+              id="description",
+              name="description",
+              rows="7",
+              placeholder="Short description about the category"
+            )
+
+      // Buttons for Submit and Reset
+      .p-3.bg-light.mb-3.rounded
+        .row.justify-content-end.g-2
+          .col-lg-2
+            button.btn.btn-outline-secondary.w-100(type="submit") Create Category
+          .col-lg-2
+            button.btn.btn-primary.w-100(type="reset") Cancel

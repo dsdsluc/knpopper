@@ -1,0 +1,52 @@
+//- Featured Categories Section
+h5.text-dark.fw-medium.mb-3 Featured Categories
+script.
+  // Function to preview the selected image before uploading
+  function previewCategoryImage(event, previewId) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById(previewId).src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+each category, index in (featuredCategories && featuredCategories.length > 0 ? featuredCategories : [{ name: '', image: '', link: '' }])
+  .row.align-items-center.mb-3
+    .col-lg-12
+      h6.text-dark.fw-bold.mb-2 Featured Category #{index + 1} <!-- Differentiates each category -->
+    .col-lg-6
+      label.form-label(for=`featuredCategories[${index}][name]`) Category Name
+      input.form-control(
+        type="text",
+        id=`featuredCategories[${index}][name]`,
+        name=`featuredCategories[${index}][name]`,
+        value=category.name || '',
+        placeholder="Enter category name"
+      )
+    .col-lg-6
+      label.form-label(for=`featuredCategories[${index}][image]`) Category Image
+      input.form-control(
+        type="file",
+        id=`featuredCategories[${index}][image]`,
+        name=`featuredCategories[${index}][image]`,
+        accept="image/*",
+        onchange=`previewCategoryImage(event, 'preview-category-${index}')`
+      )
+      img.img-fluid.mt-2(
+        id=`preview-category-${index}`,
+        src=category.image || '/images/default-category.jpg',
+        alt=`Category ${index + 1}`,
+        style="max-width: 250px; max-height: 200px; object-fit: cover;"
+      )
+    .col-lg-12
+      label.form-label(for=`featuredCategories[${index}][link]`) Category Link
+      input.form-control(
+        type="text",
+        id=`featuredCategories[${index}][link]`,
+        name=`featuredCategories[${index}][link]`,
+        value=category.link || '',
+        placeholder="Enter category link"
+      )

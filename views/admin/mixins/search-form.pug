@@ -1,0 +1,15 @@
+mixin search-form(search, add, userName, searchProduct, path)
+  .row.my-4.search-box
+    .col-md-8.search-box__form
+      form.form-inline.search-box__form-inputs(method="GET", action=path)
+        input.form-control.mr-sm-2.search-box__input.mb-2(
+          type="search",
+          placeholder=userName ? userName : searchProduct,
+          name="nameUser"
+        )
+        button.btn.btn-outline-primary.search-box__button(type="submit")
+          | #{userName ? "Clear" : search}
+    .col-md-4.text-right.search-box__actions
+      a.btn.btn-success.search-box__add-user(href=`/admin/${path}/new`)
+        i.fas.fa-user-plus
+        |  #{add}

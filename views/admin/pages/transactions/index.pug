@@ -1,0 +1,87 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  // Hiển thị thông báo thành công hoặc lỗi
+  +alert-success(message)
+  +alert-error(message)
+
+  .row
+    .col-xl-12
+      .card
+        .card-header.d-flex.justify-content-between.align-items-center.gap-1
+          h4.card-title.flex-grow-1 Danh Sách Giao Dịch
+          
+          // Nút thêm giao dịch mới (nếu có)
+          a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/transactions/create`) Thêm Giao Dịch Mới
+
+        // Bảng hiển thị danh sách giao dịch
+        .table-responsive
+          table.table.align-middle.mb-0.table-hover.table-centered
+            thead.bg-light-subtle
+              tr
+                th Mã Giao Dịch
+                th Đơn Hàng
+                th Ví Gửi
+                th Ví Nhận
+                th Số Tiền
+                th Trạng Thái
+                th Ngày Tạo
+                th Hành Động
+
+            tbody
+              each transaction in transactions
+                tr
+                  // Mã giao dịch
+                  td #{transaction._id}
+
+                  // Thông tin đơn hàng liên quan
+                  td
+                    if transaction.order_id
+                      a(href=`/${prefixAdmin}/orders/detail/${transaction.order_id._id}` title="Xem chi tiết đơn hàng" data-bs-toggle="tooltip")
+                        | #{transaction.order_id._id}
+                    else
+                      | Không có
+
+                  // Thông tin ví gửi
+                  td
+                    if transaction.from_wallet_id
+                      | #{transaction.from_wallet_id.name}
+                    else
+                      | Không có
+
+                  // Thông tin ví nhận
+                  td
+                    if transaction.to_wallet_id
+                      | #{transaction.to_wallet_id.name}
+                    else
+                      | Không có
+
+                  // Số tiền giao dịch (định dạng VNĐ)
+                  td #{transaction.amount.toLocaleString()} VNĐ
+
+                  // Trạng thái giao dịch với badge màu sắc
+                  td
+                    - const statusClass = transaction.status === 'completed' ? 'success' : transaction.status === 'pending' ? 'warning' : 'danger';
+                    span.badge(class=`bg-${statusClass}`) #{transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
+
+                  // Ngày tạo giao dịch
+                  td #{new Date(transaction.createdAt).toLocaleString()}
+
+                  // Nút hành động để xóa giao dịch
+                  td
+                    .d-flex.gap-2
+                      button.btn.btn-danger.btn-sm(title="Xóa giao dịch" data-bs-toggle="tooltip" onclick=`deleteTransaction('${transaction._id}')`) Xóa
+
+  script.
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    function deleteTransaction(transactionId) {
+      if (confirm("Bạn có chắc chắn muốn xóa giao dịch này không?")) {
+        // Gửi yêu cầu xóa giao dịch (cần định nghĩa route API)
+        window.location.href = `/${prefixAdmin}/transactions/delete/${transactionId}`;
+      }
+    }

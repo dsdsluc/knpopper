@@ -1,0 +1,122 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  // Hiển thị thông báo thành công hoặc lỗi
+  +alert-success(message, 5000)
+  +alert-error(message, 5000)
+
+  // Form Checkout
+  form(action=`/cart/checkout`, method="post") 
+
+    // Phần tiêu đề của trang Checkout
+    section.blog.about-blog
+      .container
+        .blog-bradcrum
+          span
+            a(href="/") Home
+          span.devider /
+          span
+            a(href="/cart") Cart
+          span.devider /
+          span Checkout
+
+        .blog-heading.about-heading
+          h1.heading Checkout
+
+    // Phần thông tin Checkout
+    section.checkout.product.footer-padding
+      .container
+        .checkout-section
+          .row.gy-5.gy-lg-0
+            // Phần nhập thông tin người mua
+            .col-lg-6
+              .checkout-wrapper
+                .account-section.billing-section.box-shadows
+                  h5.wrapper-heading Billing Details
+                  .review-form
+                    .account-inner-form
+                      .review-form-name
+                        label.form-label(for="fullName") Fullname*
+                        input.form-control(type="text" id="fullName" name="recipientName" placeholder="Full Name" required value=(user ? user.fullName : ''))
+
+                    .account-inner-form
+                      .review-form-name
+                        label.form-label(for="email") Email*
+                        input.form-control(type="email" id="email" name="email" placeholder="user@gmail.com" required value=(user ? user.email : ''))
+                      .review-form-name
+                        label.form-label(for="phone") Phone*
+                        input.form-control(type="text" id="phone" name="phoneNumber" placeholder="0987654321" required value=(user ? user.phone : ''))
+
+                    // Nhập địa chỉ
+                    .review-form-name.address-form
+                      label.form-label(for="address") Address*
+                      input.form-control(type="text" id="address" name="address" placeholder="Enter your Address" required value=(user ? user.address : ''))
+
+                    // Nhập thông tin thành phố
+                    .account-inner-form.city-inner-form
+                      .review-form-name
+                        label.form-label(for="city") Town / City*
+                        select.form-select(id="city" name="city" required)
+                          option(value="", disabled, selected) Choose...
+                          each city in cities
+                            option(value=city selected=(user && user.city === city)) #{city}
+
+            // Phần tóm tắt đơn hàng
+            .col-lg-6
+              .checkout-wrapper
+                .account-section.billing-section.box-shadows
+                  h5.wrapper-heading Order Summary
+                  .order-summery
+                    .subtotal.product-total
+                      h5.wrapper-heading PRODUCT
+                      h5.wrapper-heading TOTAL
+                    hr
+                    .subtotal.product-total
+                      ul.product-list
+                        each item in cart.items
+                          li
+                            .product-info
+                              h5.wrapper-heading #{item.product.name} x #{item.quantity}
+                              img(src=item.product.image alt=item.product.name style="width: 50px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);")
+
+                            .price
+                              h5.wrapper-heading $#{item.totalPrice}
+
+                    hr
+                    .subtotal.product-total
+                      h5.wrapper-heading SUBTOTAL
+                      h5.wrapper-heading $#{cart.totalPrice}
+                    .subtotal.product-total
+                      ul.product-list
+                        li
+                          .product-info
+                            p.paragraph SHIPPING
+                            h5.wrapper-heading Flat Rate
+                          .price
+                            h5.wrapper-heading +$#{cart.shippingFee}
+                        
+                    hr
+                    .subtotal.total
+                      h5.wrapper-heading TOTAL
+                      h5.wrapper-heading.price $#{cart.grandTotal}
+
+                    hr
+                    .subtotal.total
+                      p.paragraph COUPONS
+                      .coupon-input-group
+                        input.form-control(type="text" coupon-input name='code' placeholder="Enter your coupon code"  value=couponCode)
+                        input.form-control(type="hidden" coupon-input name='coupon_id' placeholder="Enter your coupon code"  value=(coupon && coupon.id) ? coupon.id : '')
+                        button.btn.btn-primary(type="button" apply-coupons) Apply
+                    hr
+                    // Nút Đặt hàng
+                    button.shop-btn.btn.btn-primary(type="submit") Place Order Now
+
+      // Form ẩn để giữ thông tin giỏ hàng
+      input(type="hidden" name="user_id" value=(user ? user._id : ''))
+
+      each item, index in cart.items
+        input(type="hidden" name=`items[${index}][product_id]` value=item.product.id) 
+        input(type="hidden" name=`items[${index}][quantity]` value=item.quantity) 
+        input(type="hidden" name=`items[${index}][price]` value=item.product.finalPrice) 
+        input(type="hidden" name=`items[${index}][total_price]` value=item.totalPrice) 

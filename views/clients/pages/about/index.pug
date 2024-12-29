@@ -1,0 +1,20 @@
+extends ../../layouts/default.pug
+
+block main
+  section.blog.about-blog
+    .container
+      
+      .blog-bradcrum
+        span
+          a(href="index-2.html") Home
+        span.devider /
+        span
+          a(href="#") About Us
+      .blog-heading.about-heading
+        h1.heading About Us
+      include ./seller-infor.pug
+    include ./service-section.pug
+    include ./about-section.pug
+    include ./slider-section.pug
+    include ./about-promotion.pug
+  include ./lastest-new-section/lastest-new-section.pug

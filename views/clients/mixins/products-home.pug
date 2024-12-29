@@ -1,0 +1,14 @@
+mixin products-home(products)
+        
+    each item in products
+        .row.product-home
+                .col-12
+                    .product-item
+                        .inner-image
+                            img(src=item.thumbnail, alt=item.title)
+                            if item.feature && item.feature == 1
+                                .inner-feature Nổi bật
+
+                        .inner-content 
+                            a(href=`/products/detail/${item.slug}` class = "inner-title") #{item.title}
+                            .inner-description !{item.description}

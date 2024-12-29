@@ -1,0 +1,99 @@
+section.product.product-description
+  .container
+    .product-detail-section
+      nav
+        .nav.nav-tabs.nav-item#nav-tab(role="tablist")
+          button.nav-link.active#nav-home-tab(
+            data-bs-toggle="tab",
+            data-bs-target="#nav-home",
+            type="button",
+            role="tab",
+            aria-controls="nav-home",
+            aria-selected="true"
+          ) Description
+          button.nav-link#nav-review-tab(
+            data-bs-toggle="tab",
+            data-bs-target="#nav-review",
+            type="button",
+            role="tab",
+            aria-controls="nav-review",
+            aria-selected="false"
+          ) Reviews
+          
+
+      .tab-content.tab-item#nav-tabContent
+        .tab-pane.fade.show.active#nav-home(role="tabpanel", aria-labelledby="nav-home-tab", tabindex="0", data-aos="fade-up")
+          .product-intro-section
+            h5.intro-heading Introduction
+            p.product-details !{product.description} 
+
+        .tab-pane.fade#nav-review(role="tabpanel", aria-labelledby="nav-review-tab", tabindex="0")
+          .product-review-section(data-aos="fade-up")
+            h5.intro-heading Reviews
+            .review-wrapper
+              each comment in comments
+                .wrapper
+                  .wrapper-aurthor
+                    .wrapper-info
+                      .aurthor-img
+                        img(src="/clients/images/homepage-one/aurthor-img-1.webp", alt="aurthor-img")
+                      .author-details
+                        if user
+                          h5 #{comment.user_id.id == user.id ? 'You' : comment.user_id.fullName}
+                        else
+                          h5 #{comment.user_id.fullName} 
+                        p #{comment.user_id.address || 'Location not available'}
+                    .ratings
+                      span(class="star-rating")
+                        each num in [1, 2, 3, 4, 5]
+                          if num <= comment.rating
+                            i.fas.fa-star.star-icon(style="color: #FFA800") 
+                          else
+                            i.far.fa-star.star-icon 
+                      span= comment.rating.toFixed(1) 
+                  .wrapper-description
+                    p.wrapper-details #{comment.commentText}
+
+
+
+
+section.blog-details.product.footer-padding
+  .container
+    .blog-detail-section
+      .row.g-5
+        .col-lg-8
+          .blogs-form-section
+            .review-form
+              h5.comment-title Leave a comment
+              if user
+                .review-textarea
+                  label(for="commentText") Comment*
+                  textarea#commentText.form-control(name="commentText", placeholder="Write something...........", rows="8", required)
+
+                .review-rating
+                  label Rating*
+                  .ratings
+                    .star-rating
+                      each num in [5, 4, 3, 2, 1]
+                        label.star(for=`star${num}`)
+                          input.star-input(type="radio", id=`star${num}`, name="rating", value=num, required)
+                          i.fas.fa-star.star-icon(data-rating=num)
+
+                input(type="hidden" name="product_id" value=product.id)
+                input(type="hidden" name="user_id" value=user.id)
+                
+                .review-btn
+                  button.shop-btn(type="button" id="submitReview") Submit Review
+
+        .col-lg-4
+          .blog-post-section
+            .row.g-5
+              .col-lg-12
+                .blog-post.newsletter
+                  h5.post-details Our Newsletter
+                  hr
+                  p.blog-paragraph Follow our newsletter to stay updated about us.
+                  .form
+                    input(type="text", placeholder="Enter Your Email Address")
+                    button.shop-btn(type="button") Subscribe
+

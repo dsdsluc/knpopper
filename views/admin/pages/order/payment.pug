@@ -1,0 +1,23 @@
+.card.mt-4
+  .card-header.bg-warning.text-white
+    h5 Lịch Sử Cập Nhật Thanh Toán
+
+  .card-body
+    if order.orderInfo.paymentUpdates && order.orderInfo.paymentUpdates.length > 0
+      .payment-timeline
+        each update in order.orderInfo.paymentUpdates
+          .timeline-item.mb-3
+            .timeline-icon.rounded-circle.p-3.text-white.text-center.me-3(class=`bg-${update.status === 'paid' ? 'success' : update.status === 'refunded' ? 'warning' : 'danger'}`)
+              if update.status === 'paid'
+                i.fas.fa-credit-card
+              else if update.status === 'refunded'
+                i.fas.fa-undo-alt
+              else if update.status === 'unpaid'
+                i.fas.fa-exclamation-circle
+
+            .timeline-content
+              h6.mb-1 #{update.status.charAt(0).toUpperCase() + update.status.slice(1)}
+              p.text-muted.mb-1 #{update.note || 'Không có ghi chú'}
+              small.text-secondary #{new Date(update.updatedAt).toLocaleString()}
+    else
+      p.text-center.text-muted Không có lịch sử cập nhật thanh toán.

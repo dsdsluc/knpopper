@@ -1,0 +1,51 @@
+h5.text-dark.fw-medium.mb-3 Banners
+script.
+  // Function to preview the selected image before uploading
+  function previewBannerImage(event, previewId) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById(previewId).src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+each banner, index in (banners && banners.length > 0 ? banners : [{ title: '', image: '', link: '' }])
+  .row.align-items-center.mb-3
+    .col-lg-12
+      h6.text-dark.fw-bold.mb-2 Banner #{index + 1} <!-- Differentiates each banner -->
+    .col-lg-6
+      label.form-label(for=`banners[${index}][title]`) Banner Title
+      input.form-control(
+        type="text",
+        id=`banners[${index}][title]`,
+        name=`banners[${index}][title]`,
+        value=banner.title || '',
+        placeholder="Enter banner title"
+      )
+    .col-lg-6
+      label.form-label(for=`banners[${index}][image]`) Banner Image
+      input.form-control(
+        type="file",
+        id=`banners[${index}][image]`,
+        name=`banners[${index}][image]`,
+        accept="image/*",
+        onchange=`previewBannerImage(event, 'preview-banner-${index}')`
+      )
+      img.img-fluid.mt-2(
+        id=`preview-banner-${index}`,
+        src=banner.image || '/images/default-banner.jpg',
+        alt=`Banner ${index + 1}`,
+        style="max-width: 250px; max-height: 200px; object-fit: cover;"
+      )
+    .col-lg-12
+      label.form-label(for=`banners[${index}][link]`) Banner Link
+      input.form-control(
+        type="text",
+        id=`banners[${index}][link]`,
+        name=`banners[${index}][link]`,
+        value=banner.link || '',
+        placeholder="Enter banner link"
+      )

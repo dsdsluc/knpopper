@@ -1,0 +1,42 @@
+// 🚚 **Update Delivery Status**
+.card.mt-4
+  .card-header.bg-info.text-white
+    h5 Cập Nhật Trạng Thái Giao Hàng
+
+  .card-body
+    form(method="POST" action=`/admin/order/update-delivery-status/${order.orderInfo.orderId}?_method=PATCH`)
+      .row.mb-3
+        // 📊 **Trạng Thái Giao Hàng**
+        .col-md-6
+          label.form-label(for="status") Trạng Thái Giao Hàng
+          select.form-control(name="status" id="status" required)
+            each statusOption in ['in progress packaging', 'dispatched', 'in transit', 'out for delivery', 'delivered']
+              - let statusDescription = ''
+              if statusOption === 'in progress packaging'
+                - statusDescription = 'Đang đóng gói'
+              else if statusOption === 'dispatched'
+                - statusDescription = 'Đã xuất kho'
+              else if statusOption === 'in transit'
+                - statusDescription = 'Đang vận chuyển'
+              else if statusOption === 'out for delivery'
+                - statusDescription = 'Đang giao hàng'
+              else if statusOption === 'delivered'
+                - statusDescription = 'Đã giao hàng'
+
+              option(
+                value=statusOption,
+                selected=(order.orderInfo.deliveryUpdates && order.orderInfo.deliveryUpdates.length > 0 && order.orderInfo.deliveryUpdates[order.orderInfo.deliveryUpdates.length - 1].status == statusOption) ? true : false
+              ) #{statusDescription} --- #{statusOption}
+
+        // 📝 **Ghi Chú Cập Nhật**
+        .col-md-6
+          label.form-label(for="note") Ghi Chú
+          input.form-control(
+            type="text",
+            name="note",
+            id="note",
+            placeholder="Thêm ghi chú cho cập nhật này"
+          )
+
+      .form-group.mt-4.text-end
+        button.btn.btn-primary(type="submit") Cập Nhật Trạng Thái Giao Hàng

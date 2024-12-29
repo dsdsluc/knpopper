@@ -1,0 +1,100 @@
+div.tab-pane.fade(id="v-pills-payment", role="tabpanel", aria-labelledby="v-pills-order-tab", tabindex="0")
+  .payment-section
+    .wrapper
+      .wrapper-item
+        .wrapper-img
+          img(src="clients/images/homepage-one/payment-img-1.png", alt="payment")
+        .wrapper-content
+          h5.heading Dutch Bangl Bank Lmtd
+          p.paragraph Bank **********5535
+          p.verified Verified
+      a.shop-btn(href="#") Manage
+    hr
+    .wrapper
+      .wrapper-item
+        .wrapper-img
+          img(src="clients/images/homepage-one/payment-img-2.png", alt="payment")
+        .wrapper-content
+          h5.heading Master Card
+          p.paragraph Bank **********5535
+          p.verified Verified
+      a.shop-btn(href="#") Manage
+    hr
+    .wrapper
+      .wrapper-item
+        .wrapper-img
+          img(src="clients/images/homepage-one/payment-img-3.png", alt="payment")
+        .wrapper-content
+          h5.heading Paypal Account
+          p.paragraph Bank **********5535
+          p.verified Verified
+      a.shop-btn(href="#") Manage
+    hr
+    .wrapper
+      .wrapper-item
+        .wrapper-img
+          img(src="clients/images/homepage-one/payment-img-4.png", alt="payment")
+        .wrapper-content
+          h5.heading Visa Card
+          p.paragraph Bank **********5535
+          p.verified Verified
+      a.shop-btn(href="#") Manage
+    hr
+    .wrapper-btn
+      a.shop-btn(href="#", onclick="modalAction('.cart')") Add Cart
+
+      // cart-modal
+      .modal-wrapper.cart
+        div.anywhere-away(onclick="modalAction('.cart')")
+        // change this
+        .login-section.account-section.modal-main
+          .review-form
+            .review-content
+              h5.comment-title Add New Card
+              .close-btn
+                img(src="clients/images/homepage-one/close-btn.png", onclick="modalAction('.cart')", alt="close-btn")
+            .review-form-name.address-form
+              label.form-label(for="cnumber") Card Number*
+              input.form-control(type="number", id="cnumber", placeholder="*** *** ***")
+            .review-form-name.address-form
+              label.form-label(for="holdername") Card Holder Name*
+              input.form-control(type="text", id="holdername", placeholder="Demo Name")
+            .account-inner-form
+              .review-form-name
+                label.form-label(for="expirydate") Expiry Date*
+                input.form-control(type="date", id="expirydate")
+              .review-form-name
+                label.form-label(for="cvv") CVV*
+                input.form-control(type="number", id="cvv", placeholder="21232")
+            .login-btn.text-center
+              a.shop-btn(href="#", onclick="modalAction('.cart')") Add Card
+        // change this
+
+      a.shop-btn.bank-btn(href="#", onclick="modalAction('.bank')") Add Bank
+
+      // bank-modal
+      .modal-wrapper.bank
+        div.anywhere-away(onclick="modalAction('.bank')")
+        // change this
+        .login-section.account-section.modal-main
+          .review-form
+            .review-content
+              h5.comment-title Add Bank Account
+              .close-btn
+                img(src="clients/images/homepage-one/close-btn.png", onclick="modalAction('.bank')", alt="close-btn")
+            .review-form-name.address-form
+              label.form-label(for="accountnumber") Account Number*
+              input.form-control(type="number", id="accountnumber", placeholder="*** *** ***")
+            .review-form-name.address-form
+              label.form-label(for="accountholdername") Card Holder Name*
+              input.form-control(type="text", id="accountholdername", placeholder="Demo Name")
+            .account-inner-form
+              .review-form-name
+                label.form-label(for="branchname") Branch*
+                input.form-control(type="text", id="branchname", placeholder="Demo Branch")
+              .review-form-name
+                label.form-label(for="ipscode") IPSC Code
+                input.form-control(type="number", id="ipscode", placeholder="21232")
+            .login-btn.text-center
+              a.shop-btn(href="#", onclick="modalAction('.bank')") Add Bank Account
+        // change this

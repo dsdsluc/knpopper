@@ -1,0 +1,14 @@
+extends ../../layouts/default.pug
+
+block main
+    section.blog.about-blog
+        .container
+            .blog-bradcrum
+                span
+                    a(href="index-2.html") Home
+                span.devider /
+                span
+                    a(href="#") Blogs
+            .blog-heading.about-heading
+                h1.heading Our Blogs
+    include ./blog-section.pug

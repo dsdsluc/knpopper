@@ -1,0 +1,116 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .container-fluid
+    .row
+      form(method='POST', action='/admin/articles/create', enctype='multipart/form-data')
+        .col-md-8.offset-md-2
+          .card.shadow-sm
+            // 👉 Header của form
+            .card-header.bg-primary.text-white
+              h5.mb-0 Tạo Bài Báo Mới
+
+            
+            .card-body
+            
+              // 📌 Tiêu Đề
+              .mb-3
+                label.form-label(for='title') Tiêu Đề *
+                input.form-control(
+                  type='text', 
+                  name='title', 
+                  id='title'
+                  placeholder='Nhập tiêu đề bài báo'
+                )
+
+              // 📌 Mô Tả Ngắn
+              .mb-3
+                label.form-label(for='summary') Mô Tả Ngắn
+                textarea.form-control(
+                  name='summary', 
+                  id='summary', 
+                  rows='2', 
+                  placeholder='Nhập mô tả ngắn'
+                )
+
+              // 📌 Nội Dung
+              .mb-3
+                label.form-label(for='content') Nội Dung *
+                textarea.form-control.bg-light-subtle.tinymce-app(
+                  id="content",
+                  name="content",
+                  rows="7",
+                )
+
+              // 📌 Ảnh Thumbnail
+              .mb-3
+                label.form-label(for='thumbnail') Ảnh Thumbnail (Tải lên)
+                input.form-control(
+                  type='file', 
+                  name='thumbnail', 
+                  id='thumbnail', 
+                  accept='image/*'
+                )
+                small.form-text.text-muted Dung lượng tối đa: 5MB. Định dạng: jpg, png, jpeg.
+
+                // 👉 Vùng hiển thị ảnh Preview
+                .mt-3
+                  label.form-label Preview Ảnh
+                  img#thumbnail-preview(
+                    src='', 
+                    alt='Preview Thumbnail', 
+                    class='img-thumbnail d-none', 
+                    style='max-width: 200px; height: auto;'
+                  )
+
+              // 📌 Trạng Thái
+              .mb-3
+                label.form-label(for='status') Trạng Thái
+                select.form-select(name='status', id='status')
+                  option(value='active') Hoạt Động
+                  option(value='inactive') Không Hoạt Động
+
+              // 📌 Nút Hành Động
+              .text-end
+                button.btn.btn-success.btn-lg(type='submit') Tạo Bài Báo
+                a.btn.btn-secondary.btn-lg.ms-2(href='/admin/articles/list') Hủy
+
+
+  // 👉 Script Preview Ảnh Thumbnail
+  script.
+    document.getElementById('thumbnail').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById('thumbnail-preview');
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.classList.remove('d-none');
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = '';
+        preview.classList.add('d-none');
+      }
+    });
+
+  script.
+    document.querySelector('form').addEventListener('submit', function(event) {
+      if (tinymce) {
+        tinymce.triggerSave(); // Đồng bộ dữ liệu từ TinyMCE về textarea gốc
+      }
+
+      const content = document.getElementById('content').value.trim();
+      if (!content) {
+        alert('Nội dung là bắt buộc!');
+        document.getElementById('content').focus();
+        event.preventDefault();
+      }
+    });

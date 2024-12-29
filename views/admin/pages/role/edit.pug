@@ -1,0 +1,123 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .row
+    // Product Card
+    .col-xl-3.col-lg-4
+      .card
+        .card-body
+          img.img-fluid.rounded.bg-light(upload-image)
+          .mt-3
+            h4 #{role.userName}
+              span.fs-14.text-muted.ms-1 (#{role.workspace})
+            h5.text-dark.fw-medium.mt-3 Role :
+            h4.fw-semibold.text-dark.mt-2.d-flex.align-items-center.gap-2
+              span.text-muted #{role.title}
+            .mt-3
+              h5.text-dark.fw-medium Tag :
+              .d-flex.flex-wrap.gap-2(role="group", aria-label="Basic checkbox toggle button group")
+                each item in role.tag
+                  span.badge.bg-light-subtle.text-muted.border.py-1.px-2 #{item}
+            
+
+        .card-footer.bg-light-subtle
+          .row.g-2
+            .col-lg-12 General Information Role
+              
+            
+
+    .col-lg-9
+      .card
+        .card-header
+          h4.card-title Edit #{role.title} Information
+        
+        .card-body
+          form(
+            action=`/${prefixAdmin}/role/edit/${role.id}?_method=PATCH`,
+            method="POST",
+            class="form-create-product",
+            enctype="multipart/form-data"
+          )
+            .row
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="roles-name") Roles Name
+                  input#roles-name.form-control(type="text" placeholder="Role name" name="title" value=role.title)
+              
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="workspace") Add Workspace
+                  select#workspace.form-control(data-choices data-choices-groups data-placeholder="Select Workspace" name="workspace")
+                    option(value="Select Workspace") Select Workspace
+                    option(value="Facebook" selected=role.workspace =="Facebook") Facebook
+                    option(value="Slack" selected=role.workspace =="Slack") Slack
+                    option(value="Zoom" selected=role.workspace =="Zoom") Zoom
+                    option(value="Analytics" selected=role.workspace =="Analytics") Analytics
+                    option(value="Meet" selected=role.workspace =="Meet") Meet
+                    option(value="Mail" selected=role.workspace =="Mail") Mail
+                    option(value="Strip" selected=role.workspace =="Strip") Strip
+
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="role-tag") Tag
+                  select#choices-multiple-remove-button.form-control(
+                    data-choices 
+                    data-choices-removeItem 
+                    name="tag"
+                    multiple
+                    )
+                    option(value="Manager" selected=role.tag.includes('Manager')) Manager
+                    option(value="Product" selected=role.tag.includes('Product')) Product
+                    option(value="Data" selected=role.tag.includes('Data')) Data
+                    option(value="Designer" selected=role.tag.includes('Designer')) Designer
+                    option(value="Supporter" selected=role.tag.includes('Supporter')) Supporter
+                    option(value="System Design" selected=role.tag.includes('System Design')) System Design
+                    option(value="QA" selected=role.tag.includes('QA')) QA
+
+              
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="user-name") User Name
+                  input#user-name.form-control(type="text" placeholder="Enter name" name="userName" value=role.userName)
+              
+              .col-lg-6
+                .mb-3
+                  p User Status
+                  .d-flex.gap-2.align-items-center
+                    .form-check
+                      input#flexRadioDefault1.form-check-input(type="radio" name="status" checked=role.status=="active" value="active")
+                      label.form-check-label(for="flexRadioDefault1") Active
+                    .form-check
+                      input#flexRadioDefault2.form-check-input(type="radio" name="status" value="inactive" checked=role.status=="inactive")
+                      label.form-check-label(for="flexRadioDefault2") Inactive
+
+              .col-lg-6
+                .mb-3
+                  label.form-label(for="description") Description
+                  textarea#description.form-control.bg-light-subtle(
+                    name="description",
+                    rows="7",
+                    placeholder="Short description about the product"
+                  ) #{role.description}
+              
+              .col-lg-6
+                .mb-3
+                  label(for="thumbnail" class="form-label") 
+                    span.btn.btn-outline-secondary.w-100 Upload Avatar Workspace            
+                  label.custom-file-upload     
+                    i.bx.bx-cloud-upload          
+                    input#thumbnail(type="file" class="form-control-file d-none" name="thumbnail" accept="image/*" multiple upload-input)
+              
+              .col-lg-6
+                img.img-fluid.rounded.bg-light(upload-image style="width: 100px; height: 100px;" src=role.thumbnail)
+              
+              .col-lg-12
+                .mb-3
+                  button.btn.btn-primary(type="submit") Edit Roles
+
+        .card-footer.border-top
+          p.text-center Setting up Role

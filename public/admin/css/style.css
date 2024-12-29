@@ -1,0 +1,170 @@
+
+
+/* Base styling for alerts */
+.message {
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.25rem;
+  position: fixed; /* Fixed positioning to stay in the viewport */
+  top: 1rem; /* Distance from the top of the viewport */
+  right: 1rem; /* Distance from the right side of the viewport */
+  width: auto; /* Width adjusts based on content */
+  max-width: 300px; /* Optional: to prevent alerts from becoming too wide */
+  z-index: 1050; /* Ensure alerts appear above other content */
+  display: flex; /* Use flexbox to align content */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space between text and close button */
+}
+
+/* Info Alert */
+.message.info {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+
+.block-title {
+  margin-top: 40px !important;
+}
+
+
+.order-status-timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.timeline {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #e0e0e0;
+  z-index: 1;
+}
+
+.step {
+  text-align: center;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.step i {
+  font-size: 24px;
+  background: #e0e0e0;
+  border-radius: 50%;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.step p {
+  margin: 5px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.step.active i {
+  background: #28a745; /* Màu xanh lá cho trạng thái active */
+  color: white;
+}
+
+.step.active p {
+  color: #28a745;
+}
+
+.step.active.canceled i {
+  background: #dc3545; /* Màu đỏ cho trạng thái canceled */
+  color: white;
+}
+
+.step.active.canceled p {
+  color: #dc3545;
+}
+
+
+.payment-timeline {
+  position: relative;
+  padding-left: 30px;
+  border-left: 3px solid #e0e0e0;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  z-index: 1;
+}
+
+.timeline-icon {
+  position: absolute;
+  left: -35px;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: white;
+  z-index: 2;
+}
+
+.timeline-icon.status-paid {
+  background: #28a745; /* Màu xanh lá cho trạng thái paid */
+}
+
+.timeline-icon.status-refunded {
+  background: #ffc107; /* Màu vàng cho trạng thái refunded */
+}
+
+.timeline-icon.status-unpaid {
+  background: #dc3545; /* Màu đỏ cho trạng thái unpaid */
+}
+
+.timeline-content {
+  margin-left: 10px;
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-content h6 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.timeline-content p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.timeline-content small {
+  font-size: 11px;
+  color: #6c757d;
+}

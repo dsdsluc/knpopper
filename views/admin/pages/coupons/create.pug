@@ -1,0 +1,95 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .container.mt-4
+    .card.shadow-lg.border-0
+      .card-header.bg-primary.text-white
+        h4.mb-0 Tạo mã giảm giá mới
+
+      .card-body.p-4
+        form(method="POST" action=`/${prefixAdmin}/coupon/create`)
+          .row.g-4
+
+            //- Mã giảm giá và Mô tả
+            .col-md-6
+              .form-group
+                label.form-label(for="code") Mã giảm giá
+                input.form-control(type="text" name="code" id="code" required placeholder="Nhập mã giảm giá")
+            
+            .col-md-6
+              .form-group
+                label.form-label(for="description") Mô tả
+                input.form-control(type="text" name="description" id="description" required placeholder="Nhập mô tả mã giảm giá")
+
+            //- Giá trị giảm và Loại giảm giá
+            .col-md-6
+              .form-group
+                label.form-label(for="discount_value") Giá trị giảm
+                input.form-control(type="number" name="discount_value" id="discount_value" required placeholder="Nhập giá trị giảm")
+
+            .col-md-6
+              .form-group
+                label.form-label(for="discount_type") Loại giảm giá
+                select.form-select(name="discount_type" id="discount_type" required)
+                  option(value="percentage") Giảm theo phần trăm (%)
+                  option(value="fixed_amount") Giảm số tiền cố định (₫)
+
+            //- Ngày bắt đầu và Ngày hết hạn
+            .col-md-6
+              .form-group
+                label.form-label(for="start_date") Ngày bắt đầu
+                input.form-control(type="date" name="start_date" id="start_date" required)
+
+            .col-md-6
+              .form-group
+                label.form-label(for="end_date") Ngày hết hạn
+                input.form-control(type="date" name="end_date" id="end_date" required)
+
+            //- Giá trị đơn hàng tối thiểu và Số lần sử dụng mỗi người dùng
+            .col-md-6
+              .form-group
+                label.form-label(for="min_order_value") Giá trị đơn hàng tối thiểu
+                input.form-control(type="number" name="min_order_value" id="min_order_value" value="0" placeholder="Nhập giá trị tối thiểu" min="0")
+
+            .col-md-6
+              .form-group
+                label.form-label(for="usage_per_user") Số lần sử dụng mỗi người dùng
+                input.form-control(type="number" name="usage_per_user" id="usage_per_user" value="1" placeholder="Số lần mỗi người sử dụng" min="1")
+
+            //- Số lần sử dụng tối đa và Số lượng
+            .col-md-6
+              .form-group
+                label.form-label(for="usage_limit") Số lần sử dụng tối đa
+                input.form-control(type="number" name="usage_limit" id="usage_limit" value="1" placeholder="Số lần sử dụng tối đa" min="1")
+
+            .col-md-6
+              .form-group
+                label.form-label(for="quantity") Số lượng
+                input.form-control(type="number" name="quantity" id="quantity" required placeholder="Số lượng mã giảm giá" min="1" value="1")
+
+            //- Cho phép kết hợp mã giảm giá và Trạng thái
+            .col-md-6
+              .form-group
+                label.form-label(for="is_combinable") Cho phép kết hợp mã giảm giá?
+                select.form-select(name="is_combinable" id="is_combinable" required)
+                  option(value="false") Không
+                  option(value="true") Có
+                  
+
+            .col-md-6
+              .form-group
+                label.form-label(for="is_active") Trạng thái
+                select.form-select(name="is_active" id="is_active" required)
+                  option(value="true") Kích hoạt
+                  option(value="false") Không kích hoạt
+
+          //- Nút Submit
+          .row.mt-4
+            .col-12.text-end
+              button.btn.btn-primary.btn-lg(type="submit")
+                i.bi.bi-check-circle.me-2
+                | Tạo mã giảm giá

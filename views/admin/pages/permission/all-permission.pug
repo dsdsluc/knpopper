@@ -1,0 +1,344 @@
+.main
+  div(data-role=roles) 
+  h1.mb-4 Phân quyền
+
+  div(class="text-end")
+    button(
+      type="submit"
+      class="btn btn-primary mb-3"
+      id="button-submit"
+    ) Cập nhật
+
+  table.table.table-hover.align-middle(table-permission)
+    thead
+      tr
+        th Tính năng
+        each item in roles
+          th #{item.title}
+
+    tbody
+      //- Danh mục sản phẩm
+      tr
+        th(colspan=roles.length + 1) Danh mục sản phẩm
+
+      tr(data-name="id" class="d-none")
+        td(class="text-center") ID
+        each item in roles
+          td
+            input(type="text", value=item.id, class="form-control")
+
+      tr(data-name="products_category-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      tr(data-name="products_category-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      tr(data-name="products_category-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      tr(data-name="products_category-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Sản phẩm
+      tr
+        th(colspan=roles.length + 1) Sản phẩm
+
+      //- Xem
+      tr(data-name="products-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="products-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="products-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="products-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+      tr
+        th(colspan=roles.length + 1) Orders
+
+      //- Xem
+      tr(data-name="orders-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="orders-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="orders-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="orders-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+      tr
+        th(colspan=roles.length + 1) Coupons
+
+      //- Xem
+      tr(data-name="coupons-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="coupons-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="coupons-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="coupons-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+      tr
+        th(colspan=roles.length + 1) Settings General
+
+      //- Xem
+      tr(data-name="settings-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="settings-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="settings-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="settings-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+      tr
+        th(colspan=roles.length + 1) Pages
+
+      //- Xem
+      tr(data-name="pages-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="pages-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="pages-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="pages-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+      tr
+        th(colspan=roles.length + 1) User
+
+      //- Xem
+      tr(data-name="users-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="users-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="users-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="users-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Nhóm quyền
+      tr
+        th(colspan=roles.length + 1) Nhóm quyền
+
+      //- Xem
+      tr(data-name="role-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="role-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="role-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="role-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Phân quyền
+      tr(data-name="role-permissions")
+        td(class="text-center") Phân quyền
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Tài khoản
+      tr
+        th(colspan=roles.length + 1) Tài khoản
+
+      //- Xem
+      tr(data-name="accounts-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="accounts-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="accounts-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="accounts-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+      tr
+        th(colspan=roles.length + 1) Customer
+
+      //- Xem
+      tr(data-name="customs-view")
+        td(class="text-center") Xem
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Thêm mới
+      tr(data-name="customs-create")
+        td(class="text-center") Thêm mới
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Chỉnh sửa
+      tr(data-name="customs-edit")
+        td(class="text-center") Chỉnh sửa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+
+      //- Xóa
+      tr(data-name="customs-delete")
+        td(class="text-center") Xóa
+        each item in roles
+          td
+            input(type="checkbox", class="form-check-input")
+      
+  button.btn.btn-success.btn-lg(button-submit) Cập nhật quyền
+  form(
+    class="d-none"
+    method="POST"
+    action=`/${prefixAdmin}/role/permissions?_method=PATCH`
+    form-permissions
+    )
+      input(type="text" name= "permissions") 

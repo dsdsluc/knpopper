@@ -1,0 +1,46 @@
+// 📦 **Thông tin đơn hàng**
+.card.mt-4
+  .card-header.bg-primary.text-white
+    h5 Thông Tin Đơn Hàng
+
+  .card-body
+    .row
+      .col-md-6.mb-3
+        strong Mã Đơn Hàng: 
+        span.text-muted #{order._id}
+
+      .col-md-6.mb-3
+        strong Ngày Tạo: 
+        span.text-muted #{new Date(order.createdAt).toLocaleString()}
+
+    .row
+      .col-md-6.mb-3
+        strong Địa Chỉ Giao Hàng: 
+        span.text-muted #{order.address || 'Không có địa chỉ'}
+
+      .col-md-6.mb-3
+        strong Tổng Giá Trị: 
+        span.text-success #{order.totalPrice.toLocaleString()} VNĐ
+
+    .row
+      .col-md-6.mb-3
+        strong Trạng Thái Đơn Hàng: 
+        - const orderStatusClass = order.status === 'completed' ? 'success' : order.status === 'pending' ? 'warning' : order.status === 'canceled' ? 'danger' : order.status === 'delivering' ? 'info' : 'secondary'
+        span.badge(class=`bg-${orderStatusClass}`) #{order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+
+      .col-md-6.mb-3
+        strong Trạng Thái Thanh Toán: 
+        - const paymentStatusClass = order.paymentStatus === 'paid' ? 'success' : order.paymentStatus === 'refunded' ? 'warning' : 'danger'
+        span.badge(class=`bg-${paymentStatusClass}`) #{order.paymentStatus.charAt(0).toUpperCase() + order.paymentStatus.slice(1)}
+
+    .row
+      .col-md-6.mb-3
+        strong Phương Thức Thanh Toán: 
+        span.text-muted #{order.paymentMethod.charAt(0).toUpperCase() + order.paymentMethod.slice(1)}
+
+      .col-md-6.mb-3
+        strong Lần Cập Nhật Cuối: 
+        span.text-muted #{new Date(order.updatedAt).toLocaleString()}
+
+  .card-footer.text-end
+    a.btn.btn-primary(href=`/cart/ordered`) Trở Về Danh Sách Đơn Hàng

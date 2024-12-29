@@ -1,0 +1,39 @@
+// 📊 **Timeline Trạng Thái Đơn Hàng**
+.card.mt-4
+  .card-header.bg-light
+    h5 Trạng Thái Đơn Hàng
+
+  .card-body
+    .order-status-timeline
+      .timeline
+        
+        .step(class=(order.orderInfo.status === 'pending' || order.status === 'completed' || order.status === 'delivering') ? 'active' : '')
+          i.fas.fa-clipboard-check
+          p Đơn Hàng Đã Đặt
+          small #{order.orderInfo.createdAt ? new Date(order.orderInfo.createdAt).toLocaleString() : ''}
+
+
+        // ✅ **Đã Giao Cho Đơn Vị Vận Chuyển**
+        .step(class=(order.orderInfo.status === 'delivering' || order.orderInfo.status === 'completed') ? 'active' : '')
+          i.fas.fa-truck
+          p Đã Giao Cho ĐVVC
+          small #{order.orderInfo.dispatchedDate ? new Date(order.orderInfo.dispatchedDate).toLocaleString() : ''}
+
+        // ✅ **Đang Giao Hàng**
+        .step(class=(order.orderInfo.status === 'delivering') ? 'active' : '')
+          i.fas.fa-shipping-fast
+          p Đang Giao
+          small #{order.orderInfo.deliveryDate ? new Date(order.orderInfo.deliveryDate).toLocaleString() : ''}
+
+        // ✅ **Hoàn Thành**
+        .step(class=(order.orderInfo.status === 'completed') ? 'active' : '')
+          i.fas.fa-check-circle
+          p Đã Hoàn Thành
+          small #{order.orderInfo.completedDate ? new Date(order.orderInfo.completedDate).toLocaleString() : ''}
+
+        // ❌ **Đã Hủy (nếu có)**
+        if order.orderInfo.status === 'canceled'
+          .step.active.canceled
+            i.fas.fa-times-circle
+            p Đơn Hàng Đã Hủy
+            small #{order.orderInfo.canceledDate ? new Date(order.orderInfo.canceledDate).toLocaleString() : ''}

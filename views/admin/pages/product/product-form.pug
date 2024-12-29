@@ -1,0 +1,205 @@
+
+.card.shadow-sm.border-0.rounded
+  .card-header.bg-primary.text-white
+    h4.card-title.mb-0 Product Information
+
+  .card-body.p-4
+    form(
+      action=`/${prefixAdmin}/products/edit/${product._id}?_method=PATCH`,
+      method="POST",
+      class="form-create-product needs-validation",
+      enctype="multipart/form-data",
+      novalidate
+    )
+      .row.g-4
+        // 📸 Product Thumbnail
+        .col-lg-6
+          .mb-3
+            label.form-label(for="thumbnail") Product Image
+            label.custom-file-upload.d-flex.align-items-center.gap-2
+              i.bx.bx-cloud-upload.fs-4.text-primary
+              span Upload Product Image
+            input(
+              type="file", 
+              class="form-control d-none", 
+              id="thumbnail", 
+              name="thumbnail", 
+              accept="image/*", 
+              multiple
+              upload-input
+            )
+            img.img-fluid.rounded.bg-light.mt-2(
+              id="preview-thumbnail", 
+              src=product.thumbnail[0] || '/images/default-product.jpg'
+            )
+
+        // ✅ Product Status
+        .col-lg-6
+          .mb-3
+            label.form-label Status
+            .d-flex.gap-3.align-items-center
+              .form-check
+                input.form-check-input(
+                  type="radio", 
+                  name="status", 
+                  id="status-active", 
+                  value="active", 
+                  checked=product.status === "active"
+                )
+                label.form-check-label(for="status-active") Active
+              .form-check
+                input.form-check-input(
+                  type="radio", 
+                  name="status", 
+                  id="status-inactive", 
+                  value="inactive", 
+                  checked=product.status === "inactive"
+                )
+                label.form-check-label(for="status-inactive") Inactive
+
+        // 🏷️ Product Name
+        .col-lg-6
+          .mb-3
+            label.form-label(for="title") Product Name
+            input.form-control(
+              type="text",
+              id="title",
+              name="title",
+              placeholder="Enter product name",
+              value=product.title,
+              required
+            )
+            .invalid-feedback Product name is required.
+
+        // 📂 Product Category
+        .col-lg-6
+          .mb-3
+            label.form-label(for="product_category_id") Product Categories
+            select.form-select(
+              id="product_category_id",
+              name="product_category_id",
+              required
+            )
+              option(value="") Choose a category
+              +select-tree(productsCategory, 1, product.product_category_id._id)
+            .invalid-feedback Please select a category.
+
+        // 🛍️ Brand
+        .col-lg-4
+          .mb-3
+            label.form-label(for="brand") Brand
+            input.form-control(
+              type="text",
+              id="brand",
+              name="brand",
+              placeholder="Enter brand name",
+              value=product.brand
+            )
+
+        // ⚖️ Weight
+        .col-lg-4
+          .mb-3
+            label.form-label(for="weight") Weight (kg)
+            input.form-control(
+              type="text",
+              id="weight",
+              name="weight",
+              placeholder="e.g., 1.5 kg",
+              value=product.weight
+            )
+
+        // 👗 Gender
+        .col-lg-4
+          .mb-3
+            label.form-label(for="gender") Gender
+            select.form-select(
+              id="gender",
+              name="gender",
+              required
+            )
+              option(value="", selected=product.gender === "") Select Gender
+              option(value="male", selected=product.gender === "male") Men
+              option(value="female", selected=product.gender === "female") Women
+              option(value="unisex", selected=product.gender === "unisex") Unisex
+            .invalid-feedback Please select gender.
+
+        // 📦 Stock
+        .col-lg-4
+          .mb-3
+            label.form-label(for="stock") Stock
+            input.form-control(
+              type="number",
+              id="stock",
+              name="stock",
+              placeholder="Available quantity",
+              value=product.stock,
+              min="0"
+            )
+
+        // 💰 Price
+        .col-lg-4
+          .mb-3
+            label.form-label(for="price") Price ($)
+            .input-group
+              span.input-group-text
+                i.bx.bx-dollar
+              input.form-control(
+                type="number",
+                id="price",
+                name="price",
+                placeholder="e.g., 100",
+                value=product.price,
+                min="0"
+              )
+
+        // 🎟️ Discount
+        .col-lg-4
+          .mb-3
+            label.form-label(for="discountPercentage") Discount (%)
+            .input-group
+              span.input-group-text
+                i.bx.bxs-discount
+              input.form-control(
+                type="number",
+                id="discountPercentage",
+                name="discountPercentage",
+                placeholder="e.g., 10",
+                value=product.discountPercentage,
+                min="0",
+                max="100"
+              )
+
+        // 📏 Size
+        .col-lg-12
+          .mb-3
+            label.form-label Size
+            .d-flex.flex-wrap.gap-2
+              each size in ['S', 'M', 'L', 'XL', 'XXL']
+                input.btn-check(
+                  type="checkbox", 
+                  id=`size-${size}`, 
+                  name="size", 
+                  value=size,
+                  checked=(product.sizes && product.sizes.includes(size))
+                )
+                label.btn.btn-outline-primary(for=`size-${size}`) #{size}
+
+        // 📝 Description
+        .col-lg-12
+          .mb-3
+            label.form-label(for="description") Description
+            textarea.form-control.tinymce-app(
+              id="description",
+              name="description",
+              rows="5",
+              placeholder="Write product description here"
+            )= product.description
+
+      // 🔘 Action Buttons
+      .p-3.bg-light.rounded.d-flex.justify-content-end.gap-3
+        button.btn.btn-success.px-4(type="submit")
+          i.bx.bx-save-alt.me-1
+          | Save Changes
+        button.btn.btn-secondary.px-4(type="reset")
+          i.bx.bx-reset.me-1
+          | Reset Form

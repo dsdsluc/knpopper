@@ -1,0 +1,83 @@
+include ../mixins/topbar-item.pug
+
+header.topbar
+  .container-fluid
+    .navbar-header
+      .d-flex.align-items-center
+        //- Menu Toggle Button
+        .topbar-item
+          button.button-toggle-menu.me-2(type="button")
+            iconify-icon.fs-24.align-middle(icon="solar:hamburger-menu-broken")
+        //- Welcome Text
+        +topbar-item(titleTopbar)
+
+      .d-flex.align-items-center.gap-1
+        //- Theme Color (Light/Dark)
+        .topbar-item
+          button#light-dark-mode.topbar-button(type="button")
+            iconify-icon.fs-24.align-middle(icon="solar:moon-bold-duotone")
+
+        //- Notification (Đơn hàng đang xử lý)
+        .dropdown.topbar-item
+          button#page-header-notifications-dropdown.topbar-button.position-relative(type="button", data-bs-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+            iconify-icon.fs-24.align-middle(icon="solar:bell-bing-bold-duotone")
+            if pendingOrdersCount > 0
+              span.position-absolute.topbar-badge.fs-10.translate-middle.badge.bg-danger.rounded-pill #{pendingOrdersCount}
+                span.visually-hidden unread messages
+          .dropdown-menu.py-0.dropdown-lg.dropdown-menu-end(aria-labelledby="page-header-notifications-dropdown")
+            .p-3.border-top-0.border-start-0.border-end-0.border-dashed.border
+              .row.align-items-center
+                .col
+                  h6.m-0.fs-16.fw-semibold Đơn Hàng Đang Xử Lý
+                .col-auto
+                  a.text-dark.text-decoration-underline(href="/admin/order/list?status=pending")
+                    small Xem Tất Cả
+            div(data-simplebar, style="max-height: 280px;")
+              if pendingOrders.length > 0
+                each order in pendingOrders
+                  a.dropdown-item.py-3.border-bottom.text-wrap(href=`/admin/order/detail/${order._id}`)
+                    .d-flex
+                      .flex-shrink-0
+                        .avatar-sm.me-2
+                          span.avatar-title.bg-soft-warning.text-warning.fs-20.rounded-circle
+                            i.bx.bx-receipt
+                      .flex-grow-1
+                        p.mb-0
+                          span.fw-medium #{order.recipientName}
+                          | - #{order.totalPrice.toLocaleString('vi-VN')} VNĐ
+                        p.mb-0.fs-12.text-muted Ngày tạo: #{new Date(order.createdAt).toLocaleString('vi-VN')}
+              else
+                p.text-center.text-muted.py-2 Không có đơn hàng nào đang xử lý.
+            .text-center.py-3
+              a.btn.btn-primary.btn-sm(href="/admin/order/list") Xem Tất Cả Đơn Hàng
+                i.bx.bx-right-arrow-alt.ms-1
+
+        //- Theme Setting
+        .topbar-item.d-none.d-md-flex
+          button#theme-settings-btn.topbar-button(type="button", data-bs-toggle="offcanvas", data-bs-target="#theme-settings-offcanvas", aria-controls="theme-settings-offcanvas")
+            iconify-icon.fs-24.align-middle(icon="solar:settings-bold-duotone")
+
+        //- Activity
+        .topbar-item.d-none.d-md-flex
+          button#theme-settings-btn.topbar-button(type="button", data-bs-toggle="offcanvas", data-bs-target="#theme-activity-offcanvas", aria-controls="theme-settings-offcanvas")
+            iconify-icon.fs-24.align-middle(icon="solar:clock-circle-bold-duotone")
+
+        //- User
+        .dropdown.topbar-item
+          a#page-header-user-dropdown.topbar-button(type="button", data-bs-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+            span.d-flex.align-items-center
+              img.rounded-circle(src=user.avatar || '/admin/images/default-avatar.png', alt="avatar-3", width="32")
+          .dropdown-menu.dropdown-menu-end
+            h6.dropdown-header Welcome #{user.fullName || 'Guest'}!
+            a.dropdown-item(href="/profile")
+              i.bx.bx-user-circle.text-muted.fs-18.align-middle.me-1
+              span.align-middle Profile
+            a.dropdown-item.text-danger(href="/auth/logout")
+              i.bx.bx-log-out.fs-18.align-middle.me-1
+              span.align-middle Logout
+
+        //- App Search
+        form.app-search.d-none.d-md-block.ms-2
+          .position-relative
+            input.form-control(type="search", placeholder="Search...", autocomplete="off", value="")
+            iconify-icon.search-widget-icon(icon="solar:magnifer-linear")

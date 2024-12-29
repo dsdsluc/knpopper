@@ -1,0 +1,16 @@
+mixin alert(message)
+    - if (messages.info)
+        .message.info
+            span= messages.info
+            button.btn-close(type="button") ×
+            
+mixin alert-success(message)
+    - if (messages.success)
+        .message.info.alert-success
+            span= messages.success
+            button.btn-close(type="button") ×
+mixin alert-error(message)
+    - if (messages.error)
+        .message.info.alert-danger
+            span= messages.error
+            button.btn-close(type="button") ×

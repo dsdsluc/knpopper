@@ -1,0 +1,89 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  // Hiển thị thông báo thành công hoặc lỗi
+  +alert-success(message)
+  +alert-error(message)
+
+  .row
+    .col-xl-12
+      .card
+        .card-header.d-flex.justify-content-between.align-items-center.gap-1
+          h4.card-title.flex-grow-1 Danh Sách Đơn Hàng
+
+          // Dropdown để lọc đơn hàng
+          .dropdown
+            a.dropdown-toggle.btn.btn-sm.btn-outline-light(href="#" data-bs-toggle="dropdown" aria-expanded="false") Lọc Đơn Hàng
+            .dropdown-menu.dropdown-menu-end
+              button.dropdown-item(data-status="completed") Đơn Hàng Hoàn Thành
+              button.dropdown-item(data-status="pending") Đơn Hàng Đang Chờ
+              button.dropdown-item(data-status="delivering") Đang vận chuyển
+              button.dropdown-item(data-status="all") Tất Cả
+
+        // Bảng hiển thị danh sách đơn hàng
+        .table-responsive
+          table.table.align-middle.mb-0.table-hover.table-centered
+            thead.bg-light-subtle
+              tr
+                th Mã Đơn Hàng
+                th Người Dùng
+                th Trạng Thái Thanh Toán
+                th Tổng Giá
+                th Trạng Thái Đơn Hàng
+                th Ngày Tạo
+                th Hành Động
+
+            tbody
+              each order in orders
+                tr
+                  // Mã đơn hàng
+                  td #{order._id}
+                  td
+                    // Thông tin người dùng (tên và email)
+                    if order.user_id
+                      if order.user_id.fullName
+                        | #{order.user_id.fullName}
+                      else
+                        | Unknown
+                      if order.user_id.email
+                        |  (#{order.user_id.email})
+                      else
+                        |  (N/A)
+                    else
+                      | Unknown (N/A)
+
+                  // Trạng thái thanh toán với badge màu sắc
+                  td
+                    - const paymentStatusClass = order.paymentStatus === 'paid' ? 'success' : order.paymentStatus === 'unpaid' ? 'warning' : 'danger';
+                    span.badge(class=`bg-${paymentStatusClass}`) #{order.paymentStatus.charAt(0).toUpperCase() + order.paymentStatus.slice(1)}
+
+                  // Tổng giá tiền với đơn vị VNĐ
+                  td #{order.totalPrice ? order.totalPrice.toLocaleString() : "0"} VNĐ
+
+
+                  // Trạng thái đơn hàng với badge màu sắc
+                  td
+                    form(id=`status-form-${order._id}`, action=`/${prefixAdmin}/order/update-status/${order._id}?_method=PATCH`, method="POST" style="display:none")
+                      input(type="hidden", name="status", value=order.status)
+                    - const orderStatusClass = order.status === 'completed' ? 'success' : order.status === 'pending' ? 'warning' : order.status === 'canceled' ? 'danger' : order.status === 'delivering' ? 'info' : 'secondary'
+                      button.badge(class=`bg-${orderStatusClass}` onclick=`submitStatusForm('${order._id}')`) #{order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                    
+                  // Ngày tạo đơn hàng
+                  td #{new Date(order.createdAt).toLocaleString()}
+
+                  // Nút hành động để xem chi tiết và xóa đơn hàng
+                  td
+                    .d-flex.gap-2
+                      a.btn.btn-light.btn-sm(href=`/${prefixAdmin}/order/detail/${order._id}` title="Xem chi tiết đơn hàng" data-bs-toggle="tooltip") Xem Chi Tiết
+                      button.btn.btn-danger.btn-sm(title="Xóa đơn hàng" data-bs-toggle="tooltip" onclick=`deleteOrder('${order._id}')`) Xóa
+
+  script.
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    function submitStatusForm(orderId) {
+      document.getElementById(`status-form-${orderId}`).submit();
+    }

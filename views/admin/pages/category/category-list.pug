@@ -1,0 +1,76 @@
+.row
+  .col-xl-12
+    .card
+      .card-header.d-flex.justify-content-between.align-items-center.gap-1
+        h4.card-title.flex-grow-1 All Categories List
+
+        a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/category/create`) Add Category
+
+        .dropdown
+          a.dropdown-toggle.btn.btn-sm.btn-outline-light(href="#", data-bs-toggle="dropdown", aria-expanded="false") This Month
+          .dropdown-menu.dropdown-menu-end
+
+            a.dropdown-item(href="#!") Download
+
+            a.dropdown-item(href="#!") Export
+
+            a.dropdown-item(href="#!") Import
+
+      .table-responsive
+        table.table.align-middle.mb-0.table-hover.table-centered
+          thead.bg-light-subtle
+            tr
+              th(style="width: 20px;")
+                .form-check
+                  input.form-check-input(type="checkbox", id="customCheck1")
+                  label.form-check-label(for="customCheck1")
+
+              th Categories
+              th Starting Price
+              th Create by
+              th ParentID
+              th Product Stock
+              th Status
+              th Action
+
+          tbody
+            each category in categories
+              tr
+                td
+                  .form-check
+                    input.form-check-input(type="checkbox", id="customCheck2")
+                    label.form-check-label(for="customCheck2")
+
+                td
+                  .d-flex.align-items-center.gap-2
+                    .rounded.bg-light.avatar-md.d-flex.align-items-center.justify-content-center
+                      img.avatar-md(src=category.thumbnail, alt="")
+                    p.text-dark.fw-medium.fs-15.mb-0 #{category.title}
+
+                td #{category.minPrice} to #{category.maxPrice}
+                td #{category.createdBy.fullName}
+                td #{category.parentCategory ? category.parentCategory.title : "No Having"}
+                td #{category.productCount}
+                td 
+                  form(action=`/${prefixAdmin}/category/change-status/${category._id}` method="POST" class="status-form")
+                    input(type="hidden" name="category_id" value=category._id)
+                    input(type="hidden" name="status" value=category.status)                    
+                    if category.status == "active"
+                      button( class="badge bg-success-subtle text-success py-1 px-2"  
+                      data-item-id=category.id, 
+                      data-current-status="active") Active
+                    else
+                      button( class="badge bg-danger-subtle text-danger py-1 px-2" 
+                      data-item-id=category.id
+                      data-current-status="inactive") Inactive
+                td
+                  .d-flex.gap-2
+                    a.btn.btn-light.btn-sm(href=`/${prefixAdmin}/category/detail/${category.slug}`)
+                      iconify-icon(icon="solar:eye-broken", class="align-middle fs-18")
+                    a.btn.btn-soft-primary.btn-sm(href=`/${prefixAdmin}/category/edit/${category.slug}`)
+                      iconify-icon(icon="solar:pen-2-broken", class="align-middle fs-18")
+                    a.btn.btn-soft-danger.btn-sm(href=`/${prefixAdmin}/category/deleted/${category.slug}`)
+                      iconify-icon(icon="solar:trash-bin-minimalistic-2-broken", class="align-middle fs-18")
+      include ./navigation.pug               
+
+            

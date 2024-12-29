@@ -1,0 +1,159 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .row
+    .col-xxl-12
+      .row
+        .col-md-6
+          .card.overflow-hidden
+            .card-body
+              .row
+                .col-6
+                  .avatar-md.bg-soft-primary.rounded
+                    iconify-icon.avatar-title.fs-32.text-primary(icon="solar:cart-5-bold-duotone")
+                .col-6.text-end
+                  p.text-muted.mb-0.text-truncate Tổng Đơn Hàng
+                  h3.text-dark.mt-1.mb-0 #{totalOrders}
+            .card-footer.py-2.bg-light.bg-opacity-50
+              .d-flex.align-items-center.justify-content-between
+                if orderChangeRate > 0
+                  .text-success
+                    i.bx.bxs-up-arrow.fs-12
+                    | #{orderChangeRate}% ↑
+                else if orderChangeRate < 0
+                  .text-danger
+                    i.bx.bxs-down-arrow.fs-12
+                    | #{Math.abs(orderChangeRate)}% ↓
+                else
+                  .text-muted
+                    | 0%
+                span.text-muted.ms-1.fs-12 Tháng trước
+                a.text-reset.fw-semibold.fs-12(href="#!") Xem Thêm
+
+        .col-md-6
+          .card.overflow-hidden
+            .card-body
+              .row
+                .col-6
+                  .avatar-md.bg-soft-primary.rounded
+                    i.bx.bx-dollar-circle.avatar-title.text-primary.fs-24
+                .col-6.text-end
+                  p.text-muted.mb-0 Tổng Doanh Thu
+                  h3.text-dark.mt-1.mb-0 #{totalRevenue} VNĐ
+            .card-footer.py-2.bg-light.bg-opacity-50
+              .d-flex.align-items-center.justify-content-between
+                if revenueChangePercent > 0
+                  .text-success
+                    i.bx.bxs-up-arrow.fs-12
+                    | #{revenueChangePercent}% ↑
+                else if revenueChangePercent < 0
+                  .text-danger
+                    i.bx.bxs-down-arrow.fs-12
+                    | #{Math.abs(revenueChangePercent)}% ↓
+                else
+                  .text-muted
+                    | 0%
+                span.text-muted.ms-1.fs-12 Tháng trước
+                a.text-reset.fw-semibold.fs-12(href="#!") Xem Thêm
+
+        .col-md-6
+          .card.overflow-hidden
+            .card-body
+              .row
+                .col-6
+                  .avatar-md.bg-soft-primary.rounded
+                    i.bx.bxs-backpack.avatar-title.fs-24.text-primary
+                .col-6.text-end
+                  p.text-muted.mb-0 Số Lượng Khách Hàng
+                  h3.text-dark.mt-1.mb-0 #{totalCustomers}
+            .card-footer.py-2.bg-light.bg-opacity-50
+              .d-flex.align-items-center.justify-content-between
+                .text-danger
+                  i.bx.bxs-down-arrow.fs-12
+                  | 0.3%
+                  span.text-muted.ms-1.fs-12 Tháng trước
+                a.text-reset.fw-semibold.fs-12(href="#!") Xem Thêm
+
+        .col-md-6
+          .card.overflow-hidden
+            .card-body
+              .row
+                .col-6
+                  .avatar-md.bg-soft-primary.rounded
+                    i.bx.bx-award.avatar-title.fs-24.text-primary
+                .col-6.text-end
+                  p.text-muted.mb-0 Tỷ Lệ Hoàn Thành Đơn Hàng
+                  h3.text-dark.mt-1.mb-0 #{orderCompletionRate}%
+            .card-footer.py-2.bg-light.bg-opacity-50
+              .d-flex.align-items-center.justify-content-between
+                  span.text-muted.ms-1.fs-12 Tháng trước
+
+    .col-xxl-12
+      .card
+        .card-body
+          .d-flex.justify-content-between.align-items-center
+            h4.card-title Biểu đồ Doanh thu và Đơn hàng
+            div
+              button.btn.btn-sm.btn-outline-light(type="button") ALL
+              button.btn.btn-sm.btn-outline-light(type="button") 1M
+              button.btn.btn-sm.btn-outline-light(type="button") 6M
+              button.btn.btn-sm.btn-outline-light.active(type="button") 1Y
+          
+          canvas#revenue-chart
+          canvas#order-chart
+
+  // Thêm script để vẽ biểu đồ
+  script.
+    // Dữ liệu cho biểu đồ
+    const revenueData = !{revenueData}; // Dữ liệu doanh thu cho 12 tháng
+    const orderData = !{orderData}; // Dữ liệu số đơn hàng cho 12 tháng
+
+    // Biểu đồ Doanh thu
+    const revenueCtx = document.getElementById('revenue-chart').getContext('2d');
+    const revenueChart = new Chart(revenueCtx, {
+        type: 'line', // Hoặc 'bar', 'pie', v.v.
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'], // Nhãn cho từng tháng
+            datasets: [{
+                label: 'Doanh thu (VNĐ)',
+                data: revenueData, // Dữ liệu doanh thu
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Biểu đồ Đơn hàng
+    const orderCtx = document.getElementById('order-chart').getContext('2d');
+    const orderChart = new Chart(orderCtx, {
+        type: 'line',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'], // Nhãn cho từng tháng
+            datasets: [{
+                label: 'Số đơn hàng',
+                data: orderData, // Dữ liệu số đơn hàng
+                fill: false,
+                borderColor: 'rgba(153, 102, 255, 1)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });

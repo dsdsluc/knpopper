@@ -1,0 +1,48 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+  .card.overflow-hidden
+    .card-body.p-0
+      .table-responsive
+        table.table.align-middle.mb-0.table-hover.table-centered
+          thead.bg-light-subtle
+            tr
+              th Role
+              th Workspace
+              th Tags
+              th Users
+              th Status
+              th Action
+          tbody
+            each role in roles
+              tr
+                td #{role.title}
+                td
+                  img.avatar-xs.rounded-circle.me-1(src=role.thumbnail alt="Slack")
+                  | #{role.workspace}
+                td 
+                  each item in role.tag
+                    span.badge.bg-light-subtle.text-muted.border.py-1.px-2 #{item}
+
+                td
+                  .avatar-group
+                    .avatar
+                      img.rounded-circle.avatar-sm(src="/admin/images/users/avatar-6.jpg" alt="User 4")
+                    .avatar
+                      img.rounded-circle.avatar-sm(src="/admin/images/users/avatar-7.jpg" alt="User 5")
+                    .avatar
+                      span.avatar-sm.d-flex.align-items-center.justify-content-center.bg-info-subtle.text-info.rounded-circle.fw-bold.shadow +12
+                td
+                  .form-check.form-switch
+                    input.form-check-input(type="checkbox" role="switch" id="flexSwitchCheckChecked4" checked=role.status =="active")
+                td
+                  .d-flex.gap-2
+                    a.btn.btn-light.btn-sm(href="#!")
+                      iconify-icon.align-middle.fs-18(icon="solar:eye-broken")
+                    a.btn.btn-soft-primary.btn-sm(href=`/${prefixAdmin}/role/edit/${role.id}`)
+                      iconify-icon.align-middle.fs-18(icon="solar:pen-2-broken")
+                    a.btn.btn-soft-danger.btn-sm(href="#!")
+                      iconify-icon.align-middle.fs-18(icon="solar:trash-bin-minimalistic-2-broken")

@@ -1,0 +1,28 @@
+.category-menu-section.position-relative
+  .empty.position-fixed(onclick="tooglmenu()")
+  button.dropdown-btn(onclick="tooglmenu()")
+    span.dropdown-icon
+      svg(width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg")
+        rect(width="14" height="1")
+        rect(y="8" width="14" height="1")
+        rect(y="4" width="10" height="1")
+      span.list-text All Categories
+    span
+      svg(width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg")
+        rect(x="8.18359" y="0.910156" width="5.78538" height="1.28564" transform="rotate(135 8.18359 0.910156)" fill="#1D1D1D")
+        rect(x="4.08984" y="5" width="5.78538" height="1.28564" transform="rotate(-135 4.08984 5)" fill="#1D1D1D")
+
+  ul.dropdown-menu
+    li
+      a.dropdown-item(href="product-sidebar.html")
+        div.dropdown-item.d-flex.justify-content-between.align-items-center
+          div.dropdown-list-item.d-flex
+            span.dropdown-img
+              svg(aria-hidden="true" focusable="false" data-prefix="fas" data-icon="anchor" class="svg-inline--fa fa-anchor w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512")
+                path(d="M352 176C369.7 176 384 190.3 384 208C384 225.7 369.7 240 352 240H320V448H368C421 448 464 405 464 352V345.9L456.1 352.1C447.6 362.3 432.4 362.3 423 352.1C413.7 343.6 413.7 328.4 423 319L479 263C488.4 253.7 503.6 253.7 512.1 263L568.1 319C578.3 328.4 578.3 343.6 568.1 352.1C559.6 362.3 544.4 362.3 535 352.1L528 345.9V352C528 440.4 456.4 512 368 512H208C119.6 512 48 440.4 48 352V345.9L40.97 352.1C31.6 362.3 16.4 362.3 7.029 352.1C-2.343 343.6-2.343 328.4 7.029 319L63.03 263C72.4 253.7 87.6 253.7 96.97 263L152.1 319C162.3 328.4 162.3 343.6 152.1 352.1C143.6 362.3 128.4 362.3 119 352.1L112 345.9V352C112 405 154.1 448 208 448H256V240H224C206.3 240 192 225.7 192 208C192 190.3 206.3 176 224 176H234.9C209 158.8 192 129.4 192 96C192 42.98 234.1 0 288 0C341 0 384 42.98 384 96C384 129.4 366.1 158.8 341.1 176H352zM288 128C305.7 128 320 113.7 320 96C320 78.33 305.7 64 288 64C270.3 64 256 78.33 256 96C256 113.7 270.3 128 288 128z")
+            span.dropdown-text Vegetable
+          div.drop-down-list-icon
+            span
+              svg(width="10" height="10" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg")
+                rect(x="1.5" y="0.818359" width="5.78538" height="1.28564" transform="rotate(45 1.5 0.818359)")
+                rect(x="5.58984" y="4.90918" width="5.78538" height="1.28564" transform="rotate(135 5.58984 4.90918)")

@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+  if( role.permissions.includes("products-create"))
+    .row
+      // Product Preview Card (Bên Trái)
+      .col-xl-3.col-lg-4
+        .card
+          .card-body
+            // Hình Ảnh Sản Phẩm
+            img.img-fluid.rounded.bg-light#preview-thumbnail( upload-image)
+
+            // Tên Sản Phẩm
+            .mt-3
+              h4#preview-title 
+                span.fs-14.text-muted.ms-1#preview-category ()
+
+            // Giá Sản Phẩm
+            h5.text-dark.fw-medium.mt-3 Price:
+            h4.fw-semibold.text-dark.mt-2.d-flex.align-items-center.gap-2
+              span.text-muted.text-decoration-line-through#preview-price 
+              |  
+              span#preview-final-price 
+              small.text-muted#preview-discount ()
+
+            // Size
+            .mt-3
+              h5.text-dark.fw-medium Size:
+              p#preview-size.text-muted.mb-0 
+
+
+
+
+      .col-xl-9.col-lg-8
+        include ./product-info.pug  

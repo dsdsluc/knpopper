@@ -1,0 +1,162 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  form(method="POST" action="/admin/products/change-multi-status?_method=PATCH" form-change-multi-status)
+    input(type="hidden" name="ids")
+    input(type="hidden" name="type")
+  if( role.permissions.includes("products-view"))   
+    .row
+      .col-xl-12
+        .card
+          .card-header.d-flex.justify-content-between.align-items-center.gap-1
+            h4.card-title.flex-grow-1 All Product List
+            if( role.permissions.includes("products-create"))   
+              a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/products/create`) Add Product
+
+            .dropdown
+              button.dropdown-toggle.btn.btn-sm.btn-outline-light(data-bs-toggle="dropdown" aria-expanded="false") Filter Product
+              .dropdown-menu.dropdown-menu-end
+                button.dropdown-item(data-status="active" class=(currentStatus === 'active' ? 'active' : '')) Filter Active
+                button.dropdown-item(data-status="inactive" class=(currentStatus === 'inactive' ? 'active' : '')) Filter Inactive
+                button.dropdown-item(data-status="show-all" class=(currentStatus === 'show-all' ? 'active' : '')) All
+            if( role.permissions.includes("products-create"))
+              .dropdown
+                a.dropdown-toggle.btn.btn-sm.btn-outline-light(href="#" data-bs-toggle="dropdown" aria-expanded="false") Advanced Product
+                .dropdown-menu.dropdown-menu-end
+                  button.dropdown-item(data-change-multi="change-position") Change Position
+                  button.dropdown-item(data-change-multi="delete-all") Delete Products
+                  button.dropdown-item(data-change-multi="active") Change Active Products
+                  button.dropdown-item(data-change-multi="inactive") Change Inactive Products
+
+          .table-responsive
+            table.table.align-middle.mb-0.table-hover.table-centered
+              thead.bg-light-subtle
+                tr
+                  th(style="width: 20px;")
+                    .form-check.ms-1
+                      input.form-check-input(type="checkbox" id="customCheck1")
+                      label.form-check-label(for="customCheck1")
+                  th Product Name & Size
+                  th Price
+                  th Stock & Discount
+                  th Category
+                  th Feature
+                  th Position
+                  th Status
+                  th Action
+
+              tbody
+                each product in products
+                  tr
+                    // Checkbox
+                    td
+                      .form-check.ms-1
+                        input.form-check-input(check-box-change-status type="checkbox" name="productIds[]" value=product.id)
+                        label.form-check-label(for=`customCheck-${product.id}`) &nbsp;
+
+                    // Product Name & Size
+                    td
+                      .d-flex.align-items-center.gap-2
+                        .rounded.bg-light.avatar-md.d-flex.align-items-center.justify-content-center
+                          img.avatar-md(src=product.thumbnail[0] alt="Product Thumbnail")
+                        div
+                          a.text-dark.fw-medium.fs-15(href=`/${prefixAdmin}/products/detail/${product.id}`) 
+                            | #{product.title.length > 20 ? product.title.substring(0, 20) + '...' : product.title}
+                          p.text-muted.mb-0.mt-1.fs-13
+                            span Size :
+                            each size, index in product.size
+                              | #{size}#{index !== product.size.length - 1 ? ', ' : ''}
+
+                    // Price
+                    td 
+                      | $#{product.priceNew} 
+                      span.text-muted.text-decoration-line-through.ms-1 ($#{product.price})
+
+                    // Stock & Discount
+                    td
+                      p.mb-1.text-muted
+                        span.text-dark.fw-medium #{product.stock} Item Left
+                      p.mb-0.text-muted #{product.discountPercentage}%
+
+                    // Category
+                    td
+                      if product.product_category_id && product.product_category_id.title
+                        | #{product.product_category_id.title}
+                      else
+                        | Not assigned
+
+                    // Rating
+                    td
+                      form(action=`/${prefixAdmin}/products/change-isFeature/${product.id}` method="POST" class="status-form")
+                        input(type="hidden" name="productId" value=product.id)
+                        input(type="hidden" name="isFeature" value=(product.isFeatured ? "true" : "false")) 
+                        if product.isFeatured
+                          button.badge.p-1.bg-success.text-white.fs-12 Nổi bật!
+                        else
+                          button.badge.p-1.bg-secondary.text-dark.fs-12 Không nổi bật
+
+
+                    // Position
+                    td
+                      .badge.bg-light.text-dark.p-2.d-inline-flex.align-items-center
+                        input.form-control.form-control-sm.fs-12.text-dark.border-0.bg-transparent(
+                          type="number", 
+                          value=product.position, 
+                          change-position, 
+                          style="width: 50px;"
+                        )
+                    // Status
+                    td 
+                      form(action=`/${prefixAdmin}/products/change-status/${product.id}` method="POST" class="status-form")
+                        input(type="hidden" name="productId" value=product.id)
+                        input(type="hidden" name="status" value=product.status)                    
+                        if product.status == "active"
+                          button.badge.bg-success-subtle.text-success.py-1.px-2(
+                            data-item-id=product.id, 
+                            data-current-status="active"
+                          ) Active 
+                        else 
+                          button.badge.bg-danger-subtle.text-danger.py-1.px-2(
+                            data-item-id=product.id, 
+                            data-current-status="inactive"
+                          ) Inactive 
+
+                    // Action Buttons
+                    td
+                      .d-flex.gap-2
+                        
+                        a.btn.btn-light.btn-sm(href=`/${prefixAdmin}/products/detail/${product.id}`)
+                          iconify-icon.align-middle.fs-18(icon="solar:eye-broken")
+                        if( role.permissions.includes("products-edit"))
+                          a.btn.btn-soft-primary.btn-sm(href=`/${prefixAdmin}/products/edit/${product.id}`)
+                            iconify-icon.align-middle.fs-18(icon="solar:pen-2-broken")
+                        if( role.permissions.includes("products-delete"))
+                          button.btn.btn-soft-danger.btn-sm(
+                            type="button", 
+                            data-bs-toggle="modal", 
+                            data-bs-target=`#deleteModal-${product.id}`
+                          )
+                            iconify-icon.align-middle.fs-18(icon="solar:trash-bin-minimalistic-2-broken")
+
+                        // Modal Xóa
+                        .modal.fade(id=`deleteModal-${product.id}` tabindex="-1" aria-labelledby=`deleteModalLabel-${product.id}` aria-hidden="true")
+                          .modal-dialog
+                            .modal-content
+                              .modal-header
+                                h5.modal-title#deleteModalLabel Xác nhận xóa
+                                button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                              .modal-body
+                                p Bạn có chắc chắn muốn xóa sản phẩm #{product.title}?
+                                img.avatar-md(src=product.thumbnail[0] alt="Product Image")
+                              .modal-footer
+                                button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Hủy
+                                form(action=`/${prefixAdmin}/products/delete/${product.id}?_method=DELETE` method="POST")
+                                  input(type="hidden" name="productId" value=product.id)
+                                  button.btn.btn-danger(type="submit") Xóa
+
+
+          include ./navigation.pug

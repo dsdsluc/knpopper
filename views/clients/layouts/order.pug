@@ -1,0 +1,61 @@
+doctype html
+html(lang="en")
+  head
+    //- Title Meta
+    meta(charset="utf-8")
+    title Dashboard | Larkon - Responsive Admin Dashboard Template
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(name="description" content="A fully responsive premium admin dashboard template")
+    meta(name="author" content="Techzaa")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    
+    //- App favicon
+    link(rel="shortcut icon" href="admin/images/favicon.ico")
+    
+    //- Vendor css (Require in all Page)
+    link(href="/admin/css/vendor.min.css" rel="stylesheet" type="text/css")
+    
+    //- Icons css (Require in all Page)
+    link(href="/admin/css/icons.min.css" rel="stylesheet" type="text/css")
+    
+    //- App css (Require in all Page)
+    link(href="/admin/css/app.min.css" rel="stylesheet" type="text/css")
+
+    link(href="/admin/css/style.css" rel="stylesheet" type="text/css")
+
+    //- font awesome-css
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css")
+
+    
+    //- Theme Config js (Require in all Page)
+    script(src="/admin/js/config.js")
+  body
+    div.wrapper
+      include ../partials/sidebar.pug
+      .page-content
+        // Start Container Fluid
+        .container-fluid
+          block main
+    //- Vendor Javascript (Require in all Page)
+    script(src="/admin/js/vendor.js")
+    
+    //- App Javascript (Require in all Page)
+    script(src="/admin/js/app.js")
+    script(src="/admin/js/script.js")
+    
+    //- Vector Map Js
+    script(src="/admin/vendor/jsvectormap/js/jsvectormap.min.js")
+    script(src="/admin/vendor/jsvectormap/maps/world-merc.js")
+    script(src="/admin/vendor/jsvectormap/maps/world.js")
+    
+    //- Dashboard Js
+    script(src="/admin/js/pages/dashboard.js")
+    script(src="/admin/js/pages/coupons-add.js")
+    
+    //- Tinymce
+    script(type="application/javascript" src="/tinymce/tinymce.min.js")
+    script(type="application/javascript" src="/admin/js/tinymce-config.js")
+
+
+
+

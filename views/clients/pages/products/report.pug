@@ -1,0 +1,21 @@
+.modal-wrapper.action
+  div.anywhere-away(onclick="modalAction('.action')")
+  .login-section.account-section.modal-main
+    form.review-form(action="/contact/send-problem", method="POST")
+      .review-content
+        h5.comment-title Report Products
+        .close-btn
+          img(src="/clients/images/homepage-one/close-btn.png", alt="close-btn", onclick="modalAction('.action')")
+      .review-form-name.address-form
+        label(for="reporttitle", class="form-label") Enter Report Title*
+        input(type="text", id="reporttitle", name="subject", class="form-control", placeholder="Reports Headline here", required)
+      .review-form-name.address-form
+        label(for="reportnote", class="form-label") Enter Report Note*
+        textarea(name="message", id="reportnote", cols="40", rows="3", class="form-control", placeholder="Type Here", required)
+      .review-form-name.address-form
+        input(type="text", name="fullName", class="form-control", value=user && user.fullName ? user.fullName : "", hidden)
+      .review-form-name.address-form
+        input(type="text", name="email", class="form-control", value=user && user.email ? user.email : "", hidden)
+
+      .login-btn.text-center
+        button(type="submit", class="shop-btn") Submit Report

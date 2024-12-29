@@ -1,0 +1,91 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  form(method="POST" action="/admin/coupons/change-status?_method=PATCH" id="form-change-status")
+    input(type="hidden" name="ids")
+    input(type="hidden" name="type")
+
+  .row
+    .col-xl-12
+      .card
+        .card-header.d-flex.justify-content-between.align-items-center.gap-1
+          h4.card-title.flex-grow-1 Coupon List
+
+          a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/coupon/create`) Add New Coupon
+
+          .dropdown
+            a.dropdown-toggle.btn.btn-sm.btn-outline-light(href="#" data-bs-toggle="dropdown" aria-expanded="false") Advanced Options
+            .dropdown-menu.dropdown-menu-end
+              button.dropdown-item(data-change-status="apply-all") Apply Discount to All
+              button.dropdown-item(data-change-status="remove-all") Remove All Discounts
+              button.dropdown-item(data-change-status="active") Activate Discounts
+              button.dropdown-item(data-change-status="inactive") Deactivate Discounts
+
+        .table-responsive
+          table.table.align-middle.mb-0.table-hover.table-centered
+            thead.bg-light-subtle
+              tr
+                th(style="width: 20px;")
+                  .form-check.ms-1
+                    input.form-check-input(type="checkbox" id="selectAll")
+                    label.form-check-label(for="selectAll")
+                th Coupon Code
+                th Description
+                th Discount Value
+                th Discount Type
+                th Start Date
+                th Expiry Date
+                th Usage Limit
+                th Quantity
+                th Status
+                th Action
+
+            tbody
+              each coupon in coupons
+                tr
+                  td
+                    .form-check.ms-1
+                      input.form-check-input(type="checkbox" class="coupon-checkbox" value=coupon.id)
+                  td #{coupon.code}
+                  td #{coupon.description}
+                  td #{coupon.discount_value} #{coupon.discount_type === 'percentage' ? '%' : '₫'}
+                  td #{coupon.discount_type}
+                  td #{new Date(coupon.start_date).toLocaleDateString()}
+                  td #{new Date(coupon.end_date).toLocaleDateString()} 
+                  td #{coupon.usage_limit > 0 ? coupon.usage_limit : 'Unlimited'}
+                  td #{coupon.quantity}
+
+                  td
+                    form(action=`/${prefixAdmin}/coupon/change-status/${coupon.id}?_method=PATCH` method="POST" class="status-form")
+                      input(type="hidden" name="couponId" value=coupon.id)
+                      input(type="hidden" name="status" value=coupon.is_active ? 'inactive': 'active')
+                      if coupon.is_active
+                        button(class="badge bg-success-subtle text-success py-1 px-2") Active
+                      else
+                        button(class="badge bg-danger-subtle text-danger py-1 px-2") Inactive
+
+                  td
+                    .d-flex.gap-2
+                      a.btn.btn-soft-primary.btn-sm(href=`/${prefixAdmin}/coupon/edit/${coupon.id}`)
+                        iconify-icon.align-middle.fs-18(icon="solar:pen-2-broken")
+                      button.btn.btn-soft-danger.btn-sm(type="button" data-bs-toggle="modal" data-bs-target=`#deleteModal-${coupon.id}`) 
+                        iconify-icon.align-middle.fs-18(icon="solar:trash-bin-minimalistic-2-broken")
+                      .modal.fade(id=`deleteModal-${coupon.id}` tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true")
+                        .modal-dialog
+                          .modal-content
+                            .modal-header
+                              h5.modal-title#deleteModalLabel Confirm Deletion
+                              button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                            .modal-body
+                              p Are you sure you want to delete coupon #{coupon.code}?
+                            .modal-footer
+                              button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel
+                              form(action=`/${prefixAdmin}/coupon/delete/${coupon.id}?_method=DELETE` method="POST")
+                                input(type="hidden" name="couponId" value=coupon.id)
+                                button.btn.btn-danger(type="submit") Delete
+
+    include ./navigation.pug

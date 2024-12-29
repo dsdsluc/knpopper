@@ -1,0 +1,72 @@
+doctype html
+html(lang="en")
+head
+  meta(charset="utf-8")
+  meta(name="keywords", content="EcoShop, bootstrap-5, bootstrap, sass, css, HTML Template, HTML, html, bootstrap template, free template, figma, web design, web development, front end, bootstrap datepicker, bootstrap timepicker, javascript, ecommerce template")
+  meta(name="viewport", content="width=device-width, initial-scale=1")
+  link(rel="icon" href="/clients/images/logos/top-logo.png")
+  
+  //- title
+  title EcoShop: Your One-Stop Destination for Fashion and Style
+  
+  //- swiper-css
+  link(rel="stylesheet" href="/clients/css/swiper10-bundle.min.css")
+  
+  //- bootstrap-css
+  link(rel="stylesheet" href="/clients/css/bootstrap-5.3.2.min.css")
+  
+  //- Range Slider
+  link(rel="stylesheet" href="/clients/css/nouislider.min.css")
+  
+  //- Scroll
+  link(rel="stylesheet" href="/clients/css/aos-3.0.0.css")
+  
+  //- additional-css
+  link(rel="stylesheet" href="/clients/css/style.css")
+
+  link(rel="stylesheet" href="/clients/css/css.css")
+
+  //- font awesome-css
+  link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css")
+
+
+
+  body
+
+    //- Social Media Floating Buttons
+    .social-box
+      a.social-btn.zalo-btn(href=settings.social_links.zalo, target="_blank", title="Chat with us on Zalo")
+        img.icon(src="/clients/images/Icon_of_Zalo.svg.png", alt="Zalo Icon")
+
+
+
+    include ../partials/header/header
+
+    block main
+
+    include ../partials/footer-section/footer-section.pug
+    
+    
+    //- jQuery
+  script(src="/clients/js/jquery_3.7.1.min.js")
+
+    //- bootstrap-js
+  script(src="/clients/js/bootstrap_5.3.2.bundle.min.js")
+
+    //- Range-Slider-js
+  script(src="/clients/js/nouislider.min.js")
+
+    //- scroll-Animation-js
+  script(src="/clients/js/aos-3.0.0.js")
+
+    //- swiper-js
+  script(src="/clients/js/swiper10-bundle.min.js")
+
+    //- additional-js
+  script(src="/clients/js/ecoshop.js")
+    //- socket_io
+  script(src="/socket.io/socket.io.js")
+  script(src="/clients/js/comment.js")
+  script(src="/clients/js/socket.js")
+    //- additional-js
+  script(src="/clients/js/scripts.js")

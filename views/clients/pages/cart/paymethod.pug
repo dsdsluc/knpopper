@@ -1,0 +1,17 @@
+.subtotal.payment-type
+    .checkbox-item
+        input(type="radio" id="bank" name="paymentMethod" value="bank" )
+        .bank
+            h5.wrapper-heading Bank Transfer
+            p.paragraph 
+                | Make your payment directly into our bank account. Please use 
+                span.inner-text your Order ID as the payment reference.
+    .checkbox-item
+        input(type="radio" id="cash" name="paymentMethod" value="cash" checked)
+        .cash
+            h5.wrapper-heading Cash on Delivery
+    .checkbox-item
+        input(type="radio" id="card" name="paymentMethod" value="card")
+        .credit
+            h5.wrapper-heading Card or PayPal
+

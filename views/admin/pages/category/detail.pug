@@ -1,0 +1,72 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-error(message)
+  +alert-success(message)
+  if( role.permissions.includes("products_category-view"))
+    .container
+      .row.g-4
+        
+        .col-lg-4
+          .card
+            .card-body
+              img.img-fluid.bg-light.rounded.mb-3(src=category.thumbnail || '/images/default-category.jpg', alt="Category Thumbnail")
+              h4.text-center.fw-medium= category.title || "Untitled Category"
+              p.text-muted.text-center= category.description || "No description available"
+
+            .card-footer.border-top
+              .d-flex.gap-2
+                a.btn.btn-soft-primary.w-50.d-flex.align-items-center.justify-content-center(href=`/${prefixAdmin}/category/edit/${category.slug}`)
+                  i.bx.bx-edit-alt.fs-18.me-2
+                  | Edit
+                a.btn.btn-soft-danger.w-50.d-flex.align-items-center.justify-content-center(href=`/${prefixAdmin}/category/delete/${category.slug}`)
+                  i.bx.bx-trash-alt.fs-18.me-2
+                  | Delete
+
+        
+        .col-lg-8
+          .card
+            .card-header.bg-primary.text-white
+              h4 Category Details
+
+            .card-body
+              .row.g-3
+                .col-lg-6
+                  p.mb-1.fw-medium Status:
+                  h5.text-muted= category.status || "N/A"
+
+                .col-lg-6
+                  p.mb-1.fw-medium Created By:
+                  h5.text-muted= category.createdBy && category.createdBy.fullName ? category.createdBy.fullName : "Unknown"
+
+                .col-lg-6
+                  p.mb-1.fw-medium Parent Category:
+                  h5.text-muted= category.parent_id && category.parent_id.title ? category.parent_id.title : "None"
+
+
+                .col-lg-6
+                  p.mb-1.fw-medium Position:
+                  h5.text-muted= category.position || "0"
+
+                .col-lg-12
+                  p.mb-1.fw-medium Description:
+                  p.text-muted= category.description || "No description provided."
+
+            .card-footer
+              a.btn.btn-outline-secondary(href=`/${prefixAdmin}/category/list`) Back to List
+
+      // 🗂️ Phần Danh Mục Con (Nếu Có)
+      if category.children && category.children.length > 0
+        .row.mt-4
+          .col-lg-12
+            .card
+              .card-header.bg-light
+                h5 Subcategories
+
+              .card-body
+                ul.list-group
+                  each child in category.children
+                    li.list-group-item.d-flex.justify-content-between.align-items-center
+                      span= child.title
+                      a.btn.btn-sm.btn-outline-primary(href=`/${prefixAdmin}/category/detail/${child.slug}`) View

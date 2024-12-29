@@ -1,0 +1,171 @@
+include ../../mixins/select-tree.pug
+
+.card
+  .card-header
+    h4.card-title Product Information
+  .card-body
+    form(
+      action=`/${prefixAdmin}/products/create`,
+      method="POST",
+      class="form-create-product",
+      enctype="multipart/form-data"
+    )
+      .row
+        // Hình ảnh sản phẩm
+        .col-lg-6  
+          label(for="thumbnail" class="form-label") 
+            span.btn.btn-outline-secondary.w-100 Product Image            
+          label.custom-file-upload     
+            i.bx.bx-cloud-upload          
+            input(type="file" class="form-control-file d-none" id="thumbnail" name="thumbnail" accept="image/*" multiple upload-input)
+          img.img-fluid.rounded.bg-light.mt-2(id="preview-thumbnail", src="/images/default-product.jpg")
+
+        // Trạng thái sản phẩm
+        .col-lg-6  
+          .card-body
+            p Status
+            .d-flex.gap-2.align-items-center.mb-3
+              .form-check
+                input.form-check-input(type="radio", name="status", id="flexRadioDefault1", value="active", checked)
+                label.form-check-label(for="flexRadioDefault1") Active
+              .form-check
+                input.form-check-input(type="radio", name="status", id="flexRadioDefault2", value="inactive")
+                label.form-check-label(for="flexRadioDefault2") Inactive
+
+        // Tên sản phẩm
+        .col-lg-6
+          .mb-3
+            label.form-label(for="product-name") Product Name
+            input.form-control(
+              type="text",
+              id="product-name",
+              name="title",
+              placeholder="Item Name"
+            )
+
+        // Danh mục sản phẩm
+        .col-lg-6
+          .mb-3
+            label.form-label(for="product-categories") Product Categories
+            select.form-control(
+              id="product-categories",
+              name="product_category_id",
+              data-choices,
+              data-choices-groups,
+              data-placeholder="Select Categories"
+            )
+              option(value="") Choose a category
+              +select-tree(productsCategory)
+
+        // Thương hiệu
+        .col-lg-4
+          .mb-3
+            label.form-label(for="product-brand") Brand
+            input.form-control(
+              type="text",
+              id="product-brand",
+              name="brand",
+              placeholder="Brand Name"
+            )
+
+        // Cân nặng
+        .col-lg-4
+          .mb-3
+            label.form-label(for="product-weight") Weight
+            input.form-control(
+              type="text",
+              id="product-weight",
+              name="weight",
+              placeholder="In gm & kg"
+            )
+
+        // Giới tính
+        .col-lg-4
+          .mb-3
+            label.form-label(for="gender") Gender
+            select.form-control(
+              id="gender",
+              name="gender",
+              data-choices,
+              data-choices-groups,
+              data-placeholder="Select Gender"
+            )
+              option(value="") Select Gender
+              option(value="male") Men
+              option(value="female") Women
+              option(value="unisex") Unisex
+
+      .row
+        // Tồn kho
+        .col-lg-4
+          .mb-3
+            label.form-label(for="product-stock") Stock
+            input.form-control(
+              type="number",
+              id="product-stock",
+              name="stock",
+              placeholder="Quantity"
+            )
+
+        // Giá sản phẩm
+        .col-lg-4
+          .mb-3
+            label.form-label(for="product-price") Price
+            .input-group
+              span.input-group-text.fs-20
+                i.bx.bx-dollar
+              input.form-control(
+                type="number",
+                id="product-price",
+                name="price",
+                placeholder="000"
+              )
+
+        // Giảm giá
+        .col-lg-4
+          .mb-3
+            label.form-label(for="product-discount") Discount
+            .input-group
+              span.input-group-text.fs-20
+                i.bx.bxs-discount
+              input.form-control(
+                type="number",
+                id="product-discount",
+                name="discountPercentage",
+                placeholder="000"
+              )
+
+
+        // Kích thước
+        .col-lg-12
+          .mb-3
+            h5.text-dark.fw-medium Size:
+            .d-flex.flex-wrap.gap-2(role="group", aria-label="Basic checkbox toggle button group")
+              each size in ['S', 'M', 'L', 'XL', 'XXL']
+                input.btn-check(
+                  type="checkbox", 
+                  id=`size-${size}`, 
+                  name="size", 
+                  value=size
+                )
+                label.btn.btn-light.avatar-sm.rounded.d-flex.justify-content-center.align-items-center(for=`size-${size}`) #{size}
+
+
+        // Mô tả sản phẩm
+        .col-lg-12
+          .mb-3
+            label.form-label(for="description") Description
+            textarea.form-control.bg-light-subtle.tinymce-app(
+              id="description",
+              name="description",
+              rows="7",
+              placeholder="Short description about the product"
+            )
+
+      // Nút Submit và Reset
+      .p-3.bg-light.mb-3.rounded
+        .row.justify-content-end.g-2
+          .col-lg-2
+            button.btn.btn-outline-secondary.w-100(type="submit") Create Product
+          .col-lg-2
+            button.btn.btn-primary.w-100(type="reset") Cancel

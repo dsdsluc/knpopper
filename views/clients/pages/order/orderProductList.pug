@@ -1,0 +1,27 @@
+.card.mt-4
+  .card-header.bg-success.text-white
+    h5 Sản Phẩm Trong Đơn Hàng
+
+  .card-body
+    table.table.table-bordered.table-hover
+      thead
+        tr.bg-light
+          th Tên Sản Phẩm
+          th.text-center Giá (VNĐ)
+          th.text-center Số Lượng
+          th.text-center Tổng (VNĐ)
+          th.text-center Tổng Sau Cùng (VNĐ)
+
+      tbody
+        each item in order.items
+          tr
+            // Tên sản phẩm
+            td #{item.product_id.title}
+            // Giá (VNĐ)
+            td.text-center #{(item.priceAtPurchase).toLocaleString("vi-VN")}
+            // Số lượng
+            td.text-center #{item.quantity}
+            // Tổng giá (VNĐ)
+            td.text-center #{(item.priceAtPurchase * item.quantity).toLocaleString("vi-VN")}
+            // Tổng sau cùng (VNĐ) (bao gồm giảm giá nếu cần)
+            td.text-center #{((item.priceAtPurchase * item.quantity) - (item.discount || 0)).toLocaleString("vi-VN")}

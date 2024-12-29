@@ -1,0 +1,11 @@
+section.order-detail
+
+  if order.deliveryUpdates && order.deliveryUpdates.length
+    ul.delivery-updates
+      each update in order.deliveryUpdates
+        li.delivery-update
+          p #{update.status}
+          p Note: #{update.note}
+          p Date: #{update.updatedAt.toLocaleDateString()} #{update.updatedAt.toLocaleTimeString()}
+  else
+    p No delivery updates available

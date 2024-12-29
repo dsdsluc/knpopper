@@ -1,0 +1,60 @@
+extends ../../layouts/auth.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+  #{message}
+  .d-flex.flex-column.h-100.p-3
+    .d-flex.flex-column.flex-grow-1
+      .row.h-100
+        .col-xxl-7
+          .row.justify-content-center.h-100
+            .col-lg-6.py-lg-5
+              .d-flex.flex-column.h-100.justify-content-center
+                .auth-logo.mb-4
+                  a.logo-dark(href="index.html")
+                    img(src="/admin/images/logo-dark.png", height="24", alt="logo dark")
+                  a.logo-light(href="index.html")
+                    img(src="/admin/images/logo-light.png", height="24", alt="logo light")
+
+                h2.fw-bold.fs-24 Sign In 
+
+                p.text-muted.mt-1.mb-4 Enter your email address and password to access admin panel.
+
+                .mb-5
+                  form.authentication-form(
+                    action=`/${prefixAdmin}/auth/login`
+                    method="POST"
+                    )
+                    .mb-3
+                      label.form-label(for="example-email") Email
+                      input#example-email.form-control.bg-(type="email", name="email", placeholder="Enter your email")
+                    .mb-3
+                      label.form-label(for="example-password") Password
+                      input#example-password.form-control(type="password", placeholder="Enter your password" name="password")
+                    .mb-3
+                      .form-check
+                        input#checkbox-signin.form-check-input(type="checkbox")
+                        label.form-check-label(for="checkbox-signin") Remember me
+
+                    .mb-1.text-center.d-grid
+                      button.btn.btn-soft-primary(type="submit") Sign In
+
+                  p.mt-3.fw-semibold.no-span OR sign with
+
+                  .d-grid.gap-2
+                    a.btn.btn-soft-dark(href="javascript:void(0);")
+                      i.bx.bxl-google.fs-20.me-1
+                      | Sign in with Google
+                    a.btn.btn-soft-primary(href="javascript:void(0);")
+                      i.bx.bxl-facebook.fs-20.me-1
+                      | Sign in with Facebook
+
+                p.text-danger.text-center Don't have an account? 
+                  a.text-dark.fw-bold.ms-1(href="auth-signup.html") Sign Up
+
+        .col-xxl-5.d-none.d-xxl-flex
+          .card.h-100.mb-0.overflow-hidden
+            .d-flex.flex-column.h-100
+              img(src="/admin/images/small/img-10.jpg", alt="", class="w-100 h-100")

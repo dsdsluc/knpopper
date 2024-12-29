@@ -1,0 +1,15 @@
+mixin products-grid(products)
+    .row
+        each item in products 
+            .col-4.mb-3
+                .product-item
+                    .inner-image
+                        img(src=item.thumbnail, alt=item.title)
+                        if item.feature && item.feature == 1
+                            .inner-feature Nổi bật
+
+                    .inner-content 
+                        a(href=`/products/detail/${item.slug}` class = "inner-title") #{item.title}
+                        .inner-price-new #{item.pricenew}$
+                        .inner-price-old #{item.price}$
+                        .inner-price-discount #{item.discountPercentage}%

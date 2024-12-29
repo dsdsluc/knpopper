@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug
+
+block main
+  .card.overflow-hidden
+    .card-body.p-0
+      .table-responsive
+        table.table.align-middle.mb-0.table-hover.table-centered
+          thead.bg-light-subtle
+            tr
+              th Name
+              th Email
+              th Roles
+              th Avatar
+              th Status
+              th Action
+          tbody
+            each account in accounts
+              tr
+                
+                td #{account.fullName}
+                td #{account.email}
+                td 
+                  span.badge.bg-light-subtle.text-muted.border.py-1.px-2 #{role.title}
+
+                td
+                  .avatar-group
+                    .avatar
+                      img.rounded-circle.avatar-sm(src=account.avatar alt="User 1")
+                    
+                td
+                  .form-check.form-switch
+                    input.form-check-input(type="checkbox" role="switch" id="flexSwitchCheckChecked1" checked=account.status=="active")
+                td
+                  .d-flex.gap-2
+                    a.btn.btn-light.btn-sm(href="#!")
+                      iconify-icon.align-middle.fs-18(icon="solar:eye-broken")
+                    a.btn.btn-soft-primary.btn-sm(href=`/${prefixAdmin}/account/edit/${account.id}`)
+                      iconify-icon.align-middle.fs-18(icon="solar:pen-2-broken")
+                    a.btn.btn-soft-danger.btn-sm(href="#!")
+                      iconify-icon.align-middle.fs-18(icon="solar:trash-bin-minimalistic-2-broken")
+            

@@ -1,0 +1,95 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  // Hiển thị thông báo thành công hoặc lỗi
+  +alert-success(message)
+  +alert-error(message)
+
+  .row
+    .col-xl-12
+      .card
+        .card-header.d-flex.justify-content-between.align-items-center.gap-1
+          h4.card-title.flex-grow-1 Danh Sách Người Dùng
+
+          // Dropdown để lọc người dùng
+          .dropdown
+            a.dropdown-toggle.btn.btn-sm.btn-outline-light(href="#" data-bs-toggle="dropdown" aria-expanded="false") Lọc Người Dùng
+            .dropdown-menu.dropdown-menu-end
+              button.dropdown-item(data-status="active") Người Dùng Hoạt Động
+              button.dropdown-item(data-status="inactive") Người Dùng Không Hoạt Động
+              button.dropdown-item(data-status="banned") Người Dùng Bị Cấm
+              button.dropdown-item(data-status="all") Tất Cả
+
+        // Bảng hiển thị danh sách người dùng
+        .table-responsive
+          table.table.align-middle.mb-0.table-hover.table-centered
+            thead.bg-light-subtle
+              tr
+                th #ID
+                th Họ Tên
+                th Email
+                th Thành Phố
+                th Trạng Thái
+                th Ngày Tạo
+                th Hành Động
+
+            tbody
+              each user in users
+                tr
+                  // ID Người Dùng
+                  td #{user._id}
+
+                  // Họ Tên
+                  td #{user.fullName || 'N/A'}
+
+                  // Email
+                  td #{user.email || 'N/A'}
+
+                  // Thành Phố
+                  td #{user.city || 'N/A'}
+
+                  // Trạng Thái với badge màu sắc
+                  td
+                    form(id=`status-form-${user._id}`, action=`/admin/user/change-status/${user._id}?_method=PATCH`, method="POST")
+                      input(type="hidden", name="status", value=user.status.toString() )
+                      - const userStatusClass = user.status === 'active' ? 'success' : user.status === 'inactive' ? 'warning' : 'danger';
+                      button.badge(class=`bg-${userStatusClass}`, type="submit") #{user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+
+
+                  // Ngày Tạo
+                  td #{new Date(user.createdAt).toLocaleString()}
+
+                  // Hành Động
+                  td
+                    .d-flex.gap-2
+                      a.btn.btn-light.btn-sm(href=`/admin/user/detail/${user._id}` title="Xem chi tiết người dùng" data-bs-toggle="tooltip") Xem Chi Tiết
+                      button.btn.btn-danger.btn-sm(title="Xóa người dùng" data-bs-toggle="tooltip" onclick=`deleteUser('${user._id}')`) Xóa
+
+  script.
+    // Kích hoạt tooltip
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    // Hàm xóa người dùng
+    function deleteUser(userId) {
+      if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+        fetch(`/admin/users/delete/${userId}`, {
+          method: 'DELETE',
+        })
+        .then(response => {
+          if (response.ok) {
+            alert('Xóa người dùng thành công!');
+            window.location.reload();
+          } else {
+            alert('Xóa người dùng thất bại!');
+          }
+        })
+        .catch(error => {
+          console.error('Lỗi:', error);
+          alert('Có lỗi xảy ra!');
+        });
+      }
+    }

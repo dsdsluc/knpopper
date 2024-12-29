@@ -1,0 +1,385 @@
+/* Alert Styles */
+[show-alert] {
+  position: fixed;
+  top: 70px;
+  right: 15px;
+  z-index: 999;
+  transition: right 0.5s ease-in-out; /* Smooth transition for alert appearance */
+  font-size: 14px;
+}
+
+[show-alert].alert-none {
+  animation-name: alert-hidden;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; /* Changed to forwards to ensure animation stays at the final state */
+}
+
+@keyframes alert-hidden {
+  0% {
+    right: 15px;
+    opacity: 1;
+  }
+
+  100% {
+    right: -100%;
+    opacity: 0;
+    display: none; /* Added opacity for a smooth fading effect */
+  }
+}
+
+[close-alert] {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-weight: 700;
+  cursor: pointer;
+  background-color: #f8d7da; /* Background color matching alert theme */
+  color: #721c24; /* Text color for contrast */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth hover effect */
+}
+
+[close-alert]:hover {
+  background-color: #f5c6cb;
+  transform: scale(1.1); /* Slight scale effect on hover */
+}
+
+/* Readonly Input Field */
+.readonly-input {
+  opacity: 0.6; /* Maintain a semi-transparent appearance */
+  pointer-events: none; /* Prevent user interaction */
+  background-color: #e9ecef; /* Slightly different background for disabled look */
+  border: 1px solid #ced4da; /* Standard border to match the rest of the form */
+  color: #495057; /* Text color to contrast with background */
+  padding: 0.5rem 0.75rem; /* Consistent padding for better readability */
+  border-radius: 0.25rem; 
+  transition: opacity 0.3s ease; 
+}
+
+
+.category-menu-section {
+  position: relative;
+}
+
+.empty {
+  display: none; /* Adjust as needed */
+}
+
+.dropdown-btn {
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.category-dropdown {
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 250px; 
+  padding: 10px 0; 
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  text-decoration: none; 
+  color: #333; 
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #48c76a; 
+  border-radius: 5px; 
+
+}
+
+
+
+.sub-category-list {
+  display: block; 
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 20px; 
+}
+
+.sub-category-list.show {
+  display: block; 
+}
+
+.sub-category-list-item {
+  position: relative;
+}
+
+.sub-category-list-item .dropdown-item {
+  padding-left: 40px; /* Indent subcategory items */
+}
+
+
+.header-cart {
+  position: relative;
+}
+
+.cart-item {
+  position: relative;
+  display: inline-block;
+  color: black; /* Màu sắc của biểu tượng giỏ hàng */
+  font-size: 24px; /* Kích thước của biểu tượng */
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px; /* Điều chỉnh vị trí theo chiều dọc */
+  right: -10px; /* Điều chỉnh vị trí theo chiều ngang */
+  background-color: #34A853; /* Màu nền của hình tròn */
+  color: white; /* Màu chữ */
+  border-radius: 50%;
+  padding: 2px 6px; /* Kích thước của hình tròn */
+  font-size: 12px; /* Kích thước chữ */
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.header-favourite {
+  position: relative;
+  display: inline-block;
+}
+
+.header-favourite .wishlist-item {
+  text-decoration: none;
+  color: #333; 
+  font-size: 24px; 
+  position: relative;
+}
+
+.header-favourite .wishlist-item:hover {
+  color: #ff4b5c; /* Màu sắc khi hover */
+}
+
+.header-favourite .badge {
+  position: absolute;
+  top: -8px; /* Điều chỉnh vị trí dọc */
+  right: -10px; /* Điều chỉnh vị trí ngang */
+  background-color: #34A853; /* Màu nền của số lượng */
+  color: #fff; /* Màu chữ */
+  font-size: 12px; /* Kích thước chữ */
+  padding: 2px 6px; /* Khoảng cách bên trong */
+  border-radius: 50%; /* Tạo hình tròn cho số lượng */
+}
+
+
+.coupon-input-group {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  flex-flow: row nowrap;
+}
+
+.coupon-input-group .form-control {
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #ced4da;
+  border-right: none;
+  background-color: #f8f9fa;
+  font-size: 16px;
+  padding: 10px 15px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.coupon-input-group .form-control:focus {
+  background-color: #ffffff;
+  border-color: #80bdff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+
+.coupon-input-group .btn {
+  border-radius: 0 8px 8px 0;
+  background-color: #28a745; /* Chuyển sang màu xanh lá cây cho nổi bật */
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.coupon-input-group .btn:hover {
+  background-color: #218838; /* Màu đậm hơn khi hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px); /* Hiệu ứng nổi lên khi hover */
+}
+
+.coupon-input-group .btn:active {
+  background-color: #1e7e34; /* Màu đậm hơn khi nhấn */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transform: translateY(0); /* Trở về vị trí ban đầu khi nhấn */
+}
+
+.original-price {
+  text-decoration: line-through; /* Gạch ngang giá gốc */
+  color: #888; /* Màu xám cho giá gốc */
+  margin-right: 5px; /* Khoảng cách giữa giá gốc và giá giảm */
+}
+
+.discounted-price {
+  color: red; /* Màu đỏ cho giá giảm */
+  font-weight: bold;
+}
+
+.star-rating {
+  display: flex;
+}
+
+.star-input {
+  display: none; /* Ẩn radio button */
+}
+
+.star-icon {
+  cursor: pointer;
+  font-size: 25px; /* Kích thước ngôi sao */
+  color: #ccc; /* Màu ngôi sao mặc định */
+  transition: color 0.2s;
+}
+
+/* Tô vàng cho ngôi sao đã chọn và tất cả ngôi sao trước đó */
+.star-input:checked ~ .star-icon {
+  color: #FFA800; /* Màu ngôi sao đã chọn */
+}
+
+.star-input:checked ~ .star-icon,
+.star-input:checked ~ .star-icon ~ .star-icon {
+  color: #FFA800; /* Màu vàng cho các sao trước đó */
+}
+
+/* Hiệu ứng hover cho ngôi sao */
+.star-rating label:hover .star-icon {
+  color: #FFA800; /* Màu vàng khi hover */
+}
+
+/* Tô màu vàng cho tất cả ngôi sao trước khi hover */
+.star-rating label:hover ~ label .star-icon {
+  color: #FFA800; /* Màu vàng cho các sao trước đó khi hover */
+}
+
+/* Tô vàng cho các sao đã chọn */
+.star-input:checked + label .star-icon,
+.star-input:checked + label ~ label .star-icon {
+  color: #FFA800; /* Tô màu vàng cho các sao đã chọn */
+}
+
+
+.review-wrapper {
+    max-height: 400px; /* Chiều cao tối đa của phần bình luận */
+    overflow-y: auto;  /* Thêm thanh cuộn dọc nếu nội dung vượt quá chiều cao */
+    padding: 30px !important;     /* Khoảng cách bên trong */
+    border: 1px solid #ccc; /* Đường viền cho phần bình luận */
+    border-radius: 8px; /* Bo tròn góc */
+    background-color: #f9f9f9; /* Màu nền cho phần bình luận */
+}
+
+/* Tùy chọn: Thay đổi kiểu cuộn */
+.review-wrapper::-webkit-scrollbar {
+    width: 8px; /* Độ rộng thanh cuộn */
+}
+
+.review-wrapper::-webkit-scrollbar-thumb {
+    background: #888; /* Màu của thanh cuộn */
+    border-radius: 4px; /* Bo tròn thanh cuộn */
+}
+
+.review-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Màu của thanh cuộn khi di chuột qua */
+}
+
+
+section.order-detail {
+  /* Basic styling for order details section */
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+}
+
+ul.delivery-updates {
+  list-style: none;
+  padding: 0;
+}
+
+li.delivery-update {
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+li.delivery-update:last-child {
+  background-color: #d4edda; 
+  color: #155724;            
+  font-weight: bold;
+}
+
+li.delivery-update p {
+  margin: 5px 0;
+}
+table {
+  border-spacing: 10px; /* Adjust the value to control the spacing */
+}
+
+/* General Styles for Social Box */
+.social-box {
+  position: fixed;
+  bottom: 80px; /* Khoảng cách từ dưới lên */
+  right: 20px; /* Khoảng cách từ phải qua */
+  z-index: 1000; /* Đảm bảo nằm trên cùng */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+/* General Style for Each Button */
+.social-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 24px;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.social-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Zalo Button Styles */
+.zalo-btn {
+  background-color: #0088cc; /* Màu xanh đặc trưng của Zalo */
+}
+
+/* Facebook Button Styles */
+.facebook-btn {
+  background-color: #1877f2; /* Màu xanh đặc trưng của Facebook */
+}

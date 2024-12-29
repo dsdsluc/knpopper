@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message, 5000)
+  +alert-error(message, 5000)
+  section.forgot-password.product.footer-padding
+    .container
+      .login-section
+        .row.align-items-center
+          //- Forgot Password Form
+          .col-lg-6
+            .login-form
+              .review-form.box-shadows
+                .review-form-text
+                  h5.comment-title Forgot Password
+                  img(src="/clients/images/homepage-one/vector-line.png" alt="img")
+                form.review-inner-form(action="/auth/forgot-password" method="POST" id="forgotPasswordForm")
+                  .review-form-name
+                    label.form-label(for="email") Enter Your Email Address**
+                    input.form-control(type="email" id="email" placeholder="Email" name="email" required)
+                  .review-form-name
+                    p.text-muted A password reset link will be sent to your email.
+                  .register-btn.text-center
+                    button.shop-btn(type="submit") Send Reset Link
+                    span.shop-account 
+                      | Remember your password?
+                      a(href="/auth/login") Log In
+          //- Forgot Password Image
+          .col-lg-6
+            .login-img
+              img(src="/clients/images/homepage-one/account-img.webp" alt="img")

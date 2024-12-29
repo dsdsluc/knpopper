@@ -1,0 +1,68 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message)
+  +alert-error(message)
+
+  .container-fluid
+    .row
+      .col-md-8.offset-md-2
+        .card.shadow-sm
+          // 👉 Header của trang chi tiết
+          .card-header.bg-primary.text-white
+            h5.mb-0 Chi Tiết Bài Báo
+
+          // 👉 Nội dung chi tiết bài báo
+          .card-body
+            dl.row
+              // 📌 Tiêu Đề
+              dt.col-sm-3 Tiêu Đề:
+              dd.col-sm-9 #{article.title}
+
+              // 📌 Mô Tả Ngắn
+              dt.col-sm-3 Mô Tả Ngắn:
+              dd.col-sm-9 #{article.summary || 'Không có mô tả'}
+
+              // 📌 Nội Dung
+              dt.col-sm-3 Nội Dung:
+              dd.col-sm-9
+                .content-box.border.p-3(style="background-color: #f9fafc; border-radius: 4px;")
+                  != article.content || 'Không có nội dung'
+
+              // 📌 Trạng Thái
+              dt.col-sm-3 Trạng Thái:
+              dd.col-sm-9 
+                if article.status === 'active'
+                  span.badge.bg-success Hoạt Động
+                else
+                  span.badge.bg-secondary Không Hoạt Động
+
+              // 📌 Ảnh Thumbnail
+              dt.col-sm-3 Ảnh Thumbnail:
+              dd.col-sm-9
+                if article.thumbnail
+                  img.img-thumbnail(
+                    src=article.thumbnail, 
+                    alt='Thumbnail', 
+                    style='max-width: 200px; height: auto;'
+                  )
+                else
+                  | Không có ảnh
+
+              // 📌 Lượt Xem
+              dt.col-sm-3 Lượt Xem:
+              dd.col-sm-9 #{article.views || 0}
+
+              // 📌 Ngày Tạo
+              dt.col-sm-3 Ngày Tạo:
+              dd.col-sm-9 #{new Date(article.createdAt).toLocaleString()}
+
+              // 📌 Ngày Xuất Bản
+              dt.col-sm-3 Ngày Xuất Bản:
+              dd.col-sm-9 #{article.publishedAt ? new Date(article.publishedAt).toLocaleString() : 'Chưa xuất bản'}
+
+          // 👉 Footer với các nút hành động
+          .card-footer.text-end
+            a.btn.btn-warning(href=`/admin/articles/edit/${article._id}`) Chỉnh Sửa
+            a.btn.btn-secondary.ms-2(href='/admin/articles/list') Quay Lại

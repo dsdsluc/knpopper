@@ -1,0 +1,35 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(message, 5000)
+  +alert-error(message, 5000)
+  section.reset-password.product.footer-padding
+    .container
+      .login-section
+        .row.align-items-center
+          //- Reset Password Form
+          .col-lg-6
+            .login-form
+              .review-form.box-shadows
+                .review-form-text
+                  h5.comment-title Reset Password
+                  img(src="/clients/images/homepage-one/vector-line.png" alt="img")
+                form.review-inner-form(action="/auth/password/reset?_method=PATCH" method="POST" id="resetPasswordForm")
+                  .review-form-name
+                    label.form-label(for="email") Your Email**
+                    input.form-control.readonly-input(type="text" id="email" name="email" value=email readonly)
+                  .review-form-name
+                    label.form-label(for="password") New Password*
+                    input.form-control(type="password" id="password" placeholder="Enter new password" name="password" required)
+                  .review-form-name
+                    label.form-label(for="confirm-password") Confirm New Password*
+                    input.form-control(type="password" id="confirm-password" placeholder="Confirm new password" name="confirm" required)
+                  .review-form-name
+                    p.text-muted Enter your new password to reset it successfully.
+                  .register-btn.text-center
+                    button.shop-btn(type="submit") Reset Password
+          //- Reset Password Image
+          .col-lg-6
+            .login-img
+              img(src="/clients/images/homepage-one/account-img.webp" alt="img")

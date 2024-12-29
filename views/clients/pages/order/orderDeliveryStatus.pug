@@ -1,0 +1,24 @@
+// 🚚 **Update Delivery Status**
+.card.mt-4
+  .card-header.bg-info.text-white
+    h5 Cập Nhật Trạng Thái Giao Hàng
+
+  .card-body
+    // Hiển thị lịch sử giao hàng
+    if order.deliveryUpdates && order.deliveryUpdates.length > 0
+      .delivery-history.mb-4
+        h6.text-muted Lịch Sử Trạng Thái Giao Hàng
+        ul.list-group
+          each update in order.deliveryUpdates
+            li.list-group-item.d-flex.justify-content-between.align-items-center
+              .status-info
+                strong #{update.status.charAt(0).toUpperCase() + update.status.slice(1)}
+                small.text-muted | (#{new Date(update.updatedAt).toLocaleString()})
+                if update.note
+                  p.text-muted.mb-0 Ghi Chú: #{update.note}
+              .status-badge
+                span.badge(class=`bg-${update.status === 'delivered' ? 'success' : update.status === 'in progress packaging' ? 'warning' : 'info'}`) #{update.status === 'delivered' ? 'Hoàn thành' : 'Đang xử lý'}
+
+    else
+      p.text-center.text-muted Không có lịch sử giao hàng.
+

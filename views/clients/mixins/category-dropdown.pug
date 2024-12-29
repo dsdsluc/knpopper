@@ -1,0 +1,7 @@
+mixin category-dropdown(categories, selectedCategories)
+  ul.sidebar-list
+    each category in categories
+      li
+        input(type="checkbox" id=category.slug name="categories[]" value=category._id 
+          checked=(selectedCategories && selectedCategories.includes(category._id.toString())))
+        label(for=category.slug) #{category.title}
