@@ -49,45 +49,15 @@ block main
                 span.new-price $#{product.priceNew}
               
               p.content-paragraph
-                | It is a long established fact that a reader will be distracted by 
-                span.inner-text the readable content of a page.
+                | Đây là một sự thật đã được khẳng định từ lâu rằng người đọc sẽ bị phân tâm bởi 
+                span.inner-text nội dung dễ đọc của một trang.
+
               hr
               .product-availability
                 span Availabillity :
                 span.inner-text #{product.stock} Products Available
-              if product.size.length > 0
-                p.text-dark.fw-medium Size:
-                .d-flex.flex-wrap.gap-2(role="group", aria-label="Basic checkbox toggle button group")
-                  each size in product.size
-                    input.btn-check(type="radio", id=`size-${size}`, name="size", value=size)
-                    label.btn.btn-light.avatar-sm.rounded.d-flex.justify-content-center.align-items-center(for=`size-${size}`) #{size}
-
-              .product-size
-                p.size-title Weight
-                .size-section
-                  span.size-text(size-text) Select Weight
-                  .toggle-btn
-                    span.toggle-btn2
-                    span.chevron
-                      svg(width="11", height="7", viewBox="0 0 11 7", fill="none", xmlns="http://www.w3.org/2000/svg")
-                        path(d="M5.4 6.8L0 1.4L1.4 0L5.4 4L9.4 0L10.8 1.4L5.4 6.8Z", fill="#222222")
-                  if product.weight
-                    ul.size-option
-                      li.option
-                        span.option-text 500 gram
-                        span.option-measure $#{product.price / 2}
-                      li.option
-                        span.option-text 1 Kg
-                        span.option-measure $#{product.price * 1}
-                      li.option
-                        span.option-text 2 Kg
-                        span.option-measure $#{product.price * 2}
-                      li.option
-                        span.option-text 3 Kg
-                        span.option-measure $#{product.price * 3}
-                      li.option
-                        span.option-text 5 Kg
-                        span.option-measure $#{product.price * 5} 
+          
+                  
               .product-quantity
                 .quantity-wrapper
                   .quantity
@@ -180,15 +150,6 @@ block main
               min="1"
               max=product.stock
             )
-            input(
-              class="form-control mb-2"
-              type="text"
-              name="weight"
-            )
-            input(
-              class="form-control mb-2"
-              type="text"
-              name="size"
-            )
+
   include ./comment.pug
           

@@ -1,11 +1,10 @@
-
 .card.shadow-sm.border-0.rounded
   .card-header.bg-primary.text-white
     h4.card-title.mb-0 Product Information
 
   .card-body.p-4
     form(
-      action=`/${prefixAdmin}/products/edit/${product._id}?_method=PATCH`,
+      action=`/${prefixAdmin}/products/edit/${product._id || ''}?_method=PATCH`,
       method="POST",
       class="form-create-product needs-validation",
       enctype="multipart/form-data",
@@ -26,11 +25,11 @@
               name="thumbnail", 
               accept="image/*", 
               multiple
-              upload-input
             )
+            - const thumbnailSrc = (product && product.thumbnail && product.thumbnail[0]) ? product.thumbnail[0] : '/images/default-product.jpg';
             img.img-fluid.rounded.bg-light.mt-2(
               id="preview-thumbnail", 
-              src=product.thumbnail[0] || '/images/default-product.jpg'
+              src=thumbnailSrc
             )
 
         // ✅ Product Status
@@ -44,7 +43,7 @@
                   name="status", 
                   id="status-active", 
                   value="active", 
-                  checked=product.status === "active"
+                  checked=(product && product.status === "active")
                 )
                 label.form-check-label(for="status-active") Active
               .form-check
@@ -53,7 +52,7 @@
                   name="status", 
                   id="status-inactive", 
                   value="inactive", 
-                  checked=product.status === "inactive"
+                  checked=(product && product.status === "inactive")
                 )
                 label.form-check-label(for="status-inactive") Inactive
 
@@ -66,7 +65,7 @@
               id="title",
               name="title",
               placeholder="Enter product name",
-              value=product.title,
+              value=(product && product.title) || '',
               required
             )
             .invalid-feedback Product name is required.
@@ -81,7 +80,7 @@
               required
             )
               option(value="") Choose a category
-              +select-tree(productsCategory, 1, product.product_category_id._id)
+              +select-tree(productsCategory, 1, (product && product.product_category_id && product.product_category_id._id) || '')
             .invalid-feedback Please select a category.
 
         // 🛍️ Brand
@@ -93,7 +92,7 @@
               id="brand",
               name="brand",
               placeholder="Enter brand name",
-              value=product.brand
+              value=(product && product.brand) || ''
             )
 
         // ⚖️ Weight
@@ -105,7 +104,7 @@
               id="weight",
               name="weight",
               placeholder="e.g., 1.5 kg",
-              value=product.weight
+              value=(product && product.weight) || ''
             )
 
         // 👗 Gender
@@ -117,10 +116,10 @@
               name="gender",
               required
             )
-              option(value="", selected=product.gender === "") Select Gender
-              option(value="male", selected=product.gender === "male") Men
-              option(value="female", selected=product.gender === "female") Women
-              option(value="unisex", selected=product.gender === "unisex") Unisex
+              option(value="", selected=!(product && product.gender)) Select Gender
+              option(value="male", selected=(product && product.gender === "male")) Men
+              option(value="female", selected=(product && product.gender === "female")) Women
+              option(value="unisex", selected=(product && product.gender === "unisex")) Unisex
             .invalid-feedback Please select gender.
 
         // 📦 Stock
@@ -132,7 +131,7 @@
               id="stock",
               name="stock",
               placeholder="Available quantity",
-              value=product.stock,
+              value=(product && product.stock) || 0,
               min="0"
             )
 
@@ -148,7 +147,7 @@
                 id="price",
                 name="price",
                 placeholder="e.g., 100",
-                value=product.price,
+                value=(product && product.price) || 0,
                 min="0"
               )
 
@@ -164,13 +163,13 @@
                 id="discountPercentage",
                 name="discountPercentage",
                 placeholder="e.g., 10",
-                value=product.discountPercentage,
+                value=(product && product.discountPercentage) || 0,
                 min="0",
                 max="100"
               )
 
         // 📏 Size
-        .col-lg-12
+        .col-lg-6
           .mb-3
             label.form-label Size
             .d-flex.flex-wrap.gap-2
@@ -180,10 +179,49 @@
                   id=`size-${size}`, 
                   name="size", 
                   value=size,
-                  checked=(product.sizes && product.sizes.includes(size))
+                  checked=(product && product.sizes && product.sizes.includes(size))
                 )
                 label.btn.btn-outline-primary(for=`size-${size}`) #{size}
+        .col-lg-6
+          .mb-3
+            label.form-label(for="product-discount") Rating
+            .input-group
+              span.input-group-text.fs-20
+                i.fas.fa-star(style="color: #ff5e57;")
+              input.form-control(
+                type="number",
+                id="rating",
+                name="rating",
+                placeholder="Nhập điểm đánh giá",
+                min=1,
+                max=5, 
+                step=0.1 
+                value=product.rating
+              )
+        .col-lg-6
+          .mb-3
+            label.form-label(for="feature") Feature
+            .input-group
+              textarea.form-control.bg-light-subtle.tinymce-app(
+                id="feature",
+                name="feature",
+                placeholder="Nhập đặc điểm nổi bật của sản phẩm",
+                maxlength="255",
+                rows="5"
+              )= (product && product.feature) || ''
+        .col-lg-6
+          .mb-3
+            label.form-label(for="position") Position
+            .input-group
+              input.form-control(
+                type="number",
+                id="position",
+                name="position",
+                value=product.position, 
+                min="1", 
+                placeholder="Nhập vị trí"
 
+              )
         // 📝 Description
         .col-lg-12
           .mb-3
@@ -193,7 +231,7 @@
               name="description",
               rows="5",
               placeholder="Write product description here"
-            )= product.description
+            )= (product && product.description) || ''
 
       // 🔘 Action Buttons
       .p-3.bg-light.rounded.d-flex.justify-content-end.gap-3

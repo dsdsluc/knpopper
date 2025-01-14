@@ -21,7 +21,11 @@
 
     .mt-3
       h4 #{product.title}
-        span.fs-14.text-muted.ms-1 (#{product.product_category_id})
+        span.fs-14.text-muted.ms-1
+          | (
+          = product.product_category_id? product.product_category_id.title : "No category"
+          | )
+
       h5.text-dark.fw-medium.mt-3 Price :
       h4.fw-semibold.text-dark.mt-2.d-flex.align-items-center.gap-2
         span.text-muted.text-decoration-line-through $100

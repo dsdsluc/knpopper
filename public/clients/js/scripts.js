@@ -1,22 +1,9 @@
 const formAddToCart = document.querySelector("[card-add-item]");
-const quantityElement = document.querySelector(".product-quantity [quantity]");
-const sizeElement = document.querySelector("[size-text]");
 const buttonAddToCart = document.querySelector("[button-add-to-cart]");
 
-if (formAddToCart && quantityElement && buttonAddToCart && sizeElement) {
+if (formAddToCart  && buttonAddToCart ) {
   buttonAddToCart.addEventListener("click", () => {
-    const inputQuantity = formAddToCart.querySelector("[name=quantity]");
-    const inputSize = formAddToCart.querySelector("[name=weight]");
-    const stockQuantity = parseInt(inputQuantity.max, 10);
-    const desiredQuantity = parseInt(quantityElement.textContent, 10);
-
-    if (desiredQuantity <= stockQuantity) {
-      inputQuantity.value = desiredQuantity;
-      inputSize.value = sizeElement.textContent;
-      formAddToCart.submit();
-    } else {
-      document.querySelector("[alert-out-stock]").classList.remove("d-none");
-    }
+    formAddToCart.submit();
   });
 }
 
@@ -189,4 +176,18 @@ if (applyCouponButton && couponInput) {
     // Chuyển hướng với query string ?coupon=value
     window.location.href = `${window.location.pathname}?coupon=${encodeURIComponent(couponCode)}`;
   });
+}
+
+
+const buttonAddToCartAll = document.querySelectorAll("[btn-add-to-cart]");
+if(buttonAddToCartAll.length > 0 && buttonAddToCartAll){
+  buttonAddToCartAll.forEach(item=>{
+    item.addEventListener("click", ()=>{
+      // goi ra cai form gan nhat cung cap voi no roi submit
+      const form = item.closest(".product-cart-btn").querySelector("form[card-add-item]");
+      if(form){
+        form.submit();
+      }
+    })
+  })
 }

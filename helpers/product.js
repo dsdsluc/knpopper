@@ -4,8 +4,27 @@ module.exports.priceNews = (products)=>{
     })
     return products
 }
+
+module.exports.formatCurrencyVNDs = (products)=>{
+    products.forEach(item =>{
+        item.priceNew = Math.round((item.price * (100-item.discountPercentage))/100,0);
+
+        item.priceNew = item.priceNew.toLocaleString('vi-VN') + ' ₫';
+        item.price = item.price.toLocaleString('vi-VN') + ' ₫';
+    })
+    return products
+}
+
 module.exports.priceNew = (product)=>{
     product.priceNew = Math.round((product.price * (100-product.discountPercentage))/100,0);
+    return product
+}
+
+module.exports.formatCurrencyVND = (product)=>{
+    product.priceNew = Math.round((product.price * (100-product.discountPercentage))/100,0);
+
+    product.priceNew = product.priceNew.toLocaleString('vi-VN') + ' ₫';
+    product.price = product.price.toLocaleString('vi-VN') + ' ₫';
     return product
 }
 

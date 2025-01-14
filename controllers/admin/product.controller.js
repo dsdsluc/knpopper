@@ -53,7 +53,7 @@ module.exports.index = async (req, res) => {
     res.render("admin/pages/product/index", {
       title: "Shop của tôi",
       message: "Hello there!",
-      products: productHelper.priceNews(products),
+      products: productHelper.formatCurrencyVNDs(products),
       titleTopbar: "Product List!",
       pagination: objectPagination,
       currentStatus: status || "show-all", // Trạng thái hiện tại

@@ -46,7 +46,7 @@ module.exports.index = async (req, res) => {
 
   
       const productsDB = await Product.find(find).sort(sortOption);
-      const products = productHelper.priceNews(productsDB);
+      const products = productHelper.formatCurrencyVNDs(productsDB);
 
   
       res.render("clients/pages/products/index", {

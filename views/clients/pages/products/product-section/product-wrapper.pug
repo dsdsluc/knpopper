@@ -63,8 +63,8 @@ each product in products
         .product-description
           a.product-details(href=`/products/detail/${product.slug}` style="font-size: 18px") #{product.title.length > 20 ? product.title.substring(0, 20) + '...' : product.title}
           .price
-            span.price-cut #{product.price}$
-            span.new-price #{product.priceNew}$
+            span.price-cut #{product.price}
+            span.new-price #{product.priceNew}
         .product-cart-btn
           a.product-btn(href=`/products/detail/${product.slug}`)
             span

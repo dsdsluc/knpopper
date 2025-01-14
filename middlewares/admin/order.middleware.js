@@ -17,7 +17,6 @@ module.exports.countPendingOrdersMiddleware = async (req, res, next) => {
     res.locals.pendingOrders = pendingOrders;
     res.locals.pendingOrdersCount = pendingOrdersCount; 
 
-    console.log(`🛒 Có ${pendingOrdersCount} đơn hàng đang xử lý.`);
   } catch (error) {
     console.error('❌ Lỗi khi lấy danh sách đơn hàng đang xử lý:', error.message);
     res.locals.pendingOrders = []; 
